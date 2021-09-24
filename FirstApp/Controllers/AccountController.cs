@@ -1,12 +1,11 @@
 using System.Data.Common;
 using System.Threading.Tasks;
-using Data;
-using Data.Repository;
-using Data.Services;
+using Entities;
+using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models.DTO;
 using Newtonsoft.Json;
+using Repository;
 
 namespace FirstApp.Controllers
 {
@@ -17,7 +16,7 @@ namespace FirstApp.Controllers
         private readonly AppDbContext _context;
 
         public AccountController(AppDbContext context) => _context = context;
-
+    /*
         [HttpPost]
         [Route("signup")]
         [AllowAnonymous]
@@ -25,7 +24,7 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var user = new UserRepository(_context).Post(model).Result;
+                var user = _repo
                 if (user == null)
                     return UnprocessableEntity(new { message = "One or more fields are missing" });
                 return Content(JsonConvert.SerializeObject(user));
@@ -79,5 +78,6 @@ namespace FirstApp.Controllers
         [Route("manager")]
         [Authorize(Roles = "manager")]
         public string Manager() => "Manager";
+    */
     }
 }
