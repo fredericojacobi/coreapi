@@ -8,7 +8,6 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace FirstApp.Controllers
 {
@@ -61,7 +60,6 @@ namespace FirstApp.Controllers
             }
         }
         
-        // TODO: consertar Reminder - GetByUserId - nao retorna
         [HttpGet("user/{id}")]
         public async Task<ActionResult> GetByUserId(long id)
         {
@@ -80,7 +78,6 @@ namespace FirstApp.Controllers
         }
 
         // PUT: api/Reminder/5
-        // TODO: consertar Reminder - Put - nao edita
         [HttpPut("{id}")]
         public async Task<ActionResult<ReminderDTO>> Put([FromRoute] long id, [FromBody] ReminderDTO model)
         {
@@ -88,18 +85,19 @@ namespace FirstApp.Controllers
             {
                 
                 // TODO: quando model esta nulo ele nao entra no metodo, entao nao verifica
-                if (model == null)
-                {
-                    _logger.LogError($"{DateTime.Now} - {nameof(Put)} : Reminder's model is null");
-                    return BadRequest("Object cannot be null");
-                }
+                // if (model == null)
+                // {
+                //     _logger.LogError($"{DateTime.Now} - {nameof(Put)} : Reminder's model is null");
+                //     return BadRequest("Object cannot be null");
+                // }
                 
                 // TODO: nao verifica model valido
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogError($"{DateTime.Now} - {nameof(Put)} :  Invalid Reminder's object sent from client");
-                    return BadRequest("Invalid model object");
-                }
+                // if (!ModelState.IsValid)
+                // {
+                //     _logger.LogError($"{DateTime.Now} - {nameof(Put)} :  Invalid Reminder's object sent from client");
+                //     return BadRequest("Invalid model object");
+                // }
+                
                 // validacao id != OK
                 if (id != model.Id)
                 {
@@ -123,7 +121,6 @@ namespace FirstApp.Controllers
         }
 
         // POST: api/Reminder
-        // TODO: consertar Reminder - Post - nao grava
         [HttpPost]
         public async Task<ActionResult<dynamic>> Post(ReminderDTO model)
         {
@@ -154,7 +151,6 @@ namespace FirstApp.Controllers
         }
 
         // DELETE: api/Reminder/5
-        // TODO: consertar Reminder - Delete - nao deleta
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] long id, [FromBody] ReminderDTO model)
         {

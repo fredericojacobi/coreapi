@@ -17,7 +17,7 @@ namespace Repository
 
         public Reminder GetReminderById(long id) => FindByCondition(r => r.Id.Equals(id)).FirstOrDefault();
 
-        public Reminder GetReminderByUserId(long userId) => FindByCondition(r => r.Id.Equals(userId)).Include(u => u.Users).FirstOrDefault();
+        public Reminder GetReminderByUserId(long userId) => FindByCondition(r => r.UserId.Equals(userId)).FirstOrDefault();
         
         public bool PutReminder(Reminder reminder) => Update(reminder);
 

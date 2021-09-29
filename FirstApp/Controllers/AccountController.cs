@@ -1,11 +1,7 @@
 using System.Data.Common;
 using System.Threading.Tasks;
 using Entities;
-using Entities.DataTransferObjects;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Repository;
 
 namespace FirstApp.Controllers
 {

@@ -26,10 +26,18 @@ namespace Repository
             _context.SaveChanges();
             _context.Entry(entity).ReloadAsync();
             return entity;
+        }
+
+        public bool Update(T entity)
+        {
+            _context.Set<T>().Update(entity);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool Delete(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+            return _context.SaveChanges() > 0;
         } 
-
-        public bool Update(T entity) => _context.Set<T>().Update(entity).State == EntityState.Modified;
-
-        public bool Delete(T entity) => _context.Set<T>().Remove(entity).State == EntityState.Deleted;
     }
 }

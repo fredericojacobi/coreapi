@@ -12,7 +12,6 @@ namespace FirstApp.Extensions
 {
     public static class ServiceExtensions
     {
-
         public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration["ConnectionStrings:ReminderApp"];
@@ -45,6 +44,12 @@ namespace FirstApp.Extensions
                         ValidateAudience = false
                     };
                 });
+        }
+
+        public static void ConfigureControllerAndNewtonsoftJson(this IServiceCollection services)
+        {
+            services.AddControllers().AddNewtonsoftJson(opt =>
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
     }
 }
