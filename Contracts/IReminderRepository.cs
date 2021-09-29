@@ -10,9 +10,6 @@ namespace Contracts
         Reminder GetReminderById(long id);
 
         Reminder GetReminderByUserId(long userId);
-
-        bool PutReminder(Reminder reminder);
         
-        Reminder PostReminder(Reminder reminder);
     }
 }

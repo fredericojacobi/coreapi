@@ -106,7 +106,7 @@ namespace FirstApp.Controllers
                 }
 
                 var reminder = _mapper.Map<Reminder>(model);
-                var modified = _repository.Reminder.PutReminder(reminder);
+                var modified = _repository.Reminder.Update(reminder);
                 if (modified)
                     return NoContent();
                 
@@ -138,7 +138,7 @@ namespace FirstApp.Controllers
                     return BadRequest("Invalid model object");
                 }
                 var reminder = _mapper.Map<Reminder>(model);
-                var repositoryResult = _repository.Reminder.PostReminder(reminder);
+                var repositoryResult = _repository.Reminder.Create(reminder);
                 if(repositoryResult != null) return CreatedAtAction(nameof(Get), new { id = repositoryResult.Id }, repositoryResult);
                 _logger.LogError($"{DateTime.Now} - {nameof(Post)} : Reminder hasn't been created");
                 return StatusCode(500, "Internal server error");

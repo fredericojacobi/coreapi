@@ -19,8 +19,5 @@ namespace Repository
 
         public Reminder GetReminderByUserId(long userId) => FindByCondition(r => r.UserId.Equals(userId)).FirstOrDefault();
         
-        public bool PutReminder(Reminder reminder) => Update(reminder);
-
-        public Reminder PostReminder(Reminder reminder) => Create(reminder);
     }
 }
