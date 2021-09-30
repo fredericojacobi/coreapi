@@ -11,8 +11,8 @@ namespace FirstApp
             CreateMap<Reminder, ReminderDTO>();
             CreateMap<ReminderDTO, Reminder>();
 
-            CreateMap<User, UserDTO>();
-            CreateMap<UserDTO, User>();
+            // CreateMap<User, UserDTO>();
+            // CreateMap<UserDTO, User>();
             
         }
     }

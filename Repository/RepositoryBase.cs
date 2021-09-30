@@ -20,8 +20,6 @@ namespace Repository
 
         public T Create(T entity)
         {
-            // TODO: verificar o ReloadAsync() para retornar o objeto gravado
-            // TODO: verificar o SaveChanges() se houve alteracao
             _context.Set<T>().Add(entity);
             _context.SaveChanges();
             _context.Entry(entity).ReloadAsync();

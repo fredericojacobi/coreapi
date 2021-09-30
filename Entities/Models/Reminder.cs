@@ -1,12 +1,14 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace Entities.Models
 {
     [Table("Reminder")]
     public class Reminder
     {
-        [Key] [Column("ReminderId")] public long Id { get; set; }
+        [Key] [Column("ReminderId")] public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         [MaxLength(60, ErrorMessage = "The title can't be longer than 60 characters")]
@@ -19,8 +21,8 @@ namespace Entities.Models
         [Required(ErrorMessage = "IsComplete is required")]
         public bool isComplete { get; set; }
 
-        [Required(ErrorMessage = "UserId is required")]
-        [ForeignKey(nameof(User))]
-        public long UserId { get; set; }
+        [Required(ErrorMessage = "User is required")]
+        [ForeignKey(nameof(IdentityUser))]
+        public IdentityUser User { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace FirstApp.Controllers
 
         // GET: api/Reminder/5
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(long id)
+        public async Task<ActionResult> Get(Guid id)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace FirstApp.Controllers
         }
         
         [HttpGet("user/{id}")]
-        public async Task<ActionResult> GetByUserId(long id)
+        public async Task<ActionResult> GetByUserId(Guid id)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace FirstApp.Controllers
 
         // PUT: api/Reminder/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<ReminderDTO>> Put([FromRoute] long id, [FromBody] ReminderDTO model)
+        public async Task<ActionResult<ReminderDTO>> Put([FromRoute] Guid id, [FromBody] ReminderDTO model)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace FirstApp.Controllers
 
         // DELETE: api/Reminder/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] long id, [FromBody] ReminderDTO model)
+        public async Task<ActionResult> Delete([FromRoute] Guid id, [FromBody] ReminderDTO model)
         {
             try
             {

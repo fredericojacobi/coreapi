@@ -1,7 +1,9 @@
 using Entities;
+using Entities.Models;
 using FirstApp.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,12 +23,12 @@ namespace FirstApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.ConfigureControllerAndNewtonsoftJson();
             services.ConfigureMySqlContext(Configuration);
             services.ConfigureRepositoryWrapper();
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureAuthentication(Configuration);
+            services.ConfigureIdentity();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,
@@ -40,7 +42,7 @@ namespace FirstApp
                 app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();

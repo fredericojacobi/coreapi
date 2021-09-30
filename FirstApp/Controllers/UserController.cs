@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace FirstApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(long id)
+        public async Task<ActionResult> Get(Guid id)
         {
             try
             {
@@ -79,7 +80,7 @@ namespace FirstApp.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ReminderDTO>> Put([FromRoute] long id, [FromBody] UserDTO model)
+        public async Task<ActionResult<ReminderDTO>> Put([FromRoute] Guid id, [FromBody] UserDTO model)
         {
             try
             {
@@ -115,7 +116,7 @@ namespace FirstApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] long id, [FromBody] UserDTO model)
+        public async Task<ActionResult> Delete([FromRoute] Guid id, [FromBody] UserDTO model)
         {
             try
             {
@@ -151,4 +152,4 @@ namespace FirstApp.Controllers
             }
         }
     }
-}
+}*/

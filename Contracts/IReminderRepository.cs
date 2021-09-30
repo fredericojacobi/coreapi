@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Entities.Models;
 
@@ -7,9 +8,9 @@ namespace Contracts
     {
         IEnumerable<Reminder> GetAllReminders();
         
-        Reminder GetReminderById(long id);
+        Reminder GetReminderById(Guid id);
 
-        Reminder GetReminderByUserId(long userId);
+        Reminder GetReminderByUserId(Guid userId);
         
     }
 }

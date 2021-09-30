@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
@@ -15,9 +16,9 @@ namespace Repository
 
         public IEnumerable<Reminder> GetAllReminders() => FindAll().OrderBy(r => r.Id).ToList();
 
-        public Reminder GetReminderById(long id) => FindByCondition(r => r.Id.Equals(id)).FirstOrDefault();
+        public Reminder GetReminderById(Guid id) => FindByCondition(r => r.Id.Equals(id)).FirstOrDefault();
 
-        public Reminder GetReminderByUserId(long userId) => FindByCondition(r => r.UserId.Equals(userId)).FirstOrDefault();
+        public Reminder GetReminderByUserId(Guid userId) => FindByCondition(r => r.User.Id.Equals(userId)).FirstOrDefault();
         
     }
 }
