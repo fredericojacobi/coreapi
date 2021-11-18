@@ -8,7 +8,9 @@ namespace Entities.Models
     [Table("Reminder")]
     public class Reminder
     {
-        [Key] [Column("ReminderId")] public Guid Id { get; set; }
+        [Key] 
+        [Column("ReminderId")]
+        public Guid ReminderId { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         [MaxLength(60, ErrorMessage = "The title can't be longer than 60 characters")]

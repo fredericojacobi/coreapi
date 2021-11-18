@@ -1,8 +1,6 @@
-using System;
 using System.Text;
 using Contracts;
 using Entities;
-using Entities.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +13,10 @@ namespace FirstApp.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration["ConnectionStrings:ReminderApp"];
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+            var connection = configuration.GetSection("ConnectionString:ReminderApp").Value;
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
         }
 
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)

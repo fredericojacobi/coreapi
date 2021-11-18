@@ -6,10 +6,10 @@ namespace Contracts
 {
     public interface IRepositoryBase<T>
     {
-        IQueryable<T> FindAll();
-        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
+        IQueryable<T> ReadAll();
+        IQueryable<T> ReadByCondition(Expression<Func<T, bool>> expression);
         T Create(T entity);
-        bool Update(T entity);
+        T Update(T entity);
         bool Delete(T entity);
     }
 }

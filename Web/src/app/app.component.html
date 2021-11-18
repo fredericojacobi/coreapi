@@ -1,0 +1,11 @@
+{{ title }}
+<br>
+Resultado: {{ name }}
+<br>
+<input placeholder="Digite aqui..." [(ngModel)]="name" name="name">
+<hr>
+<br>
+Nome:
+<span *ngFor="let item of lista">
+    <span [title]="item">{{ item }} </span>
+</span>

@@ -6,7 +6,7 @@ namespace Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly AppDbContext _context;
-        public IReminderRepository _reminder;
+        private IReminderRepository _reminder;
 
         public IReminderRepository Reminder => _reminder ??= new ReminderRepository(_context);
 

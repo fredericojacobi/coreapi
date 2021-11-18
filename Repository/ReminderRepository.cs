@@ -14,11 +14,17 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Reminder> GetAllReminders() => FindAll().OrderBy(r => r.Id).ToList();
+        public List<Reminder> ReadAllReminders() => ReadAll().OrderBy(r => r.ReminderId).ToList();
 
-        public Reminder GetReminderById(Guid id) => FindByCondition(r => r.Id.Equals(id)).FirstOrDefault();
+        public Reminder ReadReminderById(Guid id) => ReadByCondition(r => r.ReminderId.Equals(id)).FirstOrDefault();
 
-        public Reminder GetReminderByUserId(Guid userId) => FindByCondition(r => r.User.Id.Equals(userId)).FirstOrDefault();
-        
+        public List<Reminder> ReadRemindersByUserId(Guid userId) =>
+            ReadByCondition(r => r.User.Id.Equals(userId.ToString())).ToList();
+
+        public Reminder CreateReminder(Reminder reminder) => Create(reminder);
+
+        public Reminder UpdateReminder(Reminder reminder) => Update(reminder);
+
+        public bool DeleteReminder(Reminder reminder) => Delete(reminder);
     }
 }

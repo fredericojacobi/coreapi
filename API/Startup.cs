@@ -1,9 +1,7 @@
 using Entities;
-using Entities.Models;
 using FirstApp.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,12 +17,12 @@ namespace FirstApp
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureControllerAndNewtonsoftJson();
-            services.ConfigureMySqlContext(Configuration);
+            services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryWrapper();
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureAuthentication(Configuration);
