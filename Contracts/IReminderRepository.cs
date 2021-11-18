@@ -6,12 +6,12 @@ namespace Contracts
 {
     public interface IReminderRepository : IRepositoryBase<Reminder>
     {
-        List<Reminder> ReadAllReminders();
+        IList<Reminder> ReadAllReminders();
         
         Reminder ReadReminderById(Guid id);
-
+        /*
         List<Reminder> ReadRemindersByUserId(Guid userId);
-        
+        */
         Reminder CreateReminder(Reminder reminder);
         
         Reminder UpdateReminder(Reminder reminder);

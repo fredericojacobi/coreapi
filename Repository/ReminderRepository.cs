@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
-using Entities;
+using Entities.Context;
 using Entities.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -14,13 +13,13 @@ namespace Repository
         {
         }
 
-        public List<Reminder> ReadAllReminders() => ReadAll().OrderBy(r => r.ReminderId).ToList();
+        public IList<Reminder> ReadAllReminders() => ReadAll().ToList();
 
         public Reminder ReadReminderById(Guid id) => ReadByCondition(r => r.ReminderId.Equals(id)).FirstOrDefault();
-
+/*
         public List<Reminder> ReadRemindersByUserId(Guid userId) =>
             ReadByCondition(r => r.User.Id.Equals(userId.ToString())).ToList();
-
+*/
         public Reminder CreateReminder(Reminder reminder) => Create(reminder);
 
         public Reminder UpdateReminder(Reminder reminder) => Update(reminder);
