@@ -10,6 +10,9 @@ namespace FirstApp
         {
             CreateMap<Reminder, ReminderDTO>();
             CreateMap<ReminderDTO, Reminder>();
+            
+            CreateMap<EletronicPointHistoryDTO, EletronicPointHistory>();
+            CreateMap<EletronicPointHistory, EletronicPointHistoryDTO>();
         }
     }
 }

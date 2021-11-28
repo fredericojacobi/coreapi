@@ -15,7 +15,7 @@ namespace Repository
 
         public IList<Reminder> ReadAllReminders() => ReadAll().ToList();
 
-        public Reminder ReadReminderById(Guid id) => ReadByCondition(r => r.ReminderId.Equals(id)).FirstOrDefault();
+        public Reminder ReadReminder(Guid id) => ReadByCondition(r => r.Id.Equals(id)).FirstOrDefault();
 /*
         public List<Reminder> ReadRemindersByUserId(Guid userId) =>
             ReadByCondition(r => r.User.Id.Equals(userId.ToString())).ToList();
@@ -25,5 +25,7 @@ namespace Repository
         public Reminder UpdateReminder(Reminder reminder) => Update(reminder);
 
         public bool DeleteReminder(Reminder reminder) => Delete(reminder);
+        
+        public bool DeleteReminder(Guid id) => DeleteReminder(ReadReminder(id));
     }
 }

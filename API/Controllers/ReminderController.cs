@@ -42,13 +42,13 @@ namespace FirstApp.Controllers
             }
         }
 
-        // GET: api/Reminder/5
+        // GET: api/Reminder/5œ
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(Guid id)
         {
             try
             {
-                var reminder = _repository.Reminder.ReadReminderById(id);
+                var reminder = _repository.Reminder.ReadReminder(id);
                 if (reminder != null) return Ok(_mapper.Map<ReminderDTO>(reminder));
                 _logger.LogError($"{DateTime.Now} - {nameof(Get)} : Reminder with id {id} hasn't been found in db");
                 return NotFound();
@@ -65,10 +65,13 @@ namespace FirstApp.Controllers
         {
             try
             {
+                return StatusCode(503, "Under maintenance.");
+                /*
                 var reminder = _repository.Reminder.ReadRemindersByUserId(id);
                 if (reminder != null) return Ok(_mapper.Map<List<ReminderDTO>>(reminder));
                 _logger.LogError($"{DateTime.Now} - {nameof(Get)} : Reminder with id {id} hasn't been found in db");
                 return NotFound();
+                */
             }
             catch (DbException e)
             {

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Contracts;
 using Entities;
+using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repository
@@ -38,6 +39,6 @@ namespace Repository
         {
             _context.Set<T>().Remove(entity);
             return _context.SaveChanges() > 0;
-        } 
+        }
     }
 }

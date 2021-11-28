@@ -1,6 +1,9 @@
+using System;
 using System.Text;
 using Contracts;
 using Entities;
+using Entities.Context;
+using Entities.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +27,7 @@ namespace FirstApp.Extensions
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
 
+        /*
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration Configuration)
         {
             var key = Encoding.ASCII.GetBytes(Configuration["Authentication:Token"]);
@@ -45,7 +49,7 @@ namespace FirstApp.Extensions
                     };
                 });
         }
-
+        */
         public static void ConfigureControllerAndNewtonsoftJson(this IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(opt =>
@@ -54,7 +58,14 @@ namespace FirstApp.Extensions
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole<Guid>>(options =>
+                {
+                    options.Password.RequiredLength = 4;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireDigit = false;
+                })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
         }

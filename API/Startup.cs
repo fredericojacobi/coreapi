@@ -1,4 +1,5 @@
 using Entities;
+using Entities.Context;
 using FirstApp.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,7 @@ namespace FirstApp
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryWrapper();
             services.AddAutoMapper(typeof(Startup));
-            services.ConfigureAuthentication(Configuration);
+            //services.ConfigureAuthentication(Configuration);
             services.ConfigureIdentity();
         }
 

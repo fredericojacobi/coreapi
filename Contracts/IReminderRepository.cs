@@ -8,7 +8,7 @@ namespace Contracts
     {
         IList<Reminder> ReadAllReminders();
         
-        Reminder ReadReminderById(Guid id);
+        Reminder ReadReminder(Guid id);
         /*
         List<Reminder> ReadRemindersByUserId(Guid userId);
         */
@@ -17,5 +17,7 @@ namespace Contracts
         Reminder UpdateReminder(Reminder reminder);
         
         bool DeleteReminder(Reminder reminder);
+
+        bool DeleteReminder(Guid id);
     }
 }
