@@ -2,14 +2,20 @@ namespace Contracts
 {
     public interface IRepositoryWrapper
     {
-        IReminderRepository Reminder { get; }
+        IBranchRepository Branch { get; }
         
-        IUserRepository User { get; }
+        ICompanyRepository Company { get; }
         
         IEletronicPointHistoryRepository EletronicPointHistory { get; }
         
         IEventRepository Event { get; }
         
-        IBranchRepository Branch { get; }
+        ILocationRepository Location { get; }
+        
+        IPointRepository Point { get; }
+        
+        IReminderRepository Reminder { get; }
+        
+        IUserRepository User { get; }
     }
 }
