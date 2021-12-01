@@ -7,5 +7,7 @@ namespace Contracts
         IUserRepository User { get; }
         
         IEletronicPointHistoryRepository EletronicPointHistory { get; }
+        
+        // IEventRepository Event { get; }
     }
 }

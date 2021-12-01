@@ -9,6 +9,7 @@ namespace Repository
         private IReminderRepository _reminder;
         private IUserRepository _user;
         private IEletronicPointHistoryRepository _eletronicPointHistory;
+        private IEventRepository _event;
 
         public IReminderRepository Reminder => _reminder ??= new ReminderRepository(_context);
 

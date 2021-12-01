@@ -4,14 +4,16 @@ using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Entities.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211130223657_RemoveFKFromLocations")]
+    partial class RemoveFKFromLocations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,14 +35,12 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -63,11 +63,9 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -86,14 +84,12 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
@@ -118,7 +114,6 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -131,7 +126,6 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -140,9 +134,6 @@ namespace Entities.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("WeatherForecast")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isCovered")
                         .HasColumnType("bit");
@@ -195,7 +186,6 @@ namespace Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Latitude")
@@ -207,7 +197,6 @@ namespace Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("State")
@@ -229,11 +218,9 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -250,7 +237,6 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -261,7 +247,6 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
@@ -301,7 +286,6 @@ namespace Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -318,7 +302,6 @@ namespace Entities.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")

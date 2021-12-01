@@ -9,13 +9,16 @@ namespace Entities.Context
     {
         public void Configure(EntityTypeBuilder<Reminder> builder)
         {
-            builder.Property<Guid>("Id")
-                .ValueGeneratedOnAdd();
+            builder.Property<Guid>("Id").ValueGeneratedOnAdd();
             builder.Property<Guid>("UserId");
             builder.Property<Guid>("LocationId");
             builder.Property<string>("Title").IsRequired();
             builder.Property<string>("Description").IsRequired();
             builder.Property<bool>("isComplete").IsRequired();
+            builder.Property<DateTime>("CreatedAt")
+                .ValueGeneratedOnAdd();
+            builder.Property<DateTime>("ModifiedAt")
+                .ValueGeneratedOnUpdate();
             builder.HasOne(x => x.User).WithMany(x => x.Reminders).HasForeignKey(x => x.UserId);
             builder.HasOne(x => x.Location).WithMany(x => x.Reminders).HasForeignKey(x => x.LocationId);
         }

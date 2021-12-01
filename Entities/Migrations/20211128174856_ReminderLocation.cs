@@ -25,7 +25,7 @@ namespace Entities.Migrations
                 column: "LocationId",
                 principalTable: "Location",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

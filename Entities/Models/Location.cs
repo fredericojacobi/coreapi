@@ -17,8 +17,12 @@ namespace Entities.Models
         
         public string Longitude { get; set; }
         
+        public ICollection<Branch> Branches { get; set; }
+
         public ICollection<EletronicPointHistory> EletronicPointHistories { get; set; }
         
         public ICollection<Reminder> Reminders { get; set; }
+        
+        public ICollection<Event> Events { get; set; }
     }
 }
