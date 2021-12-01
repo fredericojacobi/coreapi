@@ -8,6 +8,8 @@ namespace Contracts
         
         IEletronicPointHistoryRepository EletronicPointHistory { get; }
         
-        // IEventRepository Event { get; }
+        IEventRepository Event { get; }
+        
+        IBranchRepository Branch { get; }
     }
 }
