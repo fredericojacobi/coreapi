@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace Entities.Models
@@ -7,6 +8,9 @@ namespace Entities.Models
     public class User : IdentityUser<Guid>
     {
         public Guid BranchId { get; set; }
+        
+        [NotMapped]
+        public string Password { get; set; }
         
         public DateTime CreatedAt { get; set; }
 

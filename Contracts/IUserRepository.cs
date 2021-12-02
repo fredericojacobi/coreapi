@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts
@@ -10,9 +11,9 @@ namespace Contracts
         
         User ReadUser(Guid id);
         
-        User CreateUser(User user);
+        Task<User> CreateUser(User user, string password);
         
-        User UpdateUser(User user);
+        Task<User> UpdateUser(User user);
         
         bool DeleteUser(User user);
         
