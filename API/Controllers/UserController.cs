@@ -97,17 +97,11 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var usersResult = _repository.User.ReadAllUsers();
-                var ok = false;
-                foreach (var user in usersResult)
-                {
-                    ok = _repository.User.DeleteUser(user);
-                }
-                return Ok(ok);
+                return Ok(_repository.User.DeleteUser(id));
             }
             catch (Exception e)
             {
-                _logger.LogError($"{DateTime.Now} - {nameof(DeleteAllUsers)} : {e.Message}");
+                _logger.LogError($"{DateTime.Now} - {nameof(DeleteUser)} : {e.Message}");
                 return StatusCode(500, ResponseErrorMessage.InternalServerError(e));
             }
         }
@@ -118,7 +112,7 @@ namespace FirstApp.Controllers
             try
             {
                 var usersResult = _repository.User.ReadAllUsers();
-                bool ok = false;
+                var ok = false;
                 foreach (var user in usersResult)
                 {
                     ok = _repository.User.DeleteUser(user);
