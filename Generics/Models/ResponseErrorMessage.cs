@@ -6,11 +6,13 @@ namespace Generic.Models
     {
         private string Code;
 
+        private DateTime Time;
+        
         private string Message;
 
         private string StackTrace;
-
-        private DateTime Time;
+        
+        private string InnerException;
 
         public static ResponseErrorMessage InternalServerError() => new() {Code = "500"};
         
@@ -19,6 +21,7 @@ namespace Generic.Models
             Code = "500",
             Message = e.Message,
             StackTrace = e.StackTrace,
+            InnerException = e.InnerException?.Message,
             Time = DateTime.Now
         };
 
@@ -29,6 +32,7 @@ namespace Generic.Models
             Code = "404",
             Message = e.Message,
             StackTrace = e.StackTrace,
+            InnerException = e.InnerException?.Message,
             Time = DateTime.Now
         };
     }

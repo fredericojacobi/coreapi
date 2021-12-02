@@ -29,20 +29,19 @@ namespace Repository
             .Include(x => x.EventUsers)
             .Include(x => x.EletronicPointHistories)
             .FirstOrDefault();
+
+        public async Task<User> ReadUserByUserName(string username) => await _userManager.FindByNameAsync(username);
         
-        public async Task<User> CreateUser(User user, string password)
+        public async Task<IdentityResult> CreateUser(User user, string password)
         {
             user.CreatedAt = DateTime.Now;
-            var result = await _userManager.CreateAsync(user, password);
-            return result.Succeeded ? _userManager.FindByNameAsync(user.UserName).Result : null;
+            return await _userManager.CreateAsync(user, password);
         }
 
-        public async Task<User> UpdateUser(User user)
+        public async Task<IdentityResult> UpdateUser(User user)
         {
             user.ModifiedAt = DateTime.Now;
-            await _userManager.UpdateAsync(user);
-            var id = _userManager.GetUserIdAsync(user).Result;
-            return ReadUser(new Guid(id));
+            return await _userManager.UpdateAsync(user); 
         }
 
         public bool DeleteUser(User user) => Delete(user);
