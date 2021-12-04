@@ -7,14 +7,13 @@ using Contracts;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
-        private UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public UserRepository(AppDbContext context, UserManager<User> userManager) : base(context)
         {

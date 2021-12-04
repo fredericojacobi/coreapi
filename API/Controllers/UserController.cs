@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
 using Microsoft.AspNetCore.Http;
@@ -32,8 +33,8 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var usersResult = _repository.User.ReadAllUsers();
-                return Ok(usersResult);
+                var repositoryResult = _repository.User.ReadAllUsers();
+                return Ok(_mapper.Map<List<UserDTO>>(repositoryResult));
             }
             catch (Exception e)
             {
@@ -47,8 +48,8 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var usersResult = _repository.User.ReadUser(id);
-                return Ok(usersResult);
+                var repositoryResult = _repository.User.ReadUser(id);
+                return Ok(_mapper.Map<UserDTO>(repositoryResult));
             }
             catch (Exception e)
             {
@@ -59,14 +60,15 @@ namespace FirstApp.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> PostUser(User model)
+        public async Task<ActionResult> PostUser(UserDTO model)
         {
             try
             {
-                var userResult = _repository.User.CreateUser(model, model.Password).Result;
-                return userResult.Succeeded
-                    ? Ok(await _repository.User.ReadUserByUserName(model.UserName))
-                    : Ok(userResult);
+                var user = _mapper.Map<User>(model);
+                var repositoryResult = _repository.User.CreateUser(user, user.Password).Result;
+                if (!repositoryResult.Succeeded) return StatusCode(500, "Internal server error.");
+                var userResult = await _repository.User.ReadUserByUserName(model.UserName);
+                return Ok(_mapper.Map<UserDTO>(userResult));
             }
             catch (Exception e)
             {
@@ -76,14 +78,15 @@ namespace FirstApp.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateUser(User model)
+        public async Task<ActionResult> UpdateUser(UserDTO model)
         {
             try
             {
-                var userResult = _repository.User.UpdateUser(model).Result;
-                return userResult.Succeeded
-                    ? Ok(await _repository.User.ReadUserByUserName(model.UserName))
-                    : Ok(userResult);
+                var user = _mapper.Map<User>(model);
+                var repositoryResult = _repository.User.UpdateUser(user).Result;
+                if (!repositoryResult.Succeeded) return StatusCode(500, "Internal server error.");
+                var userResult = await _repository.User.ReadUserByUserName(model.UserName);
+                return Ok(_mapper.Map<UserDTO>(userResult));
             }
             catch (Exception e)
             {

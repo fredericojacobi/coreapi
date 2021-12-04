@@ -4,6 +4,7 @@ using System.Linq;
 using Contracts;
 using Entities.Context;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -13,13 +14,32 @@ namespace Repository
         {
         }
 
-        public IList<Branch> ReadAllBranches() => ReadAll().ToList();
+        public IList<Branch> ReadAllBranches() => ReadAll()
+            .Include(x => x.Company)
+            .Include(x => x.Location)
+            .ToList();
 
-        public Branch ReadBranch(Guid id) => ReadByCondition(r => r.Id.Equals(id)).FirstOrDefault();
+        public Branch ReadBranch(Guid id) => ReadByCondition(r => r.Id.Equals(id))
+            .Include(x => x.Company)
+            .Include(x => x.Location)
+            .Include(x => x.Points)
+            .FirstOrDefault();
 
-        public Branch CreateBranch(Branch branch) => Create(branch);
+        public IList<Branch> ReadBranchByCompanyId(Guid id) => ReadByCondition(x => x.CompanyId.Equals(id)).ToList();
 
-        public Branch UpdateBranch(Branch branch) => Update(branch);
+        public Branch CreateBranch(Branch branch)
+        {
+            branch.CreatedAt = DateTime.Now;
+            var created = Create(branch);
+            return created != null ? ReadBranch(created.Id) : null;
+        }
+
+        public Branch UpdateBranch(Branch branch)
+        {
+            branch.ModifiedAt = DateTime.Now;
+            var updated = Update(branch);
+            return updated != null ? ReadBranch(updated.Id) : null;
+        }
 
         public bool DeleteBranch(Branch branch) => Delete(branch);
 

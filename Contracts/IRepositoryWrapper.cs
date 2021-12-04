@@ -17,5 +17,7 @@ namespace Contracts
         IReminderRepository Reminder { get; }
         
         IUserRepository User { get; }
+        
+        IEventUserRepository EventUser { get; }
     }
 }

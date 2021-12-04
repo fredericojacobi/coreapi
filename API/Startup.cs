@@ -1,4 +1,4 @@
-using Entities;
+using System;
 using Entities.Context;
 using FirstApp.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace FirstApp
 {
+    //TODO: CRIAR DOCUMENTACAO SWAGGER
+    //TODO: GERAR BACKUP BANCO
+    //TODO: DOCKERIZAR E HOSPEDAR NO HEROKU
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -28,6 +31,7 @@ namespace FirstApp
             services.AddAutoMapper(typeof(Startup));
             //services.ConfigureAuthentication(Configuration);
             services.ConfigureIdentity();
+            services.ConfigureSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,
@@ -35,10 +39,18 @@ namespace FirstApp
         {
             context.Database.EnsureCreated();
             context.Database.Migrate();
-
-            // loggerFactory.AddFile($"Logs/{DateTime.Now.ToString("yyyyMMddHHmmss")}.txt");
+        
+            loggerFactory.AddFile($"Logs/{DateTime.Now.ToString("yyyyMMddHHmmss")}.txt");
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(opt =>
+                {
+                    opt.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    opt.RoutePrefix = string.Empty;
+                });
+            }
 
             app.UseHttpsRedirection();
             

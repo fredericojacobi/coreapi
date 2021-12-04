@@ -1,14 +1,13 @@
 using System;
 using Entities.Models;
+using Generic.Models;
 
 namespace Entities.DataTransferObjects
 {
-    public class EletronicPointHistoryDTO
+    public class PointDTO
     {
         public Guid Id { get; set; }
         
-        public UserDTO User { get; set; }
-
-        public PointDTO Point { get; set; }
+        public BranchDTO Branch { get; set; }
     }
 }

@@ -7,9 +7,9 @@ namespace Entities.Models
     {
         public Guid UserId { get; set; }
 
-        public Guid LocationId { get; set; }
+        public Guid PointId { get; set; }
         
-        public Location Location { get; set; }
+        public Point Point { get; set; }
         
         public User User { get; set; }
     }

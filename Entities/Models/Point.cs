@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Generic.Models;
 
 namespace Entities.Models
@@ -8,5 +9,7 @@ namespace Entities.Models
         public Guid BranchId { get; set; }
         
         public Branch Branch { get; set; }
+        
+        public ICollection<EletronicPointHistory> EletronicPointHistories { get; set; }
     }
 }

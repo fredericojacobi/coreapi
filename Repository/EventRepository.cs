@@ -17,9 +17,17 @@ namespace Repository
 
         public Event ReadEvent(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 
-        public Event CreateEvent(Event eEvent) =>Create(eEvent); 
-            
-        public Event UpdateEvent(Event eEvent) => Update(eEvent);
+        public Event CreateEvent(Event eEvent)
+        {
+            eEvent.CreatedAt = DateTime.Now;
+            return Create(eEvent);
+        }
+
+        public Event UpdateEvent(Event eEvent)
+        {
+            eEvent.ModifiedAt = DateTime.Now;
+            return Update(eEvent);
+        }
 
         public bool DeleteEvent(Event eEvent) => Delete(eEvent);
 

@@ -18,9 +18,17 @@ namespace Repository
 
         public Point ReadPoint(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 
-        public Point CreatePoint(Point point) => Create(point);
+        public Point CreatePoint(Point point)
+        {
+            point.CreatedAt = DateTime.Now;
+            return Create(point);
+        }
 
-        public Point UpdatePoint(Point point) => Update(point);
+        public Point UpdatePoint(Point point)
+        {
+            point.ModifiedAt = DateTime.Now;
+            return Update(point);
+        }
 
         public bool DeletePoint(Point point) => Delete(point);
 

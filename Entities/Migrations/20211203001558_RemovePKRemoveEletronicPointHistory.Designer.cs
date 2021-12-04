@@ -4,14 +4,16 @@ using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Entities.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211203001558_RemovePKRemoveEletronicPointHistory")]
+    partial class RemovePKRemoveEletronicPointHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,8 +83,10 @@ namespace Entities.Migrations
 
             modelBuilder.Entity("Entities.Models.EletronicPointHistory", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PointId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -93,17 +97,9 @@ namespace Entities.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PointId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "PointId");
 
                     b.HasIndex("PointId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("EletronicPointHistories");
                 });
@@ -162,16 +158,8 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");

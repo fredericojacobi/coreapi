@@ -11,7 +11,7 @@ namespace Entities.Context
         {
             builder.Property<Guid>("Id").ValueGeneratedOnAdd();
             builder.Property<Guid>("UserId").IsRequired();
-            builder.Property<Guid>("LocationId").IsRequired();
+            builder.Property<Guid>("PointId").IsRequired();
             builder.Property<DateTime>("CreatedAt")
                 .ValueGeneratedOnAdd();
             builder.Property<DateTime>("ModifiedAt")
@@ -19,9 +19,9 @@ namespace Entities.Context
             builder.HasOne(x => x.User)
                 .WithMany(x => x.EletronicPointHistories)
                 .HasForeignKey(x => x.UserId);
-            builder.HasOne(x => x.Location)
+            builder.HasOne(x => x.Point)
                 .WithMany(x => x.EletronicPointHistories)
-                .HasForeignKey(x => x.LocationId);
+                .HasForeignKey(x => x.PointId);
         }
     }
 }

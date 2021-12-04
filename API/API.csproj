@@ -20,6 +20,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
         <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -30,6 +31,18 @@
 
     <ItemGroup>
       <Folder Include="Logs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Controllers\CompanyController.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controllers\BranchController.cs">
+        <SubType>Component</SubType>
+      </Compile>
+      <Compile Update="Controllers\LocationController.cs">
+        <SubType>Component</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

@@ -12,6 +12,8 @@ namespace Contracts
 
         Location CreateLocation(Location location);
 
+        bool CreateMultiplesLocations(IList<Location> locations);
+        
         Location UpdateLocation(Location location);
 
         bool DeleteLocation(Location location);

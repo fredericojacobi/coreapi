@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Contracts;
@@ -10,7 +11,7 @@ namespace Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected AppDbContext _context { get; }
+        private AppDbContext _context { get; }
 
         public RepositoryBase(AppDbContext context) => _context = context;
 
@@ -25,6 +26,12 @@ namespace Repository
             _context.SaveChanges();
             _context.Entry(entity).Reload();
             return entity;
+        }
+
+        public bool CreateMultiples(IList<T> entities)
+        {
+            _context.Set<T>().AddRange(entities);
+            return _context.SaveChanges() > 0;
         }
 
         public T Update(T entity)

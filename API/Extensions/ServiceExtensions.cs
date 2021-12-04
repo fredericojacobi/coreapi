@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Repository;
 
 namespace FirstApp.Extensions
@@ -68,6 +69,23 @@ namespace FirstApp.Extensions
                 })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+        }
+
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1.0 alpha",
+                    Title = "Prática de Banco de Dados",
+                    Description = "Gerenciamento de empresas com: Usuários, Empresas, Filiais, Eventos, Locais (Cidades), Pontos Eletrônicos e Lembretes.",
+                    Contact = new OpenApiContact
+                    {
+                        Email = "fredvjacobi@gmail.com"
+                    }
+                });
+            });
         }
     }
 }

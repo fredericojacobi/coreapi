@@ -20,9 +20,6 @@ namespace Entities.Context
                 .ValueGeneratedOnAdd();
             builder.Property<DateTime>("ModifiedAt")
                 .ValueGeneratedOnUpdate();
-            builder.HasMany(x => x.EletronicPointHistories)
-                .WithOne(x => x.Location)
-                .HasForeignKey(x => x.LocationId);
             builder.HasMany(x => x.Reminders)
                 .WithOne(x => x.Location)
                 .HasForeignKey(x => x.LocationId);

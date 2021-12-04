@@ -4,14 +4,16 @@ using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Entities.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211202233703_EletronicPointHistoryPointId")]
+    partial class EletronicPointHistoryPointId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,6 +91,9 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("LocationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("ModifiedAt")
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
@@ -100,6 +105,8 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("PointId");
 
@@ -162,16 +169,8 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -521,6 +520,10 @@ namespace Entities.Migrations
 
             modelBuilder.Entity("Entities.Models.EletronicPointHistory", b =>
                 {
+                    b.HasOne("Entities.Models.Location", null)
+                        .WithMany("EletronicPointHistories")
+                        .HasForeignKey("LocationId");
+
                     b.HasOne("Entities.Models.Point", "Point")
                         .WithMany("EletronicPointHistories")
                         .HasForeignKey("PointId")
@@ -690,6 +693,8 @@ namespace Entities.Migrations
             modelBuilder.Entity("Entities.Models.Location", b =>
                 {
                     b.Navigation("Branches");
+
+                    b.Navigation("EletronicPointHistories");
 
                     b.Navigation("Events");
 

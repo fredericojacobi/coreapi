@@ -9,6 +9,8 @@ namespace Contracts
         IList<Branch> ReadAllBranches();
 
         Branch ReadBranch(Guid id);
+
+        IList<Branch> ReadBranchByCompanyId(Guid id);
         
         Branch CreateBranch(Branch branch);
         

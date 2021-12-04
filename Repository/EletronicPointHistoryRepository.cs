@@ -18,11 +18,17 @@ namespace Repository
 
         public EletronicPointHistory ReadHistory(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 
-        public EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory) =>
-            Create(eletronicPointHistory);
+        public EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory)
+        {
+            eletronicPointHistory.CreatedAt = DateTime.Now;
+            return Create(eletronicPointHistory);
+        }
 
-        public EletronicPointHistory UpdateHistory(EletronicPointHistory eletronicPointHistory) =>
-            Update(eletronicPointHistory);
+        public EletronicPointHistory UpdateHistory(EletronicPointHistory eletronicPointHistory)
+        {
+            eletronicPointHistory.ModifiedAt = DateTime.Now;
+            return Update(eletronicPointHistory);
+        }
 
         public bool DeleteHistory(EletronicPointHistory eletronicPointHistory) => Delete(eletronicPointHistory);
 

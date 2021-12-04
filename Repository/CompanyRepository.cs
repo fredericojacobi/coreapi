@@ -4,6 +4,7 @@ using System.Linq;
 using Contracts;
 using Entities.Context;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -16,11 +17,21 @@ namespace Repository
 
         public IList<Company> ReadAllCompanies() => ReadAll().ToList();
 
-        public Company ReadCompany(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
+        public Company ReadCompany(Guid id) => ReadByCondition(x => x.Id.Equals(id))
+            .Include(x => x.Branches)
+            .FirstOrDefault();
 
-        public Company CreateCompany(Company company) => Create(company);
+        public Company CreateCompany(Company company)
+        {
+            company.CreatedAt = DateTime.Now;
+            return Create(company);
+        }
 
-        public Company UpdateCompany(Company company) => Update(company);
+        public Company UpdateCompany(Company company)
+        {
+            company.ModifiedAt = DateTime.Now;
+            return Update(company);
+        }
 
         public bool DeleteCompany(Company company) => Delete(company);
 

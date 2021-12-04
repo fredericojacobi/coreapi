@@ -17,6 +17,7 @@ namespace Repository
         private IPointRepository _point;
         private IReminderRepository _reminder;
         private IUserRepository _user;
+        private IEventUserRepository _eventUser;
         
         public RepositoryWrapper(AppDbContext context, UserManager<User> userManager)
         {
@@ -39,5 +40,7 @@ namespace Repository
         public IReminderRepository Reminder => _reminder ??= new ReminderRepository(_context);
 
         public IUserRepository User => _user ??= new UserRepository(_context, _userManager);
+        
+        public IEventUserRepository EventUser => _eventUser ??= new EventUserRepository(_context);
     }
 }

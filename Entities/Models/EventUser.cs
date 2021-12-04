@@ -4,10 +4,8 @@ using Generic.Models;
 
 namespace Entities.Models
 {
-    public class EventUser
+    public class EventUser : ObjectBase
     {
-        public Guid Id { get; set; }
-        
         public Guid UserId { get; set; }
         
         public Guid EventId { get; set; }

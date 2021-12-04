@@ -14,14 +14,22 @@ namespace Generic.Models
         
         private string InnerException;
 
+
         public static ResponseErrorMessage InternalServerError() => new() {Code = "500"};
+        
+        public static ResponseErrorMessage InternalServerError(string message) => new()
+        {
+            Code = "500",
+            Time = DateTime.Now,
+            Message = message
+        };
         
         public static ResponseErrorMessage InternalServerError(Exception e) => new()
         {
             Code = "500",
             Message = e.Message,
             StackTrace = e.StackTrace,
-            InnerException = e.InnerException?.Message,
+            InnerException = $"{e.InnerException?.Message.Substring(0, 600)} See logfiles for more details.",
             Time = DateTime.Now
         };
 
