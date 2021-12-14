@@ -10,8 +10,8 @@ namespace Entities.Context
         public void Configure(EntityTypeBuilder<Branch> builder)
         {
             builder.Property<Guid>("Id").ValueGeneratedOnAdd();
-            builder.Property<Guid>("CompanyId").IsRequired();
-            builder.Property<Guid>("LocationId").IsRequired();
+            builder.Property<Guid?>("CompanyId");
+            builder.Property<Guid?>("LocationId");
             builder.Property<string>("Name").IsRequired();
             builder.Property<string>("Cnpj").IsRequired();
             builder.Property<DateTime>("CreatedAt")

@@ -10,7 +10,7 @@ namespace Entities.Context
         public void Configure(EntityTypeBuilder<Point> builder)
         {
             builder.Property<Guid>("Id");
-            builder.Property<Guid>("BranchId");
+            builder.Property<Guid?>("BranchId");
             builder.Property<DateTime>("CreatedAt")
                 .ValueGeneratedOnAdd();
             builder.Property<DateTime>("ModifiedAt")

@@ -10,8 +10,8 @@ namespace Entities.Context
         public void Configure(EntityTypeBuilder<Event> builder)
         {
             builder.Property<Guid>("Id").ValueGeneratedOnAdd();
-            builder.Property<Guid>("BranchId").IsRequired();
-            builder.Property<Guid>("LocationId").IsRequired();
+            builder.Property<Guid?>("BranchId");
+            builder.Property<Guid?>("LocationId");
             builder.Property<string>("Name").IsRequired();
             builder.Property<string>("Description");
             builder.Property<DateTime>("StartDate").IsRequired();

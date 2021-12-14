@@ -10,8 +10,8 @@ namespace Entities.Context
         public void Configure(EntityTypeBuilder<Reminder> builder)
         {
             builder.Property<Guid>("Id").ValueGeneratedOnAdd();
-            builder.Property<Guid>("UserId");
-            builder.Property<Guid>("LocationId");
+            builder.Property<Guid?>("UserId");
+            builder.Property<Guid?>("LocationId");
             builder.Property<string>("Title").IsRequired();
             builder.Property<string>("Description").IsRequired();
             builder.Property<bool>("isComplete").IsRequired();

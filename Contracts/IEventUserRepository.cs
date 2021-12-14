@@ -8,6 +8,10 @@ namespace Contracts
     {
         IList<EventUser> ReadAllEventUsers();
 
+        IList<EventUser> ReadEventByUserId(Guid id);
+
+        IList<EventUser> ReadEventByEventId(Guid id);
+
         EventUser ReadEventUser(Guid id);
 
         EventUser CreateEventUser(EventUser eventUser);

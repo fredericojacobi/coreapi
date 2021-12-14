@@ -20,7 +20,10 @@ namespace FirstApp.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connection = configuration.GetSection("ConnectionString:ReminderApp").Value;
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(connection, opt => opt.EnableRetryOnFailure());
+            });
         }
 
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)

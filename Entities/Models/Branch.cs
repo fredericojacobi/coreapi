@@ -6,9 +6,9 @@ namespace Entities.Models
 {
     public class Branch : ObjectBase
     {
-        public Guid CompanyId { get; set; }
+        public Guid? CompanyId { get; set; }
         
-        public Guid LocationId { get; set; }
+        public Guid? LocationId { get; set; }
 
         public string Name { get; set; }
         

@@ -10,8 +10,8 @@ namespace Entities.Context
         public void Configure(EntityTypeBuilder<EletronicPointHistory> builder)
         {
             builder.Property<Guid>("Id").ValueGeneratedOnAdd();
-            builder.Property<Guid>("UserId").IsRequired();
-            builder.Property<Guid>("PointId").IsRequired();
+            builder.Property<Guid?>("UserId");
+            builder.Property<Guid?>("PointId");
             builder.Property<DateTime>("CreatedAt")
                 .ValueGeneratedOnAdd();
             builder.Property<DateTime>("ModifiedAt")

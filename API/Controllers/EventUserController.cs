@@ -58,13 +58,12 @@ namespace FirstApp.Controllers
             }
         }
 
-        //TODO: criar metodo proprio para retornar byUserId
         [HttpGet("user/{id}")]
         public async Task<ActionResult> GetAllByUserId(Guid id)
         {
             try
             {
-                var repositoryResult = _repository.EventUser.ReadByCondition(x => x.UserId.Equals(id)).ToList();
+                var repositoryResult = _repository.EventUser.ReadEventByUserId(id);
                 return Ok(_mapper.Map<List<EventUserDTO>>(repositoryResult));
             }
             catch (Exception e)
@@ -74,13 +73,12 @@ namespace FirstApp.Controllers
             }
         }
 
-        //TODO: criar metodo proprio para retornar byEventId
         [HttpGet("event/{id}")]
         public async Task<ActionResult> GetAllByEventId(Guid id)
         {
             try
             {
-                var repositoryResult = _repository.EventUser.ReadByCondition(x => x.EventId.Equals(id)).ToList();
+                var repositoryResult = _repository.EventUser.ReadEventByEventId(id);
                 return Ok(_mapper.Map<List<EventUserDTO>>(repositoryResult));
             }
             catch (Exception e)

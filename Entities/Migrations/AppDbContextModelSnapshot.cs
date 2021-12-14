@@ -29,14 +29,14 @@ namespace Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CompanyId")
+                    b.Property<Guid?>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
@@ -93,10 +93,10 @@ namespace Entities.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PointId")
+                    b.Property<Guid?>("PointId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -114,7 +114,7 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -127,7 +127,7 @@ namespace Entities.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
@@ -166,14 +166,14 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EventId")
+                    b.Property<Guid?>("EventId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -233,7 +233,7 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -265,7 +265,7 @@ namespace Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
@@ -277,7 +277,7 @@ namespace Entities.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("isComplete")
@@ -301,7 +301,7 @@ namespace Entities.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -504,15 +504,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Company", "Company")
                         .WithMany("Branches")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("Entities.Models.Location", "Location")
                         .WithMany("Branches")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.Navigation("Company");
 
@@ -523,15 +519,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Point", "Point")
                         .WithMany("EletronicPointHistories")
-                        .HasForeignKey("PointId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PointId");
 
                     b.HasOne("Entities.Models.User", "User")
                         .WithMany("EletronicPointHistories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Point");
 
@@ -542,15 +534,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Branch", "Branch")
                         .WithMany("Events")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BranchId");
 
                     b.HasOne("Entities.Models.Location", "Location")
                         .WithMany("Events")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.Navigation("Branch");
 
@@ -561,15 +549,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Event", "Event")
                         .WithMany("EventUsers")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventId");
 
                     b.HasOne("Entities.Models.User", "User")
                         .WithMany("EventUsers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Event");
 
@@ -580,9 +564,7 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Branch", "Branch")
                         .WithMany("Points")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BranchId");
 
                     b.Navigation("Branch");
                 });
@@ -591,15 +573,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Location", "Location")
                         .WithMany("Reminders")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("Entities.Models.User", "User")
                         .WithMany("Reminders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Location");
 
@@ -610,9 +588,7 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Branch", "Branch")
                         .WithMany("Users")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BranchId");
 
                     b.Navigation("Branch");
                 });

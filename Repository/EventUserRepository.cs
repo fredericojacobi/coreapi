@@ -15,6 +15,10 @@ namespace Repository
         }
 
         public IList<EventUser> ReadAllEventUsers() => ReadAll().ToList();
+        
+        public IList<EventUser> ReadEventByUserId(Guid id) => ReadByCondition(x => x.UserId.Equals(id)).ToList();
+        
+        public IList<EventUser> ReadEventByEventId(Guid id) => ReadByCondition(x => x.EventId.Equals(id)).ToList();
 
         public EventUser ReadEventUser(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 

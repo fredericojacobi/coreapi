@@ -6,9 +6,9 @@ namespace Entities.Models
 {
     public class Event : ObjectBase
     {
-        public Guid BranchId { get; set; }
+        public Guid? BranchId { get; set; }
         
-        public Guid LocationId { get; set; }
+        public Guid? LocationId { get; set; }
 
         public string Name { get; set; }
         

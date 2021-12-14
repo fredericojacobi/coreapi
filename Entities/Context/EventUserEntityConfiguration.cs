@@ -10,8 +10,8 @@ namespace Entities.Context
         public void Configure(EntityTypeBuilder<EventUser> builder)
         {
             builder.Property<Guid>("Id");
-            builder.Property<Guid>("EventId");
-            builder.Property<Guid>("UserId");
+            builder.Property<Guid?>("EventId");
+            builder.Property<Guid?>("UserId");
             builder.Property<DateTime>("CreatedAt")
                 .ValueGeneratedOnAdd();
             builder.Property<DateTime>("ModifiedAt")

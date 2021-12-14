@@ -106,18 +106,12 @@ namespace FirstApp.Controllers
 
         // DELETE: api/Reminder/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] Guid id, [FromBody] ReminderDTO model)
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
+
         {
             try
             {
-                if (id != model.Id)
-                {
-                    _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : Reminder's id {id} doesn't match");
-                    return BadRequest("Object's Ids doesn't match");
-                }
-
-                var reminder = _mapper.Map<Reminder>(model);
-                var removed = _repository.Reminder.Delete(reminder);
+                var removed = _repository.Reminder.DeleteReminder(id);
                 if (removed)
                     return Ok(true);
                 _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : Reminder hasn't been removed");

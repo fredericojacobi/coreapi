@@ -7,7 +7,7 @@ namespace Entities.Models
 {
     public class User : IdentityUser<Guid>
     {
-        public Guid BranchId { get; set; }
+        public Guid? BranchId { get; set; }
         
         [NotMapped]
         public string Password { get; set; }

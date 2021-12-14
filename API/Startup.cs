@@ -11,9 +11,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FirstApp
 {
-    //TODO: CRIAR DOCUMENTACAO SWAGGER
-    //TODO: GERAR BACKUP BANCO
-    //TODO: DOCKERIZAR E HOSPEDAR NO HEROKU
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -40,7 +37,8 @@ namespace FirstApp
             context.Database.EnsureCreated();
             context.Database.Migrate();
         
-            loggerFactory.AddFile($"Logs/{DateTime.Now.ToString("yyyyMMddHHmmss")}.txt");
+            // loggerFactory.AddFile($"Logs/{DateTime.Now.ToString("yyyyMMddHHmmss")}.txt");
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
