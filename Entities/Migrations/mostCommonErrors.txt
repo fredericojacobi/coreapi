@@ -1,0 +1,24 @@
+DEFAULT COMMAND:
+>>  dotnet ef migrations
+
+CREATE MIGRATION:
+>> dotnet ef migrations add NAME_OF_MIGRATION -c AppDbContext -s API -p Entities
+-s startupProjectName
+-p ContextClassProject
+
+ERRORS:
+
+No project was found. Change the current working directory or use the --project option.
+Solution: insert startup project argument 
+>> dotnet ef migr[...] -p API
+
+---------------------------------------------------------------------------------------------------------
+        
+***** Unable to retrieve project metadata. Ensure it's an SDK-style project. If you're using a custom BaseIntermediateOutputPath or MSBuildProjectExtensionsPath values, Use the --msbuildprojectextensionspath option.
+Solution: go to correct project folder
+>> cd
+
+---------------------------------------------------------------------------------------------------------
+
+[...]  X_ID DELETE OR UPDATE ON CASCADE [..]
+Solution: set ID as ID? (optional)
