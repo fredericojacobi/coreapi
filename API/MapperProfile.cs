@@ -1,6 +1,7 @@
 using AutoMapper;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using FirstApp.Controllers;
 
 namespace FirstApp
 {
@@ -27,6 +28,8 @@ namespace FirstApp
             // CreateMap<ReminderDTO, Reminder>();
             
             CreateMap<User, UserDTO>().ReverseMap();
+            
+            CreateMap<IBGE, Location>().ReverseMap();
             
         }
     }

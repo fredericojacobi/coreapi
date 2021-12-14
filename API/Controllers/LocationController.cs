@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
@@ -8,6 +9,8 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FirstApp.Controllers
 {
@@ -57,15 +60,18 @@ namespace FirstApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(LocationDTO model)
+        public async Task<ActionResult> Post(List<IBGE> model)
         {
             try
             {
-                var location = _mapper.Map<Location>(model);
+                
+                // JObject.Parse();
+                return Ok();
+                /*var location = _mapper.Map<Location>(model);
                 var repositoryResult = _repository.Location.CreateLocation(location);
                 return repositoryResult != null
                     ? Ok(_mapper.Map<LocationDTO>(repositoryResult))
-                    : StatusCode(500, "Internal server error.");
+                    : StatusCode(500, "Internal server error.");*/
             }
             catch (Exception e)
             {
@@ -73,7 +79,7 @@ namespace FirstApp.Controllers
                 return StatusCode(500, "Internal server error.");
             }
         }
-
+        //yyyy-MM-dd hh:mm:ss.mmmmmmm
         [RequestSizeLimit(9000000000000000000)]
         [HttpPost("multiple")]
         public async Task<ActionResult> Post(List<Location> models)
@@ -153,5 +159,27 @@ namespace FirstApp.Controllers
                 return StatusCode(500, "Internal server error.");
             }
         }
+    }
+
+    public class IBGE
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public MicroRegiao MicroRRegiao { get; set; }
+    }
+
+    public class MicroRegiao
+    {
+        public MesoRegiao MesoRRegiao{ get; set; }
+    }
+
+    public class MesoRegiao
+    {
+        public UF UF{ get; set; }
+    }
+
+    public class UF
+    {
+        public string Sigla { get; set; }
     }
 }
