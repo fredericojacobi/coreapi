@@ -27,6 +27,17 @@ namespace Repository
             return Create(company);
         }
 
+        public IList<Company> CreateRandomCompanies(int quantity)
+        {
+            var companies = new List<Company>();
+            for (var i = 0; i < quantity; i++)
+            {
+                companies.Add(CreateCompany(new Company {Name = Generic.Functions.Random.Name(15)}));
+            }
+
+            return companies;
+        }
+
         public Company UpdateCompany(Company company)
         {
             company.ModifiedAt = DateTime.Now;

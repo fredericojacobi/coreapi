@@ -129,12 +129,12 @@ namespace FirstApp.Controllers
             }
         }
 
-        [HttpPost("random")]
-        public async Task<ActionResult> CreateRandomCompany()
+        [HttpPost("random/{quantity}")]
+        public async Task<ActionResult> CreateRandomCompany(int quantity)
         {
-            var repositoryResult = _repository.Company.CreateCompany(new Company {Name = Generic.Functions.Random.Name(15)});
-            return Ok(_mapper.Map<CompanyDTO>(repositoryResult));  
-        } 
+            var repositoryResult = _repository.Company.CreateRandomCompanies(quantity);
+            return Ok(_mapper.Map<List<CompanyDTO>>(repositoryResult));  
+        }
         
     }
 }

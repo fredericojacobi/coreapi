@@ -11,6 +11,8 @@ namespace Contracts
         Company ReadCompany(Guid id);
 
         Company CreateCompany(Company company);
+        
+        IList<Company> CreateRandomCompanies(int quantity);
 
         Company UpdateCompany(Company company);
 
