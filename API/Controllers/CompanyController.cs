@@ -128,9 +128,13 @@ namespace FirstApp.Controllers
                 return StatusCode(500, "Internal server error.");
             }
         }
-        
+
         [HttpPost("random")]
-        public async Task<ActionResult> CreateRandomCompany() => Ok(new Company {Name = Generic.Functions.Random.Name(15)});
+        public async Task<ActionResult> CreateRandomCompany()
+        {
+            var repositoryResult = _repository.Company.CreateCompany(new Company {Name = Generic.Functions.Random.Name(15)});
+            return Ok(_mapper.Map<CompanyDTO>(repositoryResult));  
+        } 
         
     }
 }
