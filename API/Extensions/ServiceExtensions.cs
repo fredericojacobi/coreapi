@@ -30,30 +30,7 @@ namespace FirstApp.Extensions
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
-
-        /*
-        public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration Configuration)
-        {
-            var key = Encoding.ASCII.GetBytes(Configuration["Authentication:Token"]);
-            services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-        }
-        */
+        
         public static void ConfigureControllerAndNewtonsoftJson(this IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(opt =>
@@ -81,8 +58,8 @@ namespace FirstApp.Extensions
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1.0 alpha",
-                    Title = "Prática de Banco de Dados",
-                    Description = "Gerenciamento de empresas com: Usuários, Empresas, Filiais, Eventos, Locais (Cidades), Pontos Eletrônicos e Lembretes.",
+                    Title = "",
+                    Description = "",
                     Contact = new OpenApiContact
                     {
                         Email = "fredvjacobi@gmail.com"

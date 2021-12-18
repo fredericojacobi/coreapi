@@ -6,6 +6,7 @@ using Contracts;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Services.Contracts;
 
 namespace FirstApp.Controllers
 {
@@ -16,14 +17,30 @@ namespace FirstApp.Controllers
         private readonly ILogger<TestController> _logger;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
-
-        public TestController(ILogger<TestController> logger, IRepositoryWrapper repository, IMapper mapper)
+        private readonly ITestService _testService;
+        public TestController(ILogger<TestController> logger, IRepositoryWrapper repository, IMapper mapper, ITestService testService)
         {
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
+            _testService = testService;
         }
 
+        [HttpGet("service")]
+        public async Task<ActionResult> GetService()
+        {
+            try
+            {
+                var result = _testService.GetAll();
+                return Ok("Service result: \n" + result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"{DateTime.Now} - {nameof(GetService)} : {e.Message}");
+                return StatusCode(500, $"Internal server error.\n{DateTime.Now} - {nameof(GetService)} : {e.Message}\n{e.InnerException}");
+            }
+        }
+        
         [HttpGet("company/{id}")]
         public async Task<ActionResult> GetCompany(Guid id)
         {

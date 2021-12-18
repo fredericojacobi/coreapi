@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generics", "Generics\Generics.csproj", "{418F2C1E-5B65-4FF1-B1F1-B547DCB018CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{418F2C1E-5B65-4FF1-B1F1-B547DCB018CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{418F2C1E-5B65-4FF1-B1F1-B547DCB018CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{418F2C1E-5B65-4FF1-B1F1-B547DCB018CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
