@@ -7,6 +7,8 @@ namespace Entities.Models
     public class Point : ObjectBase
     {
         public Guid? BranchId { get; set; }
+
+        public string Name { get; set; }
         
         public Branch Branch { get; set; }
         
