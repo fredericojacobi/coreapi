@@ -1,6 +1,6 @@
 using System;
 using Entities.Context;
-using FirstApp.Extensions;
+using Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +24,7 @@ namespace FirstApp
         {
             services.ConfigureControllerAndNewtonsoftJson();
             services.ConfigureSqlContext(Configuration);
-            services.ConfigureRepositoryWrapper();
+            services.ConfigureWrappers();
             services.AddAutoMapper(typeof(Startup));
             //services.ConfigureAuthentication(Configuration);
             services.ConfigureIdentity();

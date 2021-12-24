@@ -1,15 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Generic.Functions;
 using Generic.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.Extensions.Logging;
+using Services.Contracts;
 
 namespace FirstApp.Controllers
 {
@@ -19,105 +20,65 @@ namespace FirstApp.Controllers
     {
         private readonly ILogger<EletronicPointHistoryController> _logger;
         private readonly IRepositoryWrapper _repository;
+        private readonly IServiceWrapper _service;
         private readonly IMapper _mapper;
 
         public EletronicPointHistoryController(ILogger<EletronicPointHistoryController> logger,
-            IRepositoryWrapper repository, IMapper mapper)
+            IRepositoryWrapper repository, IMapper mapper, IServiceWrapper service)
         {
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAllHistories()
         {
-            try
-            {
-                var histories = _repository.EletronicPointHistory.ReadAllHistories();
-                return Ok(_mapper.Map<List<EletronicPointHistoryDTO>>(histories));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(GetAllHistories)} : {e.Message}");
-                return StatusCode(500, ResponseErrorMessage.InternalServerError());
-            }
+            var returnRequest = _service.UserPointHistory.GetAll();
+            return returnRequest.ObjectResult;
+            // _logger.LogError($"{DateTime.Now} - {nameof(GetAllHistories)} : This user hasn't point histories.");
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(Guid id)
         {
-            try
-            {
-                var repositoryResult = _repository.EletronicPointHistory.ReadHistory(id);
-                if (repositoryResult != null) return Ok(_mapper.Map<EletronicPointHistoryDTO>(repositoryResult));
-                _logger.LogError($"{DateTime.Now} - {nameof(Get)} : EletronicPointHistory with id {id} hasn't been found in db.");
-                return NotFound();
-            }
-            catch (DbException e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Get)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
+            var returnRequest = _service.UserPointHistory.Get(id);
+            return returnRequest.ObjectResult;
+            // _logger.LogError(
+            // $"{DateTime.Now} - {nameof(Get)} : EletronicPointHistory with id {id} hasn't been found in db.");
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult> GetByUserId(Guid userId)
+        {
+            var returnRequest = _service.UserPointHistory.GetDailyUserPointHistory(userId);
+            return returnRequest.ObjectResult;
+            // _logger.LogError($"{DateTime.Now} - {nameof(GetByUserId)} : This user hasn't point histories.");
         }
 
         [HttpPost]
         public async Task<ActionResult> Post(EletronicPointHistoryDTO model)
         {
-            try
-            {
-                var history = _mapper.Map<EletronicPointHistory>(model);
-                var repositoryResult = _repository.EletronicPointHistory.CreateHistory(history);
-                return repositoryResult != null
-                    ? Ok(_mapper.Map<EletronicPointHistoryDTO>(repositoryResult))
-                    : StatusCode(500, "Internal server error.");
-            }
-            catch (DbException e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Post)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
+            var returnRequest = _service.UserPointHistory.Post(model);
+            return returnRequest.ObjectResult;
+            // _logger.LogError($"{DateTime.Now} - {nameof(Post)} : {e.Message}");
         }
-        
+
         [HttpPut("{id}")]
         public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] EletronicPointHistoryDTO model)
         {
-            try
-            {
-                if (id != model.Id)
-                {
-                    _logger.LogError($"{DateTime.Now} - {nameof(Put)} : EletronicPointHistory's id {id} doesn't match");
-                    return BadRequest("Object's Ids doesn't match");
-                }
-                var history = _mapper.Map<EletronicPointHistory>(model);
-                var repositoryResult = _repository.EletronicPointHistory.UpdateHistory(history);
-                if(repositoryResult != null) return Ok(_mapper.Map<EletronicPointHistoryDTO>(repositoryResult));
-                _logger.LogError($"{DateTime.Now} - {nameof(Put)} : EletronicPointHistory hasn't been created");
-                return StatusCode(500, "Internal server error.");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Put)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
+            var returnRequest = _service.UserPointHistory.Put(id, model);
+            return returnRequest.ObjectResult;
+            // _logger.LogError($"{DateTime.Now} - {nameof(Put)} : EletronicPointHistory hasn't been created");
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
-            try
-            {
-                var repositoryResult = _repository.EletronicPointHistory.DeleteHistory(id); 
-                if (repositoryResult)
-                    return Ok();
-                _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : EletronicPointHistory hasn't been removed");
-                return StatusCode(500, "Internal server error.");
-            }
-            catch (DbException e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
+            var returnRequest = _service.UserPointHistory.Delete(id);
+            return returnRequest.ObjectResult;
+            // _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : EletronicPointHistory hasn't been removed");
         }
     }
 }

@@ -9,7 +9,9 @@ namespace Contracts
         IList<EletronicPointHistory> ReadAllHistories();
         
         EletronicPointHistory ReadHistory(Guid id);
-        
+
+        IList<EletronicPointHistory> ReadHistoryByUserId(Guid userId);
+            
         EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory);
         
         EletronicPointHistory UpdateHistory(EletronicPointHistory eletronicPointHistory);

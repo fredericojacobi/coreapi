@@ -244,6 +244,10 @@ namespace Entities.Migrations
                         .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");

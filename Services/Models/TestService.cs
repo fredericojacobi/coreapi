@@ -9,13 +9,13 @@ namespace Services.Models
 {
     public class TestService : ITestService
     {
-        private readonly ICompanyRepository _companyRepository;
-        
-        public TestService(ICompanyRepository companyRepository)
+        private readonly IRepositoryWrapper _repository;
+
+        public TestService(IRepositoryWrapper repository)
         {
-            _companyRepository = companyRepository;
+            _repository = repository;
         }
 
-        public List<Company> GetAll() => _companyRepository.ReadAllCompanies().ToList();
+        public IList<Company> GetAll() => _repository.Company.ReadAllCompanies().ToList();
     }
 }

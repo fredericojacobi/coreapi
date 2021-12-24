@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generics", "Generics\Generi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{DC6765FA-6449-4FEF-82C1-F2FC2C2207FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DE0803A-3BC7-4198-B9BC-A92FB86C960E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC6765FA-6449-4FEF-82C1-F2FC2C2207FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC6765FA-6449-4FEF-82C1-F2FC2C2207FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC6765FA-6449-4FEF-82C1-F2FC2C2207FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC6765FA-6449-4FEF-82C1-F2FC2C2207FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

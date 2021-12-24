@@ -5,6 +5,6 @@ namespace Services.Contracts
 {
     public interface ITestService
     {
-        List<Company> GetAll();
+        IList<Company> GetAll();
     }
 }

@@ -6,6 +6,10 @@ namespace Entities.DataTransferObjects
     public class UserDTO
     {
         public Guid Id { get; set; }
+
+        public Guid BranchId { get; set; }
+
+        public string Password { get; set; }
         
         public string UserName { get; set; }
         

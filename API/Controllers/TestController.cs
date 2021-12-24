@@ -17,13 +17,14 @@ namespace FirstApp.Controllers
         private readonly ILogger<TestController> _logger;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
-        private readonly ITestService _testService;
-        public TestController(ILogger<TestController> logger, IRepositoryWrapper repository, IMapper mapper, ITestService testService)
+        private readonly IServiceWrapper _service;
+        
+        public TestController(ILogger<TestController> logger, IRepositoryWrapper repository, IMapper mapper, IServiceWrapper service)
         {
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
-            _testService = testService;
+            _service = service;
         }
 
         [HttpGet("service")]
@@ -31,7 +32,7 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var result = _testService.GetAll();
+                var result = _service.Test.GetAll();
                 return Ok("Service result: \n" + result);
             }
             catch (Exception e)

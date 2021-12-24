@@ -12,11 +12,11 @@ namespace FirstApp
             CreateMap<Branch, BranchDTO>().ReverseMap();
          
             CreateMap<Company, CompanyDTO>().ReverseMap();
-            
             CreateMap<Company, CompanyDTO>().ReverseMap();
             
-            CreateMap<EletronicPointHistoryDTO, EletronicPointHistory>().ReverseMap();
-            // CreateMap<EletronicPointHistory, EletronicPointHistoryDTO>();
+            CreateMap<EletronicPointHistoryDTO, EletronicPointHistory>();
+            CreateMap<EletronicPointHistory, EletronicPointHistoryDTO>()
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.CreatedAt));
             
             CreateMap<Event, EventDTO>().ReverseMap();
             

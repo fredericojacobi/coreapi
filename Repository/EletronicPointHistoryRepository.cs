@@ -17,6 +17,8 @@ namespace Repository
         public IList<EletronicPointHistory> ReadAllHistories() => ReadAll().ToList();
 
         public EletronicPointHistory ReadHistory(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
+        
+        public IList<EletronicPointHistory> ReadHistoryByUserId(Guid userId) => ReadByCondition(x => x.UserId.Equals(userId)).ToList();
 
         public EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory)
         {
