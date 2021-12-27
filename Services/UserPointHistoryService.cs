@@ -6,9 +6,8 @@ using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
-using Services.Contracts;
 
-namespace Services.Models
+namespace Services
 {
     public class UserPointHistoryService : IUserPointHistoryService
     {

@@ -1,8 +1,7 @@
 using AutoMapper;
 using Contracts;
-using Services.Contracts;
 
-namespace Services.Models
+namespace Services
 {
     public class ServiceWrapper : IServiceWrapper
     {

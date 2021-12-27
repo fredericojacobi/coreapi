@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Services.Contracts
+namespace Contracts
 {
     public interface ITestService
     {

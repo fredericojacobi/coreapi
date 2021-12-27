@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using Entities.DataTransferObjects;
-using Entities.Models;
 using Generic.Models;
 
-namespace Services.Contracts
+namespace Contracts
 {
     public interface IUserPointHistoryService
     {

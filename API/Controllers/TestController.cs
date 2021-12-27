@@ -6,7 +6,6 @@ using Contracts;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Services.Contracts;
 
 namespace FirstApp.Controllers
 {

@@ -1,4 +1,4 @@
-namespace Services.Contracts
+namespace Contracts
 {
     public interface IServiceWrapper
     {

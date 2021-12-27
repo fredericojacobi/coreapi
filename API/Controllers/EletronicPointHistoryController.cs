@@ -1,16 +1,9 @@
 using System;
-using System.Data.Common;
 using System.Threading.Tasks;
-using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
-using Entities.Models;
-using Generic.Functions;
-using Generic.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.Extensions.Logging;
-using Services.Contracts;
 
 namespace FirstApp.Controllers
 {
@@ -19,16 +12,11 @@ namespace FirstApp.Controllers
     public class EletronicPointHistoryController : ControllerBase
     {
         private readonly ILogger<EletronicPointHistoryController> _logger;
-        private readonly IRepositoryWrapper _repository;
         private readonly IServiceWrapper _service;
-        private readonly IMapper _mapper;
 
-        public EletronicPointHistoryController(ILogger<EletronicPointHistoryController> logger,
-            IRepositoryWrapper repository, IMapper mapper, IServiceWrapper service)
+        public EletronicPointHistoryController(ILogger<EletronicPointHistoryController> logger, IServiceWrapper service)
         {
             _logger = logger;
-            _repository = repository;
-            _mapper = mapper;
             _service = service;
         }
 
