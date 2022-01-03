@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Contracts.Repositories;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Contracts.Services
+namespace Contracts.Repositories
 {
     public interface IUserRepository : IRepositoryBase<User>
     {

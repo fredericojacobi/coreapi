@@ -14,7 +14,11 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Event> ReadAllEvents() => ReadAll().ToList();
+        public IEnumerable<Event> ReadAllEvents()
+        {
+            var entities = ReadAll().ToList();
+            return entities.Any() ? entities : null;
+        }
 
         public Event ReadEvent(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 

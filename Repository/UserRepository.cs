@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Contracts;
-using Contracts.Services;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;

@@ -9,10 +9,13 @@ namespace Services
     {
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
-        public ITestService _test;
-        public IUserPointHistoryService _userPointHistory;
-        public ICompanyService _company;
-        public ILocationService _location;
+        
+        private ITestService _test;
+        private IUserPointHistoryService _userPointHistory;
+        private ICompanyService _company;
+        private ILocationService _location;
+        private IBranchService _branch;
+        private IEventService _event;
         
         public ServiceWrapper(IRepositoryWrapper repository, IMapper mapper)
         {
@@ -27,5 +30,9 @@ namespace Services
         public ICompanyService Company => _company ??= new CompanyService(_repository, _mapper);
 
         public ILocationService Location => _location ??= new LocationService(_repository, _mapper);
+
+        public IBranchService Branch => _branch ??= new BranchService(_repository, _mapper);
+
+        public IEventService Event => _event ??= new EventService(_repository, _mapper);
     }
 }
