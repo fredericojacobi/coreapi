@@ -29,7 +29,7 @@ namespace FirstApp
             
             CreateMap<User, UserDTO>().ReverseMap();
             
-            CreateMap<IBGE, Location>().ReverseMap();
+            // CreateMap<IBGE, Location>().ReverseMap();
             
         }
     }

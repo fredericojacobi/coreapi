@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Repository
         {
         }
 
-        public IList<Branch> ReadAllBranches() => ReadAll()
+        public IEnumerable<Branch> ReadAllBranches() => ReadAll()
             .Include(x => x.Company)
             .Include(x => x.Location)
             .ToList();
@@ -25,7 +26,7 @@ namespace Repository
             .Include(x => x.Points)
             .FirstOrDefault();
 
-        public IList<Branch> ReadBranchByCompanyId(Guid id) => ReadByCondition(x => x.CompanyId.Equals(id)).ToList();
+        public IEnumerable<Branch> ReadBranchByCompanyId(Guid id) => ReadByCondition(x => x.CompanyId.Equals(id)).ToList();
 
         public Branch CreateBranch(Branch branch)
         {
@@ -43,6 +44,10 @@ namespace Repository
 
         public bool DeleteBranch(Branch branch) => Delete(branch);
 
-        public bool DeleteBranch(Guid id) => DeleteBranch(ReadBranch(id));
+        public bool DeleteBranch(Guid id)
+        {
+            var entity = ReadBranch(id);
+            return entity is not null && DeleteBranch(entity);
+        }
     }
 }

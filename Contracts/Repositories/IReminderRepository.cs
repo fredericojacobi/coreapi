@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     public interface IReminderRepository : IRepositoryBase<Reminder>
     {
-        IList<Reminder> ReadAllReminders();
+        IEnumerable<Reminder> ReadAllReminders();
         
         Reminder ReadReminder(Guid id);
         /*
-        List<Reminder> ReadRemindersByUserId(Guid userId);
+        IEnumerable<Reminder> ReadRemindersByUserId(Guid userId);
         */
         Reminder CreateReminder(Reminder reminder);
         

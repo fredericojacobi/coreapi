@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -14,9 +16,11 @@ namespace Repository
         {
         }
 
-        public IList<Point> ReadAllPoints() => ReadAll().ToList();
+        public IEnumerable<Point> ReadAllPoints() => ReadAll().Include(x => x.Branch).ToList();
 
-        public Point ReadPoint(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
+        public Point ReadPoint(Guid id) => ReadByCondition(x => x.Id.Equals(id))
+            .Include(x => x.Branch)
+            .FirstOrDefault();
 
         public Point CreatePoint(Point point)
         {
@@ -32,7 +36,10 @@ namespace Repository
 
         public bool DeletePoint(Point point) => Delete(point);
 
-        public bool DeletePoint(Guid id) => DeletePoint(ReadPoint(id));
-        
+        public bool DeletePoint(Guid id)
+        {
+            var entity = ReadPoint(id);
+            return entity is not null && DeletePoint(entity);
+        }
     }
 }

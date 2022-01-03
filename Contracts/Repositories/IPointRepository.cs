@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     public interface IPointRepository : IRepositoryBase<Point>
     {
-        IList<Point> ReadAllPoints();
+        IEnumerable<Point> ReadAllPoints();
 
         Point ReadPoint(Guid id);
 

@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
-using Contracts;
+using Contracts.Services;
 using Entities.DataTransferObjects;
-using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,127 +11,36 @@ namespace FirstApp.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
-        private readonly IRepositoryWrapper _repository;
+        private readonly IServiceWrapper _service;
         private readonly ILogger<CompanyController> _logger;
-        private readonly IMapper _mapper;
 
-        public CompanyController(IRepositoryWrapper repository, ILogger<CompanyController> logger, IMapper mapper)
+        public CompanyController(IServiceWrapper service, ILogger<CompanyController> logger)
         {
-            _repository = repository;
             _logger = logger;
-            _mapper = mapper;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll()
-        {
-            try
-            {
-                var repositoryResult = _repository.Company.ReadAllCompanies();
-                return Ok(_mapper.Map<List<CompanyDTO>>(repositoryResult));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(GetAll)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
+        public async Task<ActionResult> GetAll() => _service.Company.GetAll().ObjectResult;
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(Guid id)
-        {
-            try
-            {
-                var repositoryResult = _repository.Company.ReadCompany(id);
-                return Ok(_mapper.Map<CompanyDTO>(repositoryResult));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Get)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
+        public async Task<ActionResult> Get([FromRoute] Guid id) => _service.Company.Get(id).ObjectResult;
 
         [HttpPost]
-        public async Task<ActionResult> Post(CompanyDTO model)
-        {
-            try
-            {
-                var company = _mapper.Map<Company>(model);
-                var repositoryResult = _repository.Company.CreateCompany(company);
-                return repositoryResult != null
-                    ? Ok(_mapper.Map<CompanyDTO>(repositoryResult))
-                    : StatusCode(500, "Internal server error.");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Post)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
+        public async Task<ActionResult> Post([FromBody] CompanyDTO model) => _service.Company.Post(model).ObjectResult;
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] CompanyDTO model)
-        {
-            try
-            {
-                if (id != model.Id)
-                {
-                    _logger.LogError($"{DateTime.Now} - {nameof(Put)} : Company's id {id} doesn't match.");
-                    return BadRequest("Object's Ids doesn't match.");
-                }
-
-                var company = _mapper.Map<Company>(model);
-                var repositoryResult = _repository.Company.UpdateCompany(company);
-                if (repositoryResult != null) return Ok(_mapper.Map<CompanyDTO>(repositoryResult));
-                _logger.LogError($"{DateTime.Now} - {nameof(Put)} : Company hasn't been updated.");
-                return StatusCode(500, "Internal server error.");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Put)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
+        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] CompanyDTO model) =>
+            _service.Company.Put(id, model).ObjectResult;
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id)
-        {
-            try
-            {
-                var repositoryResult = _repository.Company.DeleteCompany(id);
-                if (repositoryResult)
-                    return Ok(true);
-                _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : Company hasn't been deleted.");
-                return StatusCode(500, "Internal server error.");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
+        public async Task<ActionResult> Delete([FromRoute] Guid id) => _service.Company.Delete(id).ObjectResult;
 
         [HttpDelete("all")]
-        public async Task<ActionResult> DeleteAll()
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(GetAll)} : {e.Message}");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
+        public async Task<ActionResult> DeleteAll() => throw new NotImplementedException();
 
         [HttpPost("random/{quantity}")]
-        public async Task<ActionResult> CreateRandomCompany(int quantity)
-        {
-            var repositoryResult = _repository.Company.CreateRandomCompanies(quantity);
-            return Ok(_mapper.Map<List<CompanyDTO>>(repositoryResult));  
-        }
-        
+        public async Task<ActionResult> CreateRandomCompany([FromRoute] int quantity) =>
+            _service.Company.PostRandomCompanies(quantity).ObjectResult;
     }
 }

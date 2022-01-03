@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -14,11 +16,19 @@ namespace Repository
         {
         }
 
-        public IList<EletronicPointHistory> ReadAllHistories() => ReadAll().ToList();
+        public IEnumerable<EletronicPointHistory> ReadAllHistories() => ReadAll().ToList();
 
-        public EletronicPointHistory ReadHistory(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
-        
-        public IList<EletronicPointHistory> ReadHistoryByUserId(Guid userId) => ReadByCondition(x => x.UserId.Equals(userId)).ToList();
+        public EletronicPointHistory ReadHistory(Guid id) =>
+            ReadByCondition(x => x.Id.Equals(id))
+                .Include(x => x.User)
+                .Include(x => x.Point)
+                .FirstOrDefault();
+
+        public IEnumerable<EletronicPointHistory> ReadHistoryByUserId(Guid userId) =>
+            ReadByCondition(x => x.UserId.Equals(userId))
+                .Include(x => x.User)
+                .Include(x => x.Point)
+                .ToList();
 
         public EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory)
         {
@@ -34,6 +44,10 @@ namespace Repository
 
         public bool DeleteHistory(EletronicPointHistory eletronicPointHistory) => Delete(eletronicPointHistory);
 
-        public bool DeleteHistory(Guid id) => DeleteHistory(ReadHistory(id));
+        public bool DeleteHistory(Guid id)
+        {
+            var entity = ReadHistory(id);
+            return entity is not null && DeleteHistory(entity);
+        }
     }
 }

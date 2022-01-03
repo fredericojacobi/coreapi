@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
 
@@ -14,7 +15,7 @@ namespace Repository
         {
         }
 
-        public IList<Location> ReadAllLocations() => ReadAll().ToList();
+        public IEnumerable<Location> ReadAllLocations() => ReadAll().ToList();
 
         public Location ReadLocation(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 
@@ -25,7 +26,7 @@ namespace Repository
             return Create(location);
         }
 
-        public bool CreateMultiplesLocations(IList<Location> locations) => CreateMultiples(locations);
+        public IEnumerable<Location> CreateMultiplesLocations(IEnumerable<Location> locations) => CreateMultiples(locations);
 
         public Location UpdateLocation(Location location)
         {
@@ -35,7 +36,12 @@ namespace Repository
 
         public bool DeleteLocation(Location location) => Delete(location);
 
-        public bool DeleteLocation(Guid id) => DeleteLocation(ReadLocation(id));
-        
+        public bool DeleteLocation(Guid id)
+        {
+            var entity = ReadLocation(id);
+            return entity is not null && DeleteLocation(entity);
+        }
+
+        public bool DeleteMultiplesLocation() => DeleteMultiples();
     }
 }

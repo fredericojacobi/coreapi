@@ -2,7 +2,7 @@ using System;
 using Entities.DataTransferObjects;
 using Generic.Models;
 
-namespace Contracts
+namespace Contracts.Services
 {
     public interface IUserPointHistoryService
     {

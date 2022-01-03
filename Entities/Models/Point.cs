@@ -11,7 +11,7 @@ namespace Entities.Models
         public string Name { get; set; }
         
         public Branch Branch { get; set; }
-        
+
         public ICollection<EletronicPointHistory> EletronicPointHistories { get; set; }
     }
 }

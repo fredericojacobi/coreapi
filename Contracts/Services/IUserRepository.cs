@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Contracts.Repositories;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Contracts
+namespace Contracts.Services
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
-        IList<User> ReadAllUsers();
+        IEnumerable<User> ReadAllUsers();
         
         User ReadUser(Guid id);
         

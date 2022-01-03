@@ -1,4 +1,6 @@
-namespace Contracts
+using Contracts.Services;
+
+namespace Contracts.Repositories
 {
     public interface IRepositoryWrapper
     {

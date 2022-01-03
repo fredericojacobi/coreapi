@@ -10,24 +10,20 @@ namespace Generic.Models
 {
     public class ReturnRequest<T> where T : class
     {
-        private bool OperationResult
-        {
-            get => false;
-            set{}
-        }
+        private bool OperationResult { get; set; }
 
         public HttpStatusCode Status { get; }
 
         private HttpMethod Method { get; set; }
 
-        public int Count => Records.Count;
+        public int Count => Records?.Count() ?? 0;
 
         public ObjectResult ObjectResult
         {
             get
             {
-                if (OperationResult)
-                    return new OkObjectResult(new { });
+                if (Method is HttpMethod.Delete)
+                    return ObjectResultHandler.ReturnData(OperationResult, Method);
 
                 switch (Status)
                 {
@@ -37,31 +33,41 @@ namespace Generic.Models
                         return new NotFoundObjectResult(new { });
                 }
 
-                if (Record is not null)
-                    return ObjectResultHandler.ReturnData(Record, Method);
-                if (Records.Any())
+                if (Count > 0 && Records.Any())
                     return ObjectResultHandler.ReturnData(Records, Method);
-                return new BadRequestObjectResult(new { });
+
+                return ObjectResultHandler.ReturnData(Record, Method);
             }
-            set { }
         }
 
         public T Record { get; set; }
 
-        public T FirstRecord => Records.FirstOrDefault();
+        public T FirstRecord => Records?.FirstOrDefault();
 
-        public IList<T> Records { get; set; }
+        public IEnumerable<T> Records { get; set; }
 
         public ReturnRequest()
         {
         }
 
-        public ReturnRequest(bool operationResult) => OperationResult = operationResult;
-
         public ReturnRequest(HttpStatusCode statusCode) => Status = statusCode;
 
-        public ReturnRequest(T model) => Record = model;
+        public ReturnRequest( bool operationResult, HttpMethod method)
+        {
+            Method = method;
+            OperationResult = operationResult;
+        }
 
-        public ReturnRequest(List<T> models) => Records = models;
+        public ReturnRequest(T model, HttpMethod method)
+        {
+            Record = model;
+            Method = method;
+        }
+
+        public ReturnRequest(IEnumerable<T> models, HttpMethod method)
+        {
+            Records = models;
+            Method = method;
+        }
     }
 }

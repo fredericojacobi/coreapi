@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Contracts;
+using Contracts.Services;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +21,7 @@ namespace Repository
             _userManager = userManager;
         }
 
-        public IList<User> ReadAllUsers() => ReadAll().OrderBy(x => x.Id).ToList();
+        public IEnumerable<User> ReadAllUsers() => ReadAll().OrderBy(x => x.Id).ToList();
 
         public User ReadUser(Guid id) => ReadByCondition(x => x.Id.Equals(id))
             .Include(x => x.Branch)
@@ -45,6 +46,10 @@ namespace Repository
 
         public bool DeleteUser(User user) => Delete(user);
 
-        public bool DeleteUser(Guid id) => DeleteUser(ReadUser(id));
+        public bool DeleteUser(Guid id)
+        {
+            var entity = ReadUser(id);
+            return entity is not null && DeleteUser(entity);
+        }
     }
 }

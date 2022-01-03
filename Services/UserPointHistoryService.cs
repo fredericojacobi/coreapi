@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Net;
 using AutoMapper;
 using Contracts;
+using Contracts.Repositories;
+using Contracts.Services;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 
 namespace Services
 {
@@ -25,8 +28,8 @@ namespace Services
             try
             {
                 var repositoryResult = _repository.EletronicPointHistory.ReadAllHistories();
-                var mapperResult = _mapper.Map<List<EletronicPointHistoryDTO>>(repositoryResult);
-                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult);
+                var mapperResult = _mapper.Map<IEnumerable<EletronicPointHistoryDTO>>(repositoryResult);
+                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Get);
             }
             catch (Exception e)
             {
@@ -42,8 +45,11 @@ namespace Services
             try
             {
                 var repositoryResult = _repository.EletronicPointHistory.ReadHistory(id);
+                if (repositoryResult is null)
+                    return new ReturnRequest<EletronicPointHistoryDTO>(HttpStatusCode.NotFound);
+                    
                 var mapperResult = _mapper.Map<EletronicPointHistoryDTO>(repositoryResult);
-                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult);
+                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Get);
             }
             catch (Exception e)
             {
@@ -59,8 +65,8 @@ namespace Services
             try
             {
                 var repositoryResult = _repository.EletronicPointHistory.ReadHistoryByUserId(userId);
-                var mapperResult = _mapper.Map<List<EletronicPointHistoryDTO>>(repositoryResult);
-                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult);
+                var mapperResult = _mapper.Map<IEnumerable<EletronicPointHistoryDTO>>(repositoryResult);
+                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Get);
             }
             catch (Exception e)
             {
@@ -78,7 +84,7 @@ namespace Services
                 var history = _mapper.Map<EletronicPointHistory>(model);
                 var repositoryResult = _repository.EletronicPointHistory.CreateHistory(history);
                 var mapperResult = _mapper.Map<EletronicPointHistoryDTO>(repositoryResult);
-                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult);
+                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Post);
             }
             catch (Exception e)
             {
@@ -96,7 +102,7 @@ namespace Services
                 var history = _mapper.Map<EletronicPointHistory>(model);
                 var repositoryResult = _repository.EletronicPointHistory.UpdateHistory(history);
                 var mapperResult = _mapper.Map<EletronicPointHistoryDTO>(repositoryResult);
-                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult);
+                return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Put);
             }
             catch (Exception e)
             {
@@ -112,7 +118,7 @@ namespace Services
             try
             {
                 var repositoryResult = _repository.EletronicPointHistory.DeleteHistory(id);
-                return new ReturnRequest<EletronicPointHistoryDTO>(repositoryResult);
+                return new ReturnRequest<EletronicPointHistoryDTO>(repositoryResult, HttpMethod.Delete);
             }
             catch (Exception e)
             {

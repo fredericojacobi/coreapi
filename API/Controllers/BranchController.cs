@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using Contracts.Repositories;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ namespace FirstApp.Controllers
             try
             {
                 var repositoryResult = _repository.Branch.ReadAllBranches();
-                return Ok(_mapper.Map<List<BranchDTO>>(repositoryResult));
+                return Ok(_mapper.Map<IEnumerable<BranchDTO>>(repositoryResult));
             }
             catch (Exception e)
             {
@@ -63,7 +64,7 @@ namespace FirstApp.Controllers
             try
             {
                 var repositoryResult = _repository.Branch.ReadBranchByCompanyId(id);
-                return Ok(_mapper.Map<List<BranchDTO>>(repositoryResult));
+                return Ok(_mapper.Map<IEnumerable<BranchDTO>>(repositoryResult));
             }
             catch (Exception e)
             {

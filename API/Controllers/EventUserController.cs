@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using Contracts.Repositories;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
@@ -34,7 +35,7 @@ namespace FirstApp.Controllers
             try
             {
                 var repositoryResult = _repository.EventUser.ReadAllEventUsers();
-                return Ok(_mapper.Map<List<EventUserDTO>>(repositoryResult));
+                return Ok(_mapper.Map<IEnumerable<EventUserDTO>>(repositoryResult));
             }
             catch (Exception e)
             {
@@ -64,7 +65,7 @@ namespace FirstApp.Controllers
             try
             {
                 var repositoryResult = _repository.EventUser.ReadEventByUserId(id);
-                return Ok(_mapper.Map<List<EventUserDTO>>(repositoryResult));
+                return Ok(_mapper.Map<IEnumerable<EventUserDTO>>(repositoryResult));
             }
             catch (Exception e)
             {
@@ -79,7 +80,7 @@ namespace FirstApp.Controllers
             try
             {
                 var repositoryResult = _repository.EventUser.ReadEventByEventId(id);
-                return Ok(_mapper.Map<List<EventUserDTO>>(repositoryResult));
+                return Ok(_mapper.Map<IEnumerable<EventUserDTO>>(repositoryResult));
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using Contracts.Repositories;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
@@ -34,7 +35,7 @@ namespace FirstApp.Controllers
             try
             {
                 var reminders = _repository.Reminder.ReadAllReminders();
-                return Ok(_mapper.Map<List<ReminderDTO>>(reminders));
+                return Ok(_mapper.Map<IEnumerable<ReminderDTO>>(reminders));
             }
             catch (Exception e)
             {

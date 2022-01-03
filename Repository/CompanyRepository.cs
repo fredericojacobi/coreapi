@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ namespace Repository
         {
         }
 
-        public IList<Company> ReadAllCompanies() => ReadAll().ToList();
+        public IEnumerable<Company> ReadAllCompanies() => ReadAll().ToList();
 
         public Company ReadCompany(Guid id) => ReadByCondition(x => x.Id.Equals(id))
             .Include(x => x.Branches)
@@ -27,7 +28,7 @@ namespace Repository
             return Create(company);
         }
 
-        public IList<Company> CreateRandomCompanies(int quantity)
+        public IEnumerable<Company> CreateRandomCompanies(int quantity)
         {
             var companies = new List<Company>();
             for (var i = 0; i < quantity; i++)
@@ -46,7 +47,10 @@ namespace Repository
 
         public bool DeleteCompany(Company company) => Delete(company);
 
-        public bool DeleteCompany(Guid id) => DeleteCompany(ReadCompany(id));
-        
+        public bool DeleteCompany(Guid id)
+        {
+            var entity = ReadCompany(id);
+            return entity is not null && DeleteCompany(entity);
+        }
     }
 }

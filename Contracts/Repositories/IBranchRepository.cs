@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     public interface IBranchRepository : IRepositoryBase<Branch>
     {
-        IList<Branch> ReadAllBranches();
+        IEnumerable<Branch> ReadAllBranches();
 
         Branch ReadBranch(Guid id);
 
-        IList<Branch> ReadBranchByCompanyId(Guid id);
+        IEnumerable<Branch> ReadBranchByCompanyId(Guid id);
         
         Branch CreateBranch(Branch branch);
         

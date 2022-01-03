@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
 
@@ -13,7 +14,7 @@ namespace Repository
         {
         }
 
-        public IList<Event> ReadAllEvents() => ReadAll().ToList();
+        public IEnumerable<Event> ReadAllEvents() => ReadAll().ToList();
 
         public Event ReadEvent(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 
@@ -31,6 +32,10 @@ namespace Repository
 
         public bool DeleteEvent(Event eEvent) => Delete(eEvent);
 
-        public bool DeleteEvent(Guid id) => DeleteEvent(ReadEvent(id));
+        public bool DeleteEvent(Guid id)
+        {
+            var entity = ReadEvent(id);
+            return entity is not null && DeleteEvent(entity);
+        }
     }
 }

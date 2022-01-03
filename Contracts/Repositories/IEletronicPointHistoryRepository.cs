@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     public interface IEletronicPointHistoryRepository : IRepositoryBase<EletronicPointHistory>
     {
-        IList<EletronicPointHistory> ReadAllHistories();
+        IEnumerable<EletronicPointHistory> ReadAllHistories();
         
         EletronicPointHistory ReadHistory(Guid id);
 
-        IList<EletronicPointHistory> ReadHistoryByUserId(Guid userId);
+        IEnumerable<EletronicPointHistory> ReadHistoryByUserId(Guid userId);
             
         EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory);
         

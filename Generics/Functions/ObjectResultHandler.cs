@@ -17,19 +17,26 @@ namespace Generic.Functions
             {
                 case HttpMethod.Get:
                     if (result is not IEnumerable)
-                        return result is null ? new NotFoundObjectResult(new object()) : new OkObjectResult(result);
+                        return result is null
+                            ? new NotFoundObjectResult(ResponseErrorMessage.NotFound())
+                            : new OkObjectResult(result);
 
                     var size = new List<object>(result as IEnumerable<object> ?? Array.Empty<object>()).Count;
-                    return size > 0 ? new OkObjectResult(result) : new NotFoundObjectResult(new object());
+                    return size > 0 ? new OkObjectResult(result) : new NotFoundObjectResult(ResponseErrorMessage.NotFound());
 
                 case HttpMethod.Post:
                     return result is null
                         ? new BadRequestObjectResult(ResponseErrorMessage.WrongBodyContent())
                         : new OkObjectResult(result);
-                
+
                 case HttpMethod.Put:
                     return result is null
                         ? new BadRequestObjectResult(ResponseErrorMessage.NotFound())
+                        : new OkObjectResult(result);
+
+                case HttpMethod.Delete:
+                    return result is false
+                        ? new BadRequestObjectResult(result)
                         : new OkObjectResult(result);
             }
 

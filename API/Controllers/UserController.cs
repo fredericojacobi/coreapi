@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using Contracts.Repositories;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
@@ -34,7 +35,7 @@ namespace FirstApp.Controllers
             try
             {
                 var repositoryResult = _repository.User.ReadAllUsers();
-                return Ok(_mapper.Map<List<UserDTO>>(repositoryResult));
+                return Ok(_mapper.Map<IEnumerable<UserDTO>>(repositoryResult));
             }
             catch (Exception e)
             {

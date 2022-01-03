@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Contracts;
+using Contracts.Repositories;
 using Entities;
 using Entities.Context;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +29,13 @@ namespace Repository
             return entity;
         }
 
-        public bool CreateMultiples(IList<T> entities)
+        public IEnumerable<T> CreateMultiples(IEnumerable<T> entities)
         {
-            _context.Set<T>().AddRange(entities);
-            return _context.SaveChanges() > 0;
+            var entityList = entities.ToList();
+            _context.Set<T>().AddRange(entityList);
+            _context.SaveChanges();
+            _context.Entry(entityList).Reload();
+            return entityList;
         }
 
         public T Update(T entity)
@@ -45,6 +49,14 @@ namespace Repository
         public bool Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool DeleteMultiples()
+        {
+            var entityList = ReadAll().ToList();
+            if (entityList.Count <= 0) return false;
+            _context.Set<T>().RemoveRange(entityList);
             return _context.SaveChanges() > 0;
         }
     }

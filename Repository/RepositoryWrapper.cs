@@ -1,4 +1,6 @@
 using Contracts;
+using Contracts.Repositories;
+using Contracts.Services;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;

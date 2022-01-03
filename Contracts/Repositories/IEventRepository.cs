@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     public interface IEventRepository : IRepositoryBase<Event>
     {
-        IList<Event> ReadAllEvents();
+        IEnumerable<Event> ReadAllEvents();
         
         Event ReadEvent(Guid id);
         

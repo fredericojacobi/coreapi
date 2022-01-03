@@ -2,23 +2,25 @@ using System;
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     public interface ILocationRepository : IRepositoryBase<Location>
     {
-        IList<Location> ReadAllLocations();
+        IEnumerable<Location> ReadAllLocations();
 
         Location ReadLocation(Guid id);
 
         Location CreateLocation(Location location);
 
-        bool CreateMultiplesLocations(IList<Location> locations);
+        IEnumerable<Location> CreateMultiplesLocations(IEnumerable<Location> locations);
         
         Location UpdateLocation(Location location);
 
         bool DeleteLocation(Location location);
-
+        
         bool DeleteLocation(Guid id);
+
+        bool DeleteMultiplesLocation();
         
     }
 }

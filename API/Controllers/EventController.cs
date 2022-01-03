@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using Contracts.Repositories;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;

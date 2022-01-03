@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Services
 {
     public interface ITestService
     {
-        IList<Company> GetAll();
+        IEnumerable<Company> GetAll();
     }
 }

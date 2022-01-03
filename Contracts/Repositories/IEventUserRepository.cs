@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using Entities.Models;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     public interface IEventUserRepository : IRepositoryBase<EventUser>
     {
-        IList<EventUser> ReadAllEventUsers();
+        IEnumerable<EventUser> ReadAllEventUsers();
 
-        IList<EventUser> ReadEventByUserId(Guid id);
+        IEnumerable<EventUser> ReadEventByUserId(Guid id);
 
-        IList<EventUser> ReadEventByEventId(Guid id);
+        IEnumerable<EventUser> ReadEventByEventId(Guid id);
 
         EventUser ReadEventUser(Guid id);
 

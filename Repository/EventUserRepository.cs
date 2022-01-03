@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Contracts;
+using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
 
@@ -14,11 +15,11 @@ namespace Repository
         {
         }
 
-        public IList<EventUser> ReadAllEventUsers() => ReadAll().ToList();
+        public IEnumerable<EventUser> ReadAllEventUsers() => ReadAll().ToList();
         
-        public IList<EventUser> ReadEventByUserId(Guid id) => ReadByCondition(x => x.UserId.Equals(id)).ToList();
+        public IEnumerable<EventUser> ReadEventByUserId(Guid id) => ReadByCondition(x => x.UserId.Equals(id)).ToList();
         
-        public IList<EventUser> ReadEventByEventId(Guid id) => ReadByCondition(x => x.EventId.Equals(id)).ToList();
+        public IEnumerable<EventUser> ReadEventByEventId(Guid id) => ReadByCondition(x => x.EventId.Equals(id)).ToList();
 
         public EventUser ReadEventUser(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
 
@@ -28,7 +29,10 @@ namespace Repository
 
         public bool DeleteEventUser(EventUser eventUser) => Delete(eventUser);
 
-        public bool DeleteEventUser(Guid id) => DeleteEventUser(ReadEventUser(id));
-        
+        public bool DeleteEventUser(Guid id)
+        {
+            var entity = ReadEventUser(id);
+            return entity is not null && DeleteEventUser(entity);
+        }
     }
 }
