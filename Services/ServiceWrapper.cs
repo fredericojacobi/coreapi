@@ -16,7 +16,7 @@ namespace Services
         private IBranchService _branch;
         private IEventService _event;
         private IUserService _user;
-        
+        private IPointService _point;
         
         public ServiceWrapper(IRepositoryWrapper repository, IMapper mapper)
         {
@@ -37,5 +37,7 @@ namespace Services
         public IEventService Event => _event ??= new EventService(_repository, _mapper);
         
         public IUserService User => _user ??= new UserService(_repository, _mapper);
+
+        public IPointService Point => _point ??= new PointService(_repository, _mapper);
     }
 }

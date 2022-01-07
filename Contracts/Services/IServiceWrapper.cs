@@ -15,5 +15,7 @@ namespace Contracts.Services
         IEventService Event { get; }
         
         IUserService User { get; }
+        
+        IPointService Point { get; }
     }
 }

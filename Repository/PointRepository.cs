@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities.Context;
@@ -16,30 +17,30 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Point> ReadAllPoints() => ReadAll().Include(x => x.Branch).ToList();
+        public Task<IEnumerable<Point>> ReadAllPoints() => Task.FromResult<IEnumerable<Point>>(ReadAll().Include(x => x.Branch).ToList());
 
-        public Point ReadPoint(Guid id) => ReadByCondition(x => x.Id.Equals(id))
+        public Task<Point> ReadPoint(Guid id) => Task.FromResult(ReadByCondition(x => x.Id.Equals(id))
             .Include(x => x.Branch)
-            .FirstOrDefault();
+            .FirstOrDefault());
 
-        public Point CreatePoint(Point point)
+        public Task<Point> CreatePoint(Point point)
         {
             point.CreatedAt = DateTime.Now;
-            return Create(point);
+            return Task.FromResult(Create(point));
         }
 
-        public Point UpdatePoint(Point point)
+        public Task<Point> UpdatePoint(Point point)
         {
             point.ModifiedAt = DateTime.Now;
-            return Update(point);
+            return Task.FromResult(Update(point));
         }
 
-        public bool DeletePoint(Point point) => Delete(point);
+        public Task<bool> DeletePoint(Point point) => Task.FromResult(Delete(point));
 
-        public bool DeletePoint(Guid id)
+        public async Task<bool> DeletePoint(Guid id)
         {
-            var entity = ReadPoint(id);
-            return entity is not null && DeletePoint(entity);
+            var entity = await ReadPoint(id);
+            return await DeletePoint(entity);
         }
     }
 }
