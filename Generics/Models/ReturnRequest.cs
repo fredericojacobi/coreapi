@@ -51,7 +51,7 @@ namespace Generic.Models
         }
 
         public ReturnRequest(HttpStatusCode statusCode) => Status = statusCode;
-
+        
         public ReturnRequest( bool operationResult, HttpMethod method)
         {
             Method = method;

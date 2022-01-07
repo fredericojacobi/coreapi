@@ -21,33 +21,33 @@ namespace Repository
 
         public IEnumerable<User> ReadAllUsers() => ReadAll().OrderBy(x => x.Id).ToList();
 
-        public User ReadUser(Guid id) => ReadByCondition(x => x.Id.Equals(id))
-            .Include(x => x.Branch)
-            .Include(x => x.Reminders)
-            .Include(x => x.EventUsers)
-            .Include(x => x.EletronicPointHistories)
-            .FirstOrDefault();
+        public async Task<User> ReadUser(Guid id) => await _userManager.FindByIdAsync(id.ToString());
 
         public async Task<User> ReadUserByUserName(string username) => await _userManager.FindByNameAsync(username);
         
-        public async Task<IdentityResult> CreateUser(User user, string password)
+        public async Task<User> CreateUser(User user, string password)
         {
             user.CreatedAt = DateTime.Now;
-            return await _userManager.CreateAsync(user, password);
+            var identityResult = await _userManager.CreateAsync(user, password);
+            return identityResult.Succeeded ? await ReadUserByUserName(user.UserName) : null;
         }
 
-        public async Task<IdentityResult> UpdateUser(User user)
+        public async Task<User> UpdateUser(User user)
         {
             user.ModifiedAt = DateTime.Now;
-            return await _userManager.UpdateAsync(user); 
+            return Update(user);
         }
 
-        public bool DeleteUser(User user) => Delete(user);
-
-        public bool DeleteUser(Guid id)
+        public async Task<bool> DeleteUser(User user)
         {
-            var entity = ReadUser(id);
-            return entity is not null && DeleteUser(entity);
+            var identityResult = await _userManager.DeleteAsync(user);
+            return identityResult.Succeeded;
+        }
+
+        public async Task<bool> DeleteUser(Guid id)
+        {
+            var user = await ReadUser(id);
+            return await DeleteUser(user);
         }
     }
 }

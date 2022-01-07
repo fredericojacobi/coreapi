@@ -1,5 +1,4 @@
 using AutoMapper;
-using Contracts;
 using Contracts.Repositories;
 using Contracts.Services;
 
@@ -16,6 +15,8 @@ namespace Services
         private ILocationService _location;
         private IBranchService _branch;
         private IEventService _event;
+        private IUserService _user;
+        
         
         public ServiceWrapper(IRepositoryWrapper repository, IMapper mapper)
         {
@@ -34,5 +35,7 @@ namespace Services
         public IBranchService Branch => _branch ??= new BranchService(_repository, _mapper);
 
         public IEventService Event => _event ??= new EventService(_repository, _mapper);
+        
+        public IUserService User => _user ??= new UserService(_repository, _mapper);
     }
 }

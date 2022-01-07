@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Contracts;
 using Contracts.Repositories;
+using Contracts.Services;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,116 +15,30 @@ namespace FirstApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
-        private readonly IRepositoryWrapper _repository;
-        private readonly IMapper _mapper;
+        private readonly IServiceWrapper _service;
 
-        public UserController(ILogger<UserController> logger, IRepositoryWrapper repository, IMapper mapper)
+        public UserController(ILogger<UserController> logger, IServiceWrapper service)
         {
             _logger = logger;
-            _repository = repository;
-            _mapper = mapper;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllUsers()
-        {
-            try
-            {
-                var repositoryResult = _repository.User.ReadAllUsers();
-                return Ok(_mapper.Map<IEnumerable<UserDTO>>(repositoryResult));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(GetAllUsers)} : {e.Message}");
-                return StatusCode(500, ResponseErrorMessage.InternalServerError(e));
-            }
-        }
+        public ActionResult GetAllUsers() => _service.User.GetAll().ObjectResult;
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetUser(Guid id)
-        {
-            try
-            {
-                var repositoryResult = _repository.User.ReadUser(id);
-                return Ok(_mapper.Map<UserDTO>(repositoryResult));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(GetUser)} : {e.Message}");
-                return StatusCode(500, ResponseErrorMessage.InternalServerError(e));
-            }
-        }
-
+        public ActionResult GetUser([FromRoute] Guid id) => _service.User.Get(id).ObjectResult;
 
         [HttpPost]
-        public async Task<ActionResult> PostUser(UserDTO model)
-        {
-            try
-            {
-                var user = _mapper.Map<User>(model);
-                var repositoryResult = _repository.User.CreateUser(user, user.Password).Result;
-                if (!repositoryResult.Succeeded) return StatusCode(500, "Internal server error.");
-                var userResult = await _repository.User.ReadUserByUserName(model.UserName);
-                return Ok(_mapper.Map<UserDTO>(userResult));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(PostUser)} : {e.Message}");
-                return StatusCode(500, ResponseErrorMessage.InternalServerError(e));
-            }
-        }
+        public ActionResult PostUser([FromBody] UserDTO model) => _service.User.Post(model).ObjectResult;
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateUser(UserDTO model)
-        {
-            try
-            {
-                var user = _mapper.Map<User>(model);
-                var repositoryResult = _repository.User.UpdateUser(user).Result;
-                if (!repositoryResult.Succeeded) return StatusCode(500, "Internal server error.");
-                var userResult = await _repository.User.ReadUserByUserName(model.UserName);
-                return Ok(_mapper.Map<UserDTO>(userResult));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(UpdateUser)} : {e.Message}");
-                return StatusCode(500, ResponseErrorMessage.InternalServerError(e));
-            }
-        }
+        [HttpPut("{id}")]
+        public ActionResult UpdateUser([FromRoute] Guid id, [FromBody] UserDTO model) => _service.User.Put(id, model).ObjectResult;
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id)
-        {
-            try
-            {
-                return Ok(_repository.User.DeleteUser(id));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(DeleteUser)} : {e.Message}");
-                return StatusCode(500, ResponseErrorMessage.InternalServerError(e));
-            }
-        }
+        public ActionResult DeleteUser([FromRoute] Guid id) => _service.User.Delete(id).ObjectResult;
 
         [HttpDelete("all")]
-        public async Task<ActionResult> DeleteAllUsers()
-        {
-            try
-            {
-                var usersResult = _repository.User.ReadAllUsers();
-                var ok = false;
-                foreach (var user in usersResult)
-                {
-                    ok = _repository.User.DeleteUser(user);
-                }
-
-                return Ok(ok);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{DateTime.Now} - {nameof(DeleteAllUsers)} : {e.Message}");
-                return StatusCode(500, ResponseErrorMessage.InternalServerError(e));
-            }
-        }
+        public ActionResult DeleteAllUsers() => throw new NotImplementedException();
     }
 }

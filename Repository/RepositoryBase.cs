@@ -6,6 +6,7 @@ using Contracts;
 using Contracts.Repositories;
 using Entities;
 using Entities.Context;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repository
@@ -14,7 +15,7 @@ namespace Repository
     {
         private AppDbContext _context { get; }
 
-        public RepositoryBase(AppDbContext context) => _context = context;
+        protected RepositoryBase(AppDbContext context) => _context = context;
 
         public IQueryable<T> ReadAll() => _context.Set<T>().AsNoTracking();
 
@@ -44,6 +45,15 @@ namespace Repository
             _context.SaveChanges();
             _context.Entry(entity).Reload();
             return entity;
+        }
+
+        public User Update(User user)
+        {
+            var old = _context.Set<User>().FindAsync(user.Id).Result;
+            _context.Entry(old).CurrentValues.SetValues(user);
+            _context.SaveChangesAsync();
+            _context.Entry(user).ReloadAsync();
+            return user;
         }
 
         public bool Delete(T entity)

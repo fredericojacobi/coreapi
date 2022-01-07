@@ -13,5 +13,7 @@ namespace Contracts.Services
         IBranchService Branch { get; }
         
         IEventService Event { get; }
+        
+        IUserService User { get; }
     }
 }

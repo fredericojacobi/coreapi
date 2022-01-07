@@ -10,16 +10,16 @@ namespace Contracts.Repositories
     {
         IEnumerable<User> ReadAllUsers();
         
-        User ReadUser(Guid id);
+        Task<User> ReadUser(Guid id);
         
         Task<User> ReadUserByUserName(string username);
         
-        Task<IdentityResult> CreateUser(User user, string password);
+        Task<User> CreateUser(User user, string password);
         
-        Task<IdentityResult> UpdateUser(User user);
+        Task<User> UpdateUser(User user);
         
-        bool DeleteUser(User user);
+        Task<bool> DeleteUser(User user);
         
-        bool DeleteUser(Guid id);
+        Task<bool> DeleteUser(Guid id);
     }
 }
