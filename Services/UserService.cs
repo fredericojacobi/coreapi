@@ -25,8 +25,8 @@ public class UserService : IUserService
     {
         try
         {
-            var repositoryResult = _repository.User.ReadAllUsers();
-            var mapperResult = _mapper.Map<IEnumerable<UserDTO>>(repositoryResult);
+            var repositoryTask = _repository.User.ReadAllUsers();
+            var mapperResult = _mapper.Map<IEnumerable<UserDTO>>(repositoryTask.Result);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Get);
         }
         catch (Exception e)
@@ -42,8 +42,8 @@ public class UserService : IUserService
 
         try
         {
-            var repositoryResult = _repository.User.ReadUser(id);
-            var mapperResult = _mapper.Map<UserDTO>(repositoryResult.Result);
+            var repositoryTask = _repository.User.ReadUser(id);
+            var mapperResult = _mapper.Map<UserDTO>(repositoryTask.Result);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Get);
         }
         catch (Exception e)
@@ -59,8 +59,8 @@ public class UserService : IUserService
         try
         {
             var user = _mapper.Map<User>(model);
-            var repositoryResult = _repository.User.CreateUser(user, user.Password);
-            var mapperResult = _mapper.Map<UserDTO>(repositoryResult.Result);
+            var repositoryTask = _repository.User.CreateUser(user, user.Password);
+            var mapperResult = _mapper.Map<UserDTO>(repositoryTask.Result);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Post);
         }
         catch (Exception e)
@@ -77,8 +77,8 @@ public class UserService : IUserService
         try
         {
             var user = _mapper.Map<User>(model);
-            var repositoryResult = _repository.User.UpdateUser(user);
-            var mapperResult = _mapper.Map<UserDTO>(repositoryResult.Result);
+            var repositoryTask = _repository.User.UpdateUser(user);
+            var mapperResult = _mapper.Map<UserDTO>(repositoryTask.Result);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Put);
         }
         catch (Exception e)
@@ -94,8 +94,8 @@ public class UserService : IUserService
 
         try
         {
-            var repositoryResult = _repository.User.DeleteUser(id);
-            return new ReturnRequest<UserDTO>(repositoryResult.Result, HttpMethod.Delete);
+            var repositoryTask = _repository.User.DeleteUser(id);
+            return new ReturnRequest<UserDTO>(repositoryTask.Result, HttpMethod.Delete);
         }
         catch (Exception e)
         {

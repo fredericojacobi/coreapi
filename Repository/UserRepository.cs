@@ -19,7 +19,7 @@ namespace Repository
             _userManager = userManager;
         }
 
-        public IEnumerable<User> ReadAllUsers() => ReadAll().OrderBy(x => x.Id).ToList();
+        public Task<IEnumerable<User>> ReadAllUsers() => Task.FromResult<IEnumerable<User>>(ReadAll().OrderBy(x => x.Id).ToList());
 
         public async Task<User> ReadUser(Guid id) => await _userManager.FindByIdAsync(id.ToString());
 
@@ -32,10 +32,10 @@ namespace Repository
             return identityResult.Succeeded ? await ReadUserByUserName(user.UserName) : null;
         }
 
-        public async Task<User> UpdateUser(User user)
+        public Task<User> UpdateUser(User user)
         {
             user.ModifiedAt = DateTime.Now;
-            return Update(user);
+            return Task.FromResult(Update(user));
         }
 
         public async Task<bool> DeleteUser(User user)

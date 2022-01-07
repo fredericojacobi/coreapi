@@ -8,7 +8,7 @@ namespace Contracts.Repositories
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
-        IEnumerable<User> ReadAllUsers();
+        Task<IEnumerable<User>> ReadAllUsers();
         
         Task<User> ReadUser(Guid id);
         
