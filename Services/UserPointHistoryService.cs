@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
 using Contracts.Repositories;
@@ -23,11 +25,11 @@ namespace Services
             _mapper = mapper;
         }
 
-        public ReturnRequest<EletronicPointHistoryDTO> GetAll()
+        public async Task<ReturnRequest<EletronicPointHistoryDTO>> GetAllAsync()
         {
             try
             {
-                var repositoryResult = _repository.EletronicPointHistory.ReadAllHistories();
+                var repositoryResult = await _repository.EletronicPointHistory.ReadAllHistoriesAsync();
                 var mapperResult = _mapper.Map<IEnumerable<EletronicPointHistoryDTO>>(repositoryResult);
                 return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Get);
             }
@@ -37,14 +39,14 @@ namespace Services
             }
         }
 
-        public ReturnRequest<EletronicPointHistoryDTO> Get(Guid id)
+        public async Task<ReturnRequest<EletronicPointHistoryDTO>> GetAsync(Guid id)
         {
             if (id.Equals(Guid.Empty))
                 return new ReturnRequest<EletronicPointHistoryDTO>();
 
             try
             {
-                var repositoryResult = _repository.EletronicPointHistory.ReadHistory(id);
+                var repositoryResult = await _repository.EletronicPointHistory.ReadHistoryAsync(id);
                 if (repositoryResult is null)
                     return new ReturnRequest<EletronicPointHistoryDTO>(HttpStatusCode.NotFound);
                     
@@ -57,15 +59,16 @@ namespace Services
             }
         }
 
-        public ReturnRequest<EletronicPointHistoryDTO> GetDailyUserPointHistory(Guid userId)
+        public async Task<ReturnRequest<EletronicPointHistoryDTO>> GetDailyUserPointHistoryAsync(Guid userId, DateTime day)
         {
             if (userId.Equals(Guid.Empty))
                 return new ReturnRequest<EletronicPointHistoryDTO>();
 
             try
             {
-                var repositoryResult = _repository.EletronicPointHistory.ReadHistoryByUserId(userId);
-                var mapperResult = _mapper.Map<IEnumerable<EletronicPointHistoryDTO>>(repositoryResult);
+                var repositoryResult = await _repository.EletronicPointHistory.ReadHistoryByUserIdAsync(userId);
+                var dailyUserPointHistory = repositoryResult.Where(x => x.CreatedAt.ToString("d").Equals(day.ToString("d")));
+                var mapperResult = _mapper.Map<IEnumerable<EletronicPointHistoryDTO>>(dailyUserPointHistory);
                 return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Get);
             }
             catch (Exception e)
@@ -74,7 +77,7 @@ namespace Services
             }
         }
 
-        public ReturnRequest<EletronicPointHistoryDTO> Post(EletronicPointHistoryDTO model)
+        public async Task<ReturnRequest<EletronicPointHistoryDTO>> PostAsync(EletronicPointHistoryDTO model)
         {
             if (model is null)
                 return new ReturnRequest<EletronicPointHistoryDTO>();
@@ -82,7 +85,7 @@ namespace Services
             try
             {
                 var history = _mapper.Map<EletronicPointHistory>(model);
-                var repositoryResult = _repository.EletronicPointHistory.CreateHistory(history);
+                var repositoryResult = await _repository.EletronicPointHistory.CreateHistoryAsync(history);
                 var mapperResult = _mapper.Map<EletronicPointHistoryDTO>(repositoryResult);
                 return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Post);
             }
@@ -92,7 +95,7 @@ namespace Services
             }
         }
 
-        public ReturnRequest<EletronicPointHistoryDTO> Put(Guid id, EletronicPointHistoryDTO model)
+        public async Task<ReturnRequest<EletronicPointHistoryDTO>> PutAsync(Guid id, EletronicPointHistoryDTO model)
         {
             if (model is null || id.Equals(Guid.Empty) || !id.Equals(model.Id))
                 return new ReturnRequest<EletronicPointHistoryDTO>();
@@ -100,7 +103,7 @@ namespace Services
             try
             {
                 var history = _mapper.Map<EletronicPointHistory>(model);
-                var repositoryResult = _repository.EletronicPointHistory.UpdateHistory(history);
+                var repositoryResult = await _repository.EletronicPointHistory.UpdateHistoryAsync(history);
                 var mapperResult = _mapper.Map<EletronicPointHistoryDTO>(repositoryResult);
                 return new ReturnRequest<EletronicPointHistoryDTO>(mapperResult, HttpMethod.Put);
             }
@@ -110,14 +113,14 @@ namespace Services
             }
         }
 
-        public ReturnRequest<EletronicPointHistoryDTO> Delete(Guid id)
+        public async Task<ReturnRequest<EletronicPointHistoryDTO>> DeleteAsync(Guid id)
         {
             if (id.Equals(Guid.Empty))
                 return new ReturnRequest<EletronicPointHistoryDTO>();
 
             try
             {
-                var repositoryResult = _repository.EletronicPointHistory.DeleteHistory(id);
+                var repositoryResult = await _repository.EletronicPointHistory.DeleteHistoryAsync(id);
                 return new ReturnRequest<EletronicPointHistoryDTO>(repositoryResult, HttpMethod.Delete);
             }
             catch (Exception e)

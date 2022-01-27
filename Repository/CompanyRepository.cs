@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities.Context;
@@ -11,46 +12,47 @@ namespace Repository
 {
     public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
     {
-
         public CompanyRepository(AppDbContext context) : base(context)
         {
         }
 
-        public IEnumerable<Company> ReadAllCompanies() => ReadAll().ToList();
+        public async Task<IEnumerable<Company>> ReadAllCompaniesAsync() => await ReadAllAsync();
 
-        public Company ReadCompany(Guid id) => ReadByCondition(x => x.Id.Equals(id))
-            .Include(x => x.Branches)
-            .FirstOrDefault();
-
-        public Company CreateCompany(Company company)
+        public async Task<Company> ReadCompanyAsync(Guid id)
         {
-            company.CreatedAt = DateTime.Now;
-            return Create(company);
+            var companies = await ReadByConditionAsync(
+                x => x.Id.Equals(id),
+                x => x.Branches);
+                return companies.FirstOrDefault();
         }
 
-        public IEnumerable<Company> CreateRandomCompanies(int quantity)
+        public async Task<Company> CreateCompanyAsync(Company company)
+        {
+            company.CreatedAt = DateTime.Now;
+            return await CreateAsync(company);
+        }
+
+        public async Task<IEnumerable<Company>> CreateRandomCompaniesAsync(int quantity)
         {
             var companies = new List<Company>();
             for (var i = 0; i < quantity; i++)
-            {
-                companies.Add(CreateCompany(new Company {Name = Generic.Functions.Random.Name(15)}));
-            }
+                companies.Add(await CreateCompanyAsync(new Company {Name = Generic.Functions.Random.Name(15)}));
 
-            return companies;
+            return await CreateMultipleAsync(companies);
         }
 
-        public Company UpdateCompany(Company company)
+        public async Task<Company> UpdateCompanyAsync(Company company)
         {
             company.ModifiedAt = DateTime.Now;
-            return Update(company);
+            return await UpdateAsync(company.Id, company);
         }
 
-        public bool DeleteCompany(Company company) => Delete(company);
+        public async Task<bool> DeleteCompanyAsync(Company company) => await DeleteAsync(company);
 
-        public bool DeleteCompany(Guid id)
+        public async Task<bool> DeleteCompanyAsync(Guid id)
         {
-            var entity = ReadCompany(id);
-            return entity is not null && DeleteCompany(entity);
+            var entity = await ReadCompanyAsync(id);
+            return entity is not null && await DeleteCompanyAsync(entity.Id);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Entities.DataTransferObjects;
 using Generic.Models;
 
@@ -6,17 +7,17 @@ namespace Contracts.Services
 {
     public interface IUserPointHistoryService
     {
-        ReturnRequest<EletronicPointHistoryDTO> GetAll();
+        Task<ReturnRequest<EletronicPointHistoryDTO>> GetAllAsync();
 
-        ReturnRequest<EletronicPointHistoryDTO> Get(Guid id);
+        Task<ReturnRequest<EletronicPointHistoryDTO>> GetAsync(Guid id);
         
-        ReturnRequest<EletronicPointHistoryDTO> GetDailyUserPointHistory(Guid userId);
+        Task<ReturnRequest<EletronicPointHistoryDTO>> GetDailyUserPointHistoryAsync(Guid userId, DateTime day);
 
-        ReturnRequest<EletronicPointHistoryDTO> Post(EletronicPointHistoryDTO model);
+        Task<ReturnRequest<EletronicPointHistoryDTO>> PostAsync(EletronicPointHistoryDTO model);
         
-        ReturnRequest<EletronicPointHistoryDTO> Put(Guid id, EletronicPointHistoryDTO model);
+        Task<ReturnRequest<EletronicPointHistoryDTO>> PutAsync(Guid id, EletronicPointHistoryDTO model);
         
-        ReturnRequest<EletronicPointHistoryDTO> Delete(Guid id);
+        Task<ReturnRequest<EletronicPointHistoryDTO>> DeleteAsync(Guid id);
         
     }
 }

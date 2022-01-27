@@ -22,30 +22,45 @@ namespace FirstApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllHistories() => _service.UserPointHistory.GetAll().ObjectResult;
+        public async Task<ActionResult> GetAllHistoriesAsync()
+        {
+            var returnRequest = await _service.UserPointHistory.GetAllAsync();
+            return returnRequest.ObjectResult;
+        }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get([FromRoute] Guid id) => _service.UserPointHistory.Get(id).ObjectResult;
-        // _logger.LogError(
-        // $"{DateTime.Now} - {nameof(Get)} : EletronicPointHistory with id {id} hasn't been found in db.");
+        public async Task<ActionResult> GetAsync([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.UserPointHistory.GetAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpGet("user/{userId}")]
-        public async Task<ActionResult> GetByUserId([FromRoute] Guid userId) =>
-            _service.UserPointHistory.GetDailyUserPointHistory(userId).ObjectResult;
-        // _logger.LogError($"{DateTime.Now} - {nameof(GetByUserId)} : This user hasn't point histories.");
+        public async Task<ActionResult> GetByUserIdAsync([FromRoute] Guid userId, [FromRoute] DateTime day)
+        {
+            var returnRequest = await _service.UserPointHistory.GetDailyUserPointHistoryAsync(userId, day);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] EletronicPointHistoryDTO model) =>
-            _service.UserPointHistory.Post(model).ObjectResult;
+        public async Task<ActionResult> PostAsync([FromBody] EletronicPointHistoryDTO model)
+        {
+            var returnRequest = await _service.UserPointHistory.PostAsync(model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] EletronicPointHistoryDTO model) =>
-            _service.UserPointHistory.Put(id, model).ObjectResult;
-        // _logger.LogError($"{DateTime.Now} - {nameof(Put)} : EletronicPointHistory hasn't been created");
+        public async Task<ActionResult> PutAsync([FromRoute] Guid id, [FromBody] EletronicPointHistoryDTO model)
+        {
+            var returnRequest = await _service.UserPointHistory.PutAsync(id, model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] Guid id) =>
-            _service.UserPointHistory.Delete(id).ObjectResult;
-        // _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : EletronicPointHistory hasn't been removed");
+        public async Task<ActionResult> DeleteAsync([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.UserPointHistory.DeleteAsync(id);
+            return returnRequest.ObjectResult;
+        }
     }
 }

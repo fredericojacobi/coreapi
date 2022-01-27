@@ -1,23 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Repositories
 {
     public interface IEletronicPointHistoryRepository : IRepositoryBase<EletronicPointHistory>
     {
-        IEnumerable<EletronicPointHistory> ReadAllHistories();
+        Task<IEnumerable<EletronicPointHistory>> ReadAllHistoriesAsync();
         
-        EletronicPointHistory ReadHistory(Guid id);
+        Task<EletronicPointHistory> ReadHistoryAsync(Guid id);
 
-        IEnumerable<EletronicPointHistory> ReadHistoryByUserId(Guid userId);
+        Task<IEnumerable<EletronicPointHistory>> ReadHistoryByUserIdAsync(Guid userId);
             
-        EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory);
+        Task<EletronicPointHistory> CreateHistoryAsync(EletronicPointHistory eletronicPointHistory);
         
-        EletronicPointHistory UpdateHistory(EletronicPointHistory eletronicPointHistory);
+        Task<EletronicPointHistory> UpdateHistoryAsync(EletronicPointHistory eletronicPointHistory);
         
-        bool DeleteHistory(EletronicPointHistory eletronicPointHistory);
+        Task<bool> DeleteHistoryAsync(EletronicPointHistory eletronicPointHistory);
         
-        bool DeleteHistory(Guid id);
+        Task<bool> DeleteHistoryAsync(Guid id);
     }
 }

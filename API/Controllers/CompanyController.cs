@@ -21,26 +21,48 @@ namespace FirstApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll() => _service.Company.GetAll().ObjectResult;
+        public async Task<ActionResult> GetAll()
+        {
+            var returnRequest = await _service.Company.GetAllAsync();
+            return returnRequest.ObjectResult;
+        }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get([FromRoute] Guid id) => _service.Company.Get(id).ObjectResult;
+        public async Task<ActionResult> Get([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.Company.GetAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CompanyDTO model) => _service.Company.Post(model).ObjectResult;
+        public async Task<ActionResult> Post([FromBody] CompanyDTO model)
+        {
+            var returnRequest = await _service.Company.PostAsync(model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] CompanyDTO model) =>
-            _service.Company.Put(id, model).ObjectResult;
+        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] CompanyDTO model)
+        {
+            var returnRequest = await _service.Company.PutAsync(id, model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] Guid id) => _service.Company.Delete(id).ObjectResult;
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.Company.DeleteAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpDelete("all")]
         public async Task<ActionResult> DeleteAll() => throw new NotImplementedException();
 
         [HttpPost("random/{quantity}")]
-        public async Task<ActionResult> CreateRandomCompany([FromRoute] int quantity) =>
-            _service.Company.PostRandomCompanies(quantity).ObjectResult;
+        public async Task<ActionResult> CreateRandomCompany([FromRoute] int quantity)
+        {
+            var returnRequest = await _service.Company.PostRandomCompaniesAsync(quantity);
+            return returnRequest.ObjectResult;
+        }
     }
 }

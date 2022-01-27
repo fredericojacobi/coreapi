@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities.Context;
@@ -16,38 +17,43 @@ namespace Repository
         {
         }
 
-        public IEnumerable<EletronicPointHistory> ReadAllHistories() => ReadAll().ToList();
+        public async Task<IEnumerable<EletronicPointHistory>> ReadAllHistoriesAsync() => await ReadAllAsync();
 
-        public EletronicPointHistory ReadHistory(Guid id) =>
-            ReadByCondition(x => x.Id.Equals(id))
-                .Include(x => x.User)
-                .Include(x => x.Point)
-                .FirstOrDefault();
+        public async Task<EletronicPointHistory> ReadHistoryAsync(Guid id)
+        {
+            var histories = await ReadByConditionAsync(
+                x => x.Id.Equals(id),
+                x => x.User,
+                x => x.Point);
+            return histories.FirstOrDefault();
+        }
 
-        public IEnumerable<EletronicPointHistory> ReadHistoryByUserId(Guid userId) =>
-            ReadByCondition(x => x.UserId.Equals(userId))
-                .Include(x => x.User)
-                .Include(x => x.Point)
-                .ToList();
+        public async Task<IEnumerable<EletronicPointHistory>> ReadHistoryByUserIdAsync(Guid userId) =>
+            await ReadByConditionAsync(
+                x => x.UserId.Equals(userId),
+                x => x.User,
+                x => x.Point
+            );
 
-        public EletronicPointHistory CreateHistory(EletronicPointHistory eletronicPointHistory)
+        public async Task<EletronicPointHistory> CreateHistoryAsync(EletronicPointHistory eletronicPointHistory)
         {
             eletronicPointHistory.CreatedAt = DateTime.Now;
-            return Create(eletronicPointHistory);
+            return await CreateAsync(eletronicPointHistory);
         }
 
-        public EletronicPointHistory UpdateHistory(EletronicPointHistory eletronicPointHistory)
+        public async Task<EletronicPointHistory> UpdateHistoryAsync(EletronicPointHistory eletronicPointHistory)
         {
             eletronicPointHistory.ModifiedAt = DateTime.Now;
-            return Update(eletronicPointHistory);
+            return await UpdateAsync(eletronicPointHistory.Id, eletronicPointHistory);
         }
 
-        public bool DeleteHistory(EletronicPointHistory eletronicPointHistory) => Delete(eletronicPointHistory);
+        public Task<bool> DeleteHistoryAsync(EletronicPointHistory eletronicPointHistory) =>
+            DeleteAsync(eletronicPointHistory);
 
-        public bool DeleteHistory(Guid id)
+        public async Task<bool> DeleteHistoryAsync(Guid id)
         {
-            var entity = ReadHistory(id);
-            return entity is not null && DeleteHistory(entity);
+            var entity = await ReadHistoryAsync(id);
+            return entity is not null && await DeleteHistoryAsync(entity);
         }
     }
 }

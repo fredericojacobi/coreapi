@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
@@ -8,17 +9,17 @@ namespace Contracts.Services
 {
     public interface ICompanyService
     {
-        ReturnRequest<CompanyDTO> GetAll();
+        Task<ReturnRequest<CompanyDTO>> GetAllAsync();
 
-        ReturnRequest<CompanyDTO> Get(Guid id);
+        Task<ReturnRequest<CompanyDTO>> GetAsync(Guid id);
 
-        ReturnRequest<CompanyDTO> Post(CompanyDTO company);
+        Task<ReturnRequest<CompanyDTO>> PostAsync(CompanyDTO company);
         
-        ReturnRequest<IEnumerable<CompanyDTO>> PostRandomCompanies(int quantity);
+        Task<ReturnRequest<CompanyDTO>> PostRandomCompaniesAsync(int quantity);
 
-        ReturnRequest<CompanyDTO> Put(Guid id, CompanyDTO company);
+        Task<ReturnRequest<CompanyDTO>> PutAsync(Guid id, CompanyDTO company);
 
-        ReturnRequest<CompanyDTO> Delete(Guid id);
+        Task<ReturnRequest<CompanyDTO>> DeleteAsync(Guid id);
         
     }
 }

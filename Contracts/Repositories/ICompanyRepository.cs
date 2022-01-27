@@ -1,23 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Repositories
 {
     public interface ICompanyRepository : IRepositoryBase<Company>
     {
-        IEnumerable<Company> ReadAllCompanies();
+        Task<IEnumerable<Company>> ReadAllCompaniesAsync();
 
-        Company ReadCompany(Guid id);
+        Task<Company> ReadCompanyAsync(Guid id);
 
-        Company CreateCompany(Company company);
+        Task<Company> CreateCompanyAsync(Company company);
         
-        IEnumerable<Company> CreateRandomCompanies(int quantity);
+        Task<IEnumerable<Company>> CreateRandomCompaniesAsync(int quantity);
 
-        Company UpdateCompany(Company company);
+        Task<Company> UpdateCompanyAsync(Company company);
 
-        bool DeleteCompany(Company company);
+        Task<bool> DeleteCompanyAsync(Company company);
 
-        bool DeleteCompany(Guid id);
+        Task<bool> DeleteCompanyAsync(Guid id);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using Contracts.Repositories;
 using Contracts.Services;
@@ -23,11 +24,11 @@ namespace Services
             _mapper = mapper;
         }
 
-        public ReturnRequest<CompanyDTO> GetAll()
+        public async Task<ReturnRequest<CompanyDTO>> GetAllAsync()
         {
             try
             {
-                var repositoryResult = _repository.Company.ReadAllCompanies();
+                var repositoryResult = await _repository.Company.ReadAllCompaniesAsync();
                 var mapperResult = _mapper.Map<IEnumerable<CompanyDTO>>(repositoryResult);
                 return new ReturnRequest<CompanyDTO>(mapperResult, HttpMethod.Get);
             }
@@ -37,14 +38,14 @@ namespace Services
             }
         }
 
-        public ReturnRequest<CompanyDTO> Get(Guid id)
+        public async Task<ReturnRequest<CompanyDTO>> GetAsync(Guid id)
         {
             if (id.Equals(Guid.Empty))
                 return new ReturnRequest<CompanyDTO>();
 
             try
             {
-                var repositoryResult = _repository.Company.ReadCompany(id);
+                var repositoryResult = await _repository.Company.ReadCompanyAsync(id);
                 var mapperResult = _mapper.Map<CompanyDTO>(repositoryResult);
                 return new ReturnRequest<CompanyDTO>(mapperResult, HttpMethod.Get);
             }
@@ -54,7 +55,7 @@ namespace Services
             }
         }
 
-        public ReturnRequest<CompanyDTO> Post(CompanyDTO model)
+        public async Task<ReturnRequest<CompanyDTO>> PostAsync(CompanyDTO model)
         {
             if (model is null)
                 return new ReturnRequest<CompanyDTO>();
@@ -62,7 +63,7 @@ namespace Services
             try
             {
                 var company = _mapper.Map<Company>(model);
-                var repositoryResult = _repository.Company.CreateCompany(company);
+                var repositoryResult = await _repository.Company.CreateCompanyAsync(company);
                 var mapperResult = _mapper.Map<CompanyDTO>(repositoryResult);
                 return new ReturnRequest<CompanyDTO>(mapperResult, HttpMethod.Post);
             }
@@ -72,24 +73,24 @@ namespace Services
             }
         }
 
-        public ReturnRequest<IEnumerable<CompanyDTO>> PostRandomCompanies(int quantity)
+        public async Task<ReturnRequest<CompanyDTO>> PostRandomCompaniesAsync(int quantity)
         {
             if (quantity < 1)
-                return new ReturnRequest<IEnumerable<CompanyDTO>>();
+                return new ReturnRequest<CompanyDTO>();
 
             try
             {
-                var repositoryResult = _repository.Company.CreateRandomCompanies(quantity);
+                var repositoryResult = await _repository.Company.CreateRandomCompaniesAsync(quantity);
                 var mapperResult = _mapper.Map<IEnumerable<CompanyDTO>>(repositoryResult);
-                return new ReturnRequest<IEnumerable<CompanyDTO>>(mapperResult, HttpMethod.Post);
+                return new ReturnRequest<CompanyDTO>(mapperResult, HttpMethod.Post);
             }
             catch (Exception e)
             {
-                return new ReturnRequest<IEnumerable<CompanyDTO>>(HttpStatusCode.InternalServerError);
+                return new ReturnRequest<CompanyDTO>(HttpStatusCode.InternalServerError);
             }
         }
 
-        public ReturnRequest<CompanyDTO> Put(Guid id, CompanyDTO model)
+        public async Task<ReturnRequest<CompanyDTO>> PutAsync(Guid id, CompanyDTO model)
         {
             if (model is null || id.Equals(Guid.Empty) || !id.Equals(model.Id))
                 return new ReturnRequest<CompanyDTO>();
@@ -97,7 +98,7 @@ namespace Services
             try
             {
                 var company = _mapper.Map<Company>(model);
-                var repositoryResult = _repository.Company.UpdateCompany(company);
+                var repositoryResult = await _repository.Company.UpdateCompanyAsync(company);
                 var mapperResult = _mapper.Map<CompanyDTO>(repositoryResult);
                 return new ReturnRequest<CompanyDTO>(mapperResult, HttpMethod.Put);
             }
@@ -107,14 +108,14 @@ namespace Services
             }
         }
 
-        public ReturnRequest<CompanyDTO> Delete(Guid id)
+        public async Task<ReturnRequest<CompanyDTO>> DeleteAsync(Guid id)
         {
             if (id.Equals(Guid.Empty))
                 return new ReturnRequest<CompanyDTO>();
 
             try
             {
-                var repositoryResult = _repository.Company.DeleteCompany(id);
+                var repositoryResult = await _repository.Company.DeleteCompanyAsync(id);
                 return new ReturnRequest<CompanyDTO>(repositoryResult, HttpMethod.Delete);
             }
             catch (Exception e)
