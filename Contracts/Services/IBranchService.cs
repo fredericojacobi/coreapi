@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.DataTransferObjects;
 using Generic.Models;
 
@@ -7,16 +8,16 @@ namespace Contracts.Services;
 
 public interface IBranchService
 {
-    ReturnRequest<BranchDTO> GetAll();
+    Task<ReturnRequest<BranchDTO>> GetAllAsync();
 
-    ReturnRequest<BranchDTO> Get(Guid id);
+    Task<ReturnRequest<BranchDTO>> GetAsync(Guid id);
 
-    ReturnRequest<BranchDTO> GetByCompanyId(Guid id);
+    Task<ReturnRequest<BranchDTO>> GetByCompanyIdAsync(Guid id);
 
-    ReturnRequest<BranchDTO> Post(BranchDTO branchDTO);
+    Task<ReturnRequest<BranchDTO>> PostAsync(BranchDTO branchDTO);
 
-    ReturnRequest<BranchDTO> Put(Guid id, BranchDTO branchDTO);
+    Task<ReturnRequest<BranchDTO>> PutAsync(Guid id, BranchDTO branchDTO);
 
-    ReturnRequest<BranchDTO> Delete(Guid id);
+    Task<ReturnRequest<BranchDTO>> DeleteAsync(Guid id);
     
 }

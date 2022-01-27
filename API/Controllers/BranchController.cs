@@ -28,25 +28,48 @@ namespace FirstApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll() => _service.Branch.GetAll().ObjectResult;
+        public async Task<ActionResult> GetAllAsync()
+        {
+            var returnRequest = await _service.Branch.GetAllAsync();
+            return returnRequest.ObjectResult;
+        }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(Guid id) => _service.Branch.Get(id).ObjectResult;
+        public async Task<ActionResult> GetAsync([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.Branch.GetAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpGet("company/{id}")]
-        public async Task<ActionResult> GetByCompanyId(Guid id) => _service.Branch.GetByCompanyId(id).ObjectResult;
+        public async Task<ActionResult> GetByCompanyIdAsync([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.Branch.GetByCompanyIdAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPost]
-        public async Task<ActionResult> Post(BranchDTO model) => _service.Branch.Post(model).ObjectResult;
+        public async Task<ActionResult> PostAsync([FromBody] BranchDTO model)
+        {
+            var returnRequest = await _service.Branch.PostAsync(model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] BranchDTO model) =>
-            _service.Branch.Put(id, model).ObjectResult;
+        public async Task<ActionResult> PutAsync([FromRoute] Guid id, [FromBody] BranchDTO model)
+        {
+            var returnRequest = await _service.Branch.PutAsync(id, model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id) => _service.Branch.Delete(id).ObjectResult;
-        
+        public async Task<ActionResult> DeleteAsync([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.Branch.DeleteAsync(id);
+            return returnRequest.ObjectResult;
+        }
+
         [HttpDelete("all")]
-        public async Task<ActionResult> DeleteAll() => StatusCode((int) HttpStatusCode.ServiceUnavailable, "Under maintenance.");
+        public ActionResult DeleteAllAsync() => throw new NotImplementedException();
     }
 }

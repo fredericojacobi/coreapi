@@ -1,23 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Repositories
 {
     public interface IBranchRepository : IRepositoryBase<Branch>
     {
-        IEnumerable<Branch> ReadAllBranches();
+        Task<IEnumerable<Branch>> ReadAllBranchesAsync();
 
-        Branch ReadBranch(Guid id);
+        Task<Branch> ReadBranchAsync(Guid id);
 
-        IEnumerable<Branch> ReadBranchByCompanyId(Guid id);
+        Task<IEnumerable<Branch>> ReadBranchByCompanyIdAsync(Guid id);
         
-        Branch CreateBranch(Branch branch);
+        Task<Branch> CreateBranchAsync(Branch branch);
         
-        Branch UpdateBranch(Branch branch);
+        Task<Branch> UpdateBranchAsync(Branch branch);
         
-        bool DeleteBranch(Branch branch);
+        Task<bool> DeleteBranchAsync(Branch branch);
         
-        bool DeleteBranch(Guid id);
+        Task<bool> DeleteBranchAsync(Guid id);
     }
 }

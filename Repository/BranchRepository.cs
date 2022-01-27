@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Repository
 {
@@ -15,39 +18,39 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Branch> ReadAllBranches() => ReadAll()
-            .Include(x => x.Company)
-            .Include(x => x.Location)
-            .ToList();
+        public async Task<IEnumerable<Branch>> ReadAllBranchesAsync() => await ReadAllAsync();
 
-        public Branch ReadBranch(Guid id) => ReadByCondition(r => r.Id.Equals(id))
-            .Include(x => x.Company)
-            .Include(x => x.Location)
-            .Include(x => x.Points)
-            .FirstOrDefault();
 
-        public IEnumerable<Branch> ReadBranchByCompanyId(Guid id) => ReadByCondition(x => x.CompanyId.Equals(id)).ToList();
+        public async Task<Branch> ReadBranchAsync(Guid id)
+        {
+            var branches = await ReadByConditionAsync(
+                x => x.Id.Equals(id),
+                x => x.Company,
+                x => x.Location,
+                x => x.Points);
+            return branches.FirstOrDefault();
+        }
 
-        public Branch CreateBranch(Branch branch)
+        public async Task<IEnumerable<Branch>> ReadBranchByCompanyIdAsync(Guid id) => await ReadByConditionAsync(x => x.CompanyId.Equals(id));
+
+        public async Task<Branch> CreateBranchAsync(Branch branch)
         {
             branch.CreatedAt = DateTime.Now;
-            var created = Create(branch);
-            return created != null ? ReadBranch(created.Id) : null;
+            return await CreateAsync(branch);
         }
 
-        public Branch UpdateBranch(Branch branch)
+        public async Task<Branch> UpdateBranchAsync(Branch branch)
         {
             branch.ModifiedAt = DateTime.Now;
-            var updated = Update(branch);
-            return updated != null ? ReadBranch(updated.Id) : null;
+            return await UpdateAsync(branch.Id, branch);
         }
 
-        public bool DeleteBranch(Branch branch) => Delete(branch);
+        public async Task<bool> DeleteBranchAsync(Branch branch) => await DeleteAsync(branch);
 
-        public bool DeleteBranch(Guid id)
+        public async Task<bool> DeleteBranchAsync(Guid id)
         {
-            var entity = ReadBranch(id);
-            return entity is not null && DeleteBranch(entity);
+            var entity = await ReadBranchAsync(id);
+            return entity is not null && await DeleteBranchAsync(entity);
         }
     }
 }

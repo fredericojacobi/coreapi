@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities;
 using Entities.Context;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Repository
 {
@@ -17,57 +19,62 @@ namespace Repository
 
         protected RepositoryBase(AppDbContext context) => _context = context;
 
-        public IQueryable<T> ReadAll() => _context.Set<T>().AsNoTracking();
-
-        public IQueryable<T> ReadByCondition(Expression<Func<T, bool>> expression) =>
-            _context.Set<T>().Where(expression).AsNoTracking();
-
-        public T Create(T entity)
+        public async Task<IList<T>> ReadAllAsync(params Expression<Func<T, bool>>[] includeExpressions)
         {
-            _context.Set<T>().Add(entity);
-            _context.SaveChanges();
-            _context.Entry(entity).Reload();
+            var query = _context.Set<T>();
+            if (!includeExpressions.Any()) return await query.AsNoTracking().ToListAsync();
+            includeExpressions.ToList().ForEach(x => query.Include(x));
+            return await query.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IList<T>> ReadByConditionAsync(Expression<Func<T, bool>> expression, params Expression<Func<T, Object>>[] includeExpressions)
+        {
+            var query = _context.Set<T>().Where(expression);
+            if (!includeExpressions.Any()) return await query.AsNoTracking().ToListAsync();
+            // foreach (var include in includeExpressions)
+            // query = query.Include(include);
+            includeExpressions.ToList().ForEach(x => query.Include(x));
+            return await query.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<T> CreateAsync(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            await _context.Entry(entity).ReloadAsync();
             return entity;
         }
 
-        public IEnumerable<T> CreateMultiples(IEnumerable<T> entities)
+        public async Task<IList<T>> CreateMultipleAsync(IEnumerable<T> entities)
         {
             var entityList = entities.ToList();
-            _context.Set<T>().AddRange(entityList);
-            _context.SaveChanges();
-            _context.Entry(entityList).Reload();
+            await _context.Set<T>().AddRangeAsync(entityList);
+            await _context.SaveChangesAsync();
+            await _context.Entry(entityList).ReloadAsync();
             return entityList;
         }
 
-        public T Update(T entity)
+        public async Task<T> UpdateAsync(Guid id, T entity)
         {
-            _context.Set<T>().Update(entity);
-            _context.SaveChanges();
-            _context.Entry(entity).Reload();
+            var currentEntity = await _context.Set<T>().FindAsync(id);
+            _context.Entry(currentEntity).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
+            await _context.Entry(entity).ReloadAsync();
             return entity;
         }
 
-        public User Update(User user)
-        {
-            var old = _context.Set<User>().FindAsync(user.Id).Result;
-            _context.Entry(old).CurrentValues.SetValues(user);
-            _context.SaveChangesAsync();
-            _context.Entry(user).ReloadAsync();
-            return user;
-        }
-
-        public bool Delete(T entity)
+        public async Task<bool> DeleteAsync(T entity)
         {
             _context.Set<T>().Remove(entity);
-            return _context.SaveChanges() > 0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public bool DeleteMultiples()
+        public async Task<bool> DeleteMultiplesAsync()
         {
-            var entityList = ReadAll().ToList();
-            if (entityList.Count <= 0) return false;
+            var entityList = await ReadAllAsync();
+            if (!entityList.Any()) return false;
             _context.Set<T>().RemoveRange(entityList);
-            return _context.SaveChanges() > 0;
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using Contracts.Repositories;
 using Contracts.Services;
@@ -22,11 +23,11 @@ public class BranchService : IBranchService
         _mapper = mapper;
     }
 
-    public ReturnRequest<BranchDTO> GetAll()
+    public async Task<ReturnRequest<BranchDTO>> GetAllAsync()
     {
         try
         {
-            var repositoryResult = _repository.Branch.ReadAllBranches();
+            var repositoryResult = await _repository.Branch.ReadAllBranchesAsync();
             var mapperResult = _mapper.Map<IEnumerable<BranchDTO>>(repositoryResult);
             return new ReturnRequest<BranchDTO>(mapperResult, HttpMethod.Get);
         }
@@ -36,14 +37,14 @@ public class BranchService : IBranchService
         }
     }
 
-    public ReturnRequest<BranchDTO> Get(Guid id)
+    public async Task<ReturnRequest<BranchDTO>> GetAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<BranchDTO>();
 
         try
         {
-            var repositoryResult = _repository.Branch.ReadBranch(id);
+            var repositoryResult = await _repository.Branch.ReadBranchAsync(id);
             var mapperResult = _mapper.Map<BranchDTO>(repositoryResult);
             return new ReturnRequest<BranchDTO>(mapperResult, HttpMethod.Get);
         }
@@ -53,14 +54,14 @@ public class BranchService : IBranchService
         }
     }
 
-    public ReturnRequest<BranchDTO> GetByCompanyId(Guid id)
+    public async Task<ReturnRequest<BranchDTO>> GetByCompanyIdAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<BranchDTO>();
 
         try
         {
-            var repositoryResult = _repository.Branch.ReadBranchByCompanyId(id);
+            var repositoryResult = await _repository.Branch.ReadBranchByCompanyIdAsync(id);
             var mapperResult = _mapper.Map<BranchDTO>(repositoryResult);
             return new ReturnRequest<BranchDTO>(mapperResult, HttpMethod.Get);
         }
@@ -70,7 +71,7 @@ public class BranchService : IBranchService
         }
     }
 
-    public ReturnRequest<BranchDTO> Post(BranchDTO model)
+    public async Task<ReturnRequest<BranchDTO>> PostAsync(BranchDTO model)
     {
         if (model is null)
             return new ReturnRequest<BranchDTO>();
@@ -78,7 +79,7 @@ public class BranchService : IBranchService
         try
         {
             var branch = _mapper.Map<Branch>(model);
-            var repositoryResult = _repository.Branch.CreateBranch(branch);
+            var repositoryResult = await _repository.Branch.CreateBranchAsync(branch);
             var mapperResult = _mapper.Map<BranchDTO>(repositoryResult);
             return new ReturnRequest<BranchDTO>(mapperResult, HttpMethod.Post);
         }
@@ -88,7 +89,7 @@ public class BranchService : IBranchService
         }
     }
 
-    public ReturnRequest<BranchDTO> Put(Guid id, BranchDTO model)
+    public async Task<ReturnRequest<BranchDTO>> PutAsync(Guid id, BranchDTO model)
     {
         if (model is null || id.Equals(Guid.Empty) || !id.Equals(model.Id))
             return new ReturnRequest<BranchDTO>();
@@ -96,7 +97,7 @@ public class BranchService : IBranchService
         try
         {
             var branch = _mapper.Map<Branch>(model);
-            var repositoryResult = _repository.Branch.UpdateBranch(branch);
+            var repositoryResult = await _repository.Branch.UpdateBranchAsync(branch);
             var mapperResult = _mapper.Map<BranchDTO>(repositoryResult);
             return new ReturnRequest<BranchDTO>(mapperResult, HttpMethod.Put);
         }
@@ -106,14 +107,14 @@ public class BranchService : IBranchService
         }
     }
 
-    public ReturnRequest<BranchDTO> Delete(Guid id)
+    public async Task<ReturnRequest<BranchDTO>> DeleteAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<BranchDTO>();
 
         try
         {
-            var repositoryResult = _repository.Branch.DeleteBranch(id);
+            var repositoryResult = await _repository.Branch.DeleteBranchAsync(id);
             return new ReturnRequest<BranchDTO>(repositoryResult, HttpMethod.Delete);
         }
         catch (Exception e)

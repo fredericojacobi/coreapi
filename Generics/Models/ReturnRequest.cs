@@ -30,7 +30,7 @@ namespace Generic.Models
                     case HttpStatusCode.InternalServerError:
                         return new ObjectResult(new StatusCodeResult((int) Status));
                     case HttpStatusCode.NotFound:
-                        return new NotFoundObjectResult(new { });
+                        return new NotFoundObjectResult(string.Empty);
                 }
 
                 if (Count > 0 && Records.Any())
