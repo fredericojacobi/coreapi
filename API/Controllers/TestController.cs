@@ -48,7 +48,7 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var companyResult = _repository.Company.ReadCompany(id);
+                var companyResult = _repository.Company.ReadCompanyAsync(id);
                 return Ok(companyResult);
             }
             catch (Exception e)
@@ -63,7 +63,7 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var listCompanies = _repository.Company.ReadAllCompanies();
+                var listCompanies = _repository.Company.ReadAllCompaniesAsync();
                 return Ok(listCompanies);
             }
             catch (Exception e)
@@ -78,7 +78,7 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var companyResult = _repository.Company.CreateCompany(model);
+                var companyResult = _repository.Company.CreateCompanyAsync(model);
                 return Ok(companyResult);
             }
             catch (Exception e)

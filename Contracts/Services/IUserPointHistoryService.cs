@@ -13,9 +13,9 @@ namespace Contracts.Services
         
         Task<ReturnRequest<EletronicPointHistoryDTO>> GetDailyUserPointHistoryAsync(Guid userId, DateTime day);
 
-        Task<ReturnRequest<EletronicPointHistoryDTO>> PostAsync(EletronicPointHistoryDTO model);
+        Task<ReturnRequest<EletronicPointHistoryDTO>> PostAsync(EletronicPointHistoryDTO eletronicPointHistoryDTO);
         
-        Task<ReturnRequest<EletronicPointHistoryDTO>> PutAsync(Guid id, EletronicPointHistoryDTO model);
+        Task<ReturnRequest<EletronicPointHistoryDTO>> PutAsync(Guid id, EletronicPointHistoryDTO eletronicPointHistoryDTO);
         
         Task<ReturnRequest<EletronicPointHistoryDTO>> DeleteAsync(Guid id);
         

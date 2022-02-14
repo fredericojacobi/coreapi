@@ -12,30 +12,31 @@ namespace Repository
 {
     public class PointRepository : RepositoryBase<Point>, IPointRepository
     {
-
         public PointRepository(AppDbContext context) : base(context)
         {
         }
 
-        public Task<IEnumerable<Point>> ReadAllPoints() => Task.FromResult<IEnumerable<Point>>(ReadAll().Include(x => x.Branch).ToList());
+        public async Task<IEnumerable<Point>> ReadAllPoints() => await Task.FromResult<IEnumerable<Point>>(ReadAll()
+                .Include(x => x.Branch)
+                .ToList());
 
-        public Task<Point> ReadPoint(Guid id) => Task.FromResult(ReadByCondition(x => x.Id.Equals(id))
+        public async Task<Point> ReadPoint(Guid id) => await Task.FromResult(ReadByCondition(x => x.Id.Equals(id))
             .Include(x => x.Branch)
             .FirstOrDefault());
 
-        public Task<Point> CreatePoint(Point point)
+        public async Task<Point> CreatePoint(Point point)
         {
             point.CreatedAt = DateTime.Now;
-            return Task.FromResult(Create(point));
+            return await Task.FromResult(Create(point));
         }
 
-        public Task<Point> UpdatePoint(Point point)
+        public async Task<Point> UpdatePoint(Point point)
         {
             point.ModifiedAt = DateTime.Now;
-            return Task.FromResult(Update(point));
+            return await Task.FromResult(Update(point));
         }
 
-        public Task<bool> DeletePoint(Point point) => Task.FromResult(Delete(point));
+        public async Task<bool> DeletePoint(Point point) => await Task.FromResult(Delete(point));
 
         public async Task<bool> DeletePoint(Guid id)
         {

@@ -1,3 +1,5 @@
+using Contracts.Repositories;
+
 namespace Contracts.Services
 {
     public interface IServiceWrapper

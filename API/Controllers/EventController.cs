@@ -29,10 +29,10 @@ namespace FirstApp.Controllers
         public async Task<ActionResult> GetAll() => _service.Event.GetAll().ObjectResult;
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(Guid id) => _service.Event.Get(id).ObjectResult;
+        public async Task<ActionResult> Get([FromRoute] Guid id) => _service.Event.Get(id).ObjectResult;
 
         [HttpPost]
-        public async Task<ActionResult> Post(EventDTO model) => _service.Event.Post(model).ObjectResult;
+        public async Task<ActionResult> Post([FromBody] EventDTO model) => _service.Event.Post(model).ObjectResult;
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] EventDTO model) =>

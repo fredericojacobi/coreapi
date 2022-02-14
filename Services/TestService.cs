@@ -13,6 +13,6 @@ namespace Services
 
         public TestService(IRepositoryWrapper repository) => _repository = repository;
 
-        public IEnumerable<Company> GetAll() => _repository.Company.ReadAllCompanies().ToList();
+        public IEnumerable<Company> GetAll() => _repository.Company.ReadAllCompaniesAsync().ToList();
     }
 }
