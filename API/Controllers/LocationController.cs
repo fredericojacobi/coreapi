@@ -22,25 +22,53 @@ namespace FirstApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll() => _service.Location.GetAll().ObjectResult;
+        public async Task<ActionResult> GetAll()
+        {
+            var returnRequest = await _service.Location.GetAllAsync();
+            return returnRequest.ObjectResult;
+        }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get([FromRoute] Guid id) => _service.Location.Get(id).ObjectResult;
+        public async Task<ActionResult> Get([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.Location.GetAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] LocationDTO model) => _service.Location.Post(model).ObjectResult;
+        public async Task<ActionResult> Post([FromBody] LocationDTO model)
+        {
+            var returnRequest = await _service.Location.PostAsync(model);
+            return returnRequest.ObjectResult;
+        }
 
         [RequestSizeLimit(9000000000000000000)]
         [HttpPost("multiple")]
-        public async Task<ActionResult> Post([FromBody] IEnumerable<LocationDTO> models) => _service.Location.PostMultiple(models).ObjectResult;
+        public async Task<ActionResult> Post([FromBody] IEnumerable<LocationDTO> models)
+        {
+            var returnRequest = await _service.Location.PostMultipleAsync(models);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] LocationDTO model) => _service.Location.Put(id, model).ObjectResult;
+        public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] LocationDTO model)
+        {
+            var returnRequest = await _service.Location.PutAsync(id, model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] Guid id) => _service.Location.Delete(id).ObjectResult;
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.Location.DeleteAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
-        [HttpDelete("all")]
-        public async Task<ActionResult> DeleteAll() => _service.Location.DeleteAll().ObjectResult;
+        [HttpDelete("multiple/{quantity}")]
+        public async Task<ActionResult> DeleteAll([FromRoute] int quantity)
+        {
+            var returnRequest = await _service.Location.DeleteAllAsync(quantity);
+            return returnRequest.ObjectResult;
+        }
     }
 }

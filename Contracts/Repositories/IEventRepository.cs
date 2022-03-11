@@ -1,21 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Repositories
 {
     public interface IEventRepository : IRepositoryBase<Event>
     {
-        IEnumerable<Event> ReadAllEvents();
+        Task<IEnumerable<Event>> ReadAllEventsAsync();
         
-        Event ReadEvent(Guid id);
+        Task<Event> ReadEventAsync(Guid id);
         
-        Event CreateEvent(Event eEvent);
+        Task<Event> CreateEventAsync(Event eEvent);
         
-        Event UpdateEvent(Event eEvent);
+        Task<Event> UpdateEventAsync(Event eEvent);
         
-        bool DeleteEvent(Event eEvent);
+        Task<bool> DeleteEventAsync(Event eEvent);
         
-        bool DeleteEvent(Guid id);
+        Task<bool> DeleteEventAsync(Guid id);
     }
 }

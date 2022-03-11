@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities.Context;
@@ -10,38 +11,42 @@ namespace Repository
 {
     public class LocationRepository : RepositoryBase<Location>, ILocationRepository
     {
-
         public LocationRepository(AppDbContext context) : base(context)
         {
         }
 
-        public IEnumerable<Location> ReadAllLocations() => ReadAll().ToList();
+        public async Task<IEnumerable<Location>> ReadAllLocationsAsync() => await ReadAllAsync();
 
-        public Location ReadLocation(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
+        public async Task<Location> ReadLocationAsync(Guid id)
+        {
+            var location = await ReadByConditionAsync(x => x.Id.Equals(id));
+            return location.FirstOrDefault();
+        }
 
-        public Location CreateLocation(Location location)
+        public async Task<Location> CreateLocationAsync(Location location)
         {
             location.CreatedAt = DateTime.Now;
-            
-            return Create(location);
+            location.ModifiedAt = DateTime.Now;
+            return await CreateAsync(location);
         }
 
-        public IEnumerable<Location> CreateMultiplesLocations(IEnumerable<Location> locations) => CreateMultiples(locations);
+        public async Task<IEnumerable<Location>> CreateMultipleLocationsAsync(IEnumerable<Location> locations) =>
+            await CreateMultipleAsync(locations);
 
-        public Location UpdateLocation(Location location)
+        public async Task<Location> UpdateLocationAsync(Location location)
         {
             location.ModifiedAt = DateTime.Now;
-            return Update(location);
+            return await UpdateAsync(location.Id, location);
         }
 
-        public bool DeleteLocation(Location location) => Delete(location);
+        public async Task<bool> DeleteLocationAsync(Location location) => await DeleteAsync(location);
 
-        public bool DeleteLocation(Guid id)
+        public async Task<bool> DeleteLocationAsync(Guid id)
         {
-            var entity = ReadLocation(id);
-            return entity is not null && DeleteLocation(entity);
+            var entity = await ReadLocationAsync(id);
+            return entity is not null && await DeleteLocationAsync(entity);
         }
 
-        public bool DeleteMultiplesLocation() => DeleteMultiples();
+        public async Task<bool> DeleteMultipleLocationAsync(int quantity) => await DeleteMultipleAsync(quantity);
     }
 }

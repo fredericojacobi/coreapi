@@ -12,27 +12,46 @@ namespace FirstApp.Controllers;
 public class PointController : ControllerBase
 {
     private readonly IServiceWrapper _service;
-    // private readonly ILogger<PointController> _logger;
-    public PointController(IServiceWrapper service)//, ILogger<PointController> logger
+    private readonly ILogger<PointController> _logger;
+    public PointController(IServiceWrapper service, ILogger<PointController> logger)
     {
         _service = service;
-        // _logger = logger;
+        _logger = logger;
      //_logger.LogWarning($"{DateTime.Now.ToString("T")}: [{nameof(PointDTO)}] - {nameof(Post)} status {_service.Point.Post(model).ObjectResult.StatusCode}");   
     }
 
     [HttpGet]
-    public ActionResult GetAll() => _service.Point.GetAll().ObjectResult;
+    public async Task<ActionResult> GetAll()
+    {
+        var returnRequest = await _service.Point.GetAllAsync();
+        return returnRequest.ObjectResult;
+    }
 
     [HttpGet("{id}")]
-    public ActionResult Get([FromRoute] Guid id) => _service.Point.Get(id).ObjectResult;
+    public async Task<ActionResult> Get([FromRoute] Guid id)
+    {
+        var returnRequest = await _service.Point.GetAsync(id);
+        return returnRequest.ObjectResult;
+    }
 
     [HttpPost]
-    public ActionResult Post([FromBody] PointDTO model) => _service.Point.Post(model).ObjectResult;
+    public async Task<ActionResult> Post([FromBody] PointDTO model)
+    {
+        var returnRequest = await _service.Point.PostAsync(model);
+        return returnRequest.ObjectResult;
+    }
 
     [HttpPut("{id}")]
-    public ActionResult Put([FromRoute] Guid id, [FromBody] PointDTO model) => _service.Point.Put(id, model).ObjectResult;
+    public async Task<ActionResult> Put([FromRoute] Guid id, [FromBody] PointDTO model)
+    {
+        var returnRequest = await _service.Point.PutAsync(id, model);
+        return returnRequest.ObjectResult;
+    }
 
     [HttpDelete("{id}")]
-    public ActionResult Delete([FromRoute] Guid id) => _service.Point.Delete(id).ObjectResult;
-
+    public async Task<ActionResult> Delete([FromRoute] Guid id)
+    {
+        var returnRequest = await _service.Point.DeleteAsync(id);
+        return returnRequest.ObjectResult;
+    }
 }

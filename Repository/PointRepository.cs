@@ -16,32 +16,32 @@ namespace Repository
         {
         }
 
-        public async Task<IEnumerable<Point>> ReadAllPoints() => await Task.FromResult<IEnumerable<Point>>(ReadAll()
-                .Include(x => x.Branch)
-                .ToList());
+        public async Task<IEnumerable<Point>> ReadAllPointsAsync() => await ReadAllAsync(x => x.Branch);
 
-        public async Task<Point> ReadPoint(Guid id) => await Task.FromResult(ReadByCondition(x => x.Id.Equals(id))
-            .Include(x => x.Branch)
-            .FirstOrDefault());
+        public async Task<Point> ReadPointAsync(Guid id)
+        {
+            var point = await ReadByConditionAsync(x => x.Id.Equals(id), x => x.Branch);
+            return point.FirstOrDefault();
+        }
 
-        public async Task<Point> CreatePoint(Point point)
+        public async Task<Point> CreatePointAsync(Point point)
         {
             point.CreatedAt = DateTime.Now;
-            return await Task.FromResult(Create(point));
+            return await CreateAsync(point);
         }
 
-        public async Task<Point> UpdatePoint(Point point)
+        public async Task<Point> UpdatePointAsync(Point point)
         {
             point.ModifiedAt = DateTime.Now;
-            return await Task.FromResult(Update(point));
+            return await UpdateAsync(point.Id, point);
         }
 
-        public async Task<bool> DeletePoint(Point point) => await Task.FromResult(Delete(point));
+        public async Task<bool> DeletePointAsync(Point point) => await DeleteAsync(point);
 
-        public async Task<bool> DeletePoint(Guid id)
+        public async Task<bool> DeletePointAsync(Guid id)
         {
-            var entity = await ReadPoint(id);
-            return await DeletePoint(entity);
+            var entity = await ReadPointAsync(id);
+            return await DeletePointAsync(entity);
         }
     }
 }

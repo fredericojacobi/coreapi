@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using Contracts.Repositories;
 using Contracts.Services;
@@ -21,12 +22,12 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public ReturnRequest<UserDTO> GetAll()
+    public async Task<ReturnRequest<UserDTO>> GetAllAsync()
     {
         try
         {
-            var repositoryTask = _repository.User.ReadAllUsers();
-            var mapperResult = _mapper.Map<IEnumerable<UserDTO>>(repositoryTask.Result);
+            var repositoryTask = await _repository.User.ReadAllUsersAsync();
+            var mapperResult = _mapper.Map<IEnumerable<UserDTO>>(repositoryTask);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Get);
         }
         catch (Exception e)
@@ -35,15 +36,15 @@ public class UserService : IUserService
         }
     }
 
-    public ReturnRequest<UserDTO> Get(Guid id)
+    public async Task<ReturnRequest<UserDTO>> GetAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<UserDTO>();
 
         try
         {
-            var repositoryTask = _repository.User.ReadUser(id);
-            var mapperResult = _mapper.Map<UserDTO>(repositoryTask.Result);
+            var repositoryTask = await _repository.User.ReadUserAsync(id);
+            var mapperResult = _mapper.Map<UserDTO>(repositoryTask);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Get);
         }
         catch (Exception e)
@@ -52,15 +53,15 @@ public class UserService : IUserService
         }
     }
 
-    public ReturnRequest<UserDTO> Post(UserDTO model)
+    public async Task<ReturnRequest<UserDTO>> PostAsync(UserDTO model)
     {
         if (model is null)
             return new ReturnRequest<UserDTO>();
         try
         {
             var user = _mapper.Map<User>(model);
-            var repositoryTask = _repository.User.CreateUser(user, user.Password);
-            var mapperResult = _mapper.Map<UserDTO>(repositoryTask.Result);
+            var repositoryTask = await _repository.User.CreateUserAsync(user, user.Password);
+            var mapperResult = _mapper.Map<UserDTO>(repositoryTask);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Post);
         }
         catch (Exception e)
@@ -69,7 +70,7 @@ public class UserService : IUserService
         }
     }
 
-    public ReturnRequest<UserDTO> Put(Guid id, UserDTO model)
+    public async Task<ReturnRequest<UserDTO>> PutAsync(Guid id, UserDTO model)
     {
         if (model is null || id.Equals(Guid.Empty) || !id.Equals(model.Id))
             return new ReturnRequest<UserDTO>();
@@ -77,8 +78,8 @@ public class UserService : IUserService
         try
         {
             var user = _mapper.Map<User>(model);
-            var repositoryTask = _repository.User.UpdateUser(user);
-            var mapperResult = _mapper.Map<UserDTO>(repositoryTask.Result);
+            var repositoryTask = await _repository.User.UpdateUserAsync(user);
+            var mapperResult = _mapper.Map<UserDTO>(repositoryTask);
             return new ReturnRequest<UserDTO>(mapperResult, HttpMethod.Put);
         }
         catch (Exception e)
@@ -87,15 +88,15 @@ public class UserService : IUserService
         }
     }
 
-    public ReturnRequest<UserDTO> Delete(Guid id)
+    public async Task<ReturnRequest<UserDTO>> DeleteAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<UserDTO>();
 
         try
         {
-            var repositoryTask = _repository.User.DeleteUser(id);
-            return new ReturnRequest<UserDTO>(repositoryTask.Result, HttpMethod.Delete);
+            var repositoryTask = await _repository.User.DeleteUserAsync(id);
+            return new ReturnRequest<UserDTO>(repositoryTask, HttpMethod.Delete);
         }
         catch (Exception e)
         {

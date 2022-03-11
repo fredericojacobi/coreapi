@@ -23,7 +23,7 @@ namespace Entities.Context
                 .ValueGeneratedOnUpdate();
             builder.HasOne(x => x.Branch).WithMany(x => x.Events).HasForeignKey(x => x.BranchId);
             builder.HasOne(x => x.Location).WithMany(x => x.Events).HasForeignKey(x => x.LocationId);
-            builder.HasMany(x => x.EventUsers).WithOne(x => x.Event).HasForeignKey(x => x.EventId);
+            // builder.HasMany(x => x.EventUsers).WithOne(x => x.Event).HasForeignKey(x => x.EventId);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Entities.Context
                 .ValueGeneratedOnUpdate();
             builder.HasMany(x => x.EletronicPointHistories).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             builder.HasMany(x => x.Reminders).WithOne(x => x.User).HasForeignKey(x => x.UserId);
-            builder.HasMany(x => x.EventUsers).WithOne(x => x.User).HasForeignKey(x => x.UserId);
+            // builder.HasMany(x => x.EventUsers).WithOne(x => x.User).HasForeignKey(x => x.UserId);
         }
     }
 }

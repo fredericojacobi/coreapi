@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities.Context;
@@ -14,32 +15,32 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Event> ReadAllEvents()
+        public async Task<IEnumerable<Event>> ReadAllEventsAsync() => await ReadAllAsync();
+
+        public async Task<Event> ReadEventAsync(Guid id)
         {
-            var entities = ReadAll().ToList();
-            return entities.Any() ? entities : null;
+            var events = await ReadByConditionAsync(x => x.Id.Equals(id));
+            return events.FirstOrDefault();
         }
-
-        public Event ReadEvent(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
-
-        public Event CreateEvent(Event eEvent)
+        
+        public async Task<Event> CreateEventAsync(Event eEvent)
         {
             eEvent.CreatedAt = DateTime.Now;
-            return Create(eEvent);
+            return await CreateAsync(eEvent);
         }
 
-        public Event UpdateEvent(Event eEvent)
+        public async Task<Event> UpdateEventAsync(Event eEvent)
         {
             eEvent.ModifiedAt = DateTime.Now;
-            return Update(eEvent);
+            return await UpdateAsync(eEvent.Id, eEvent);
         }
 
-        public bool DeleteEvent(Event eEvent) => Delete(eEvent);
+        public async Task<bool> DeleteEventAsync(Event eEvent) => await DeleteAsync(eEvent);
 
-        public bool DeleteEvent(Guid id)
+        public async Task<bool> DeleteEventAsync(Guid id)
         {
-            var entity = ReadEvent(id);
-            return entity is not null && DeleteEvent(entity);
+            var entity = await ReadEventAsync(id);
+            return entity is not null && await DeleteEventAsync(entity.Id);
         }
     }
 }

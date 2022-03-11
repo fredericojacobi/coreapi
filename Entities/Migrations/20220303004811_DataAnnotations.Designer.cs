@@ -4,14 +4,16 @@ using Entities.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Entities.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220303004811_DataAnnotations")]
+    partial class DataAnnotations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,23 +28,25 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Cnpj")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CompanyId")
+                    b.Property<Guid?>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -64,11 +68,12 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -86,14 +91,14 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PointId")
+                    b.Property<Guid?>("PointId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -111,7 +116,7 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -124,14 +129,15 @@ namespace Entities.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
@@ -165,8 +171,8 @@ namespace Entities.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
@@ -188,12 +194,14 @@ namespace Entities.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CityCode")
                         .HasColumnType("int");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -201,16 +209,19 @@ namespace Entities.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Latitude")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Longitude")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -224,18 +235,19 @@ namespace Entities.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -256,19 +268,21 @@ namespace Entities.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("LocationId")
+                    b.Property<Guid?>("LocationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .ValueGeneratedOnAddOrUpdate()
+                    b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("isComplete")
@@ -283,58 +297,6 @@ namespace Entities.Migrations
                     b.ToTable("Reminders");
                 });
 
-            modelBuilder.Entity("Entities.Models.TestClass", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestClasses");
-                });
-
-            modelBuilder.Entity("Entities.Models.TestRelation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TestClassId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TestStudentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TestClassId");
-
-                    b.HasIndex("TestStudentId");
-
-                    b.ToTable("TestRelations");
-                });
-
-            modelBuilder.Entity("Entities.Models.TestStudent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestStudents");
-                });
-
             modelBuilder.Entity("Entities.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -344,7 +306,7 @@ namespace Entities.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("BranchId")
+                    b.Property<Guid?>("BranchId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -352,6 +314,7 @@ namespace Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -368,6 +331,7 @@ namespace Entities.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTime>("ModifiedAt")
+                        .ValueGeneratedOnUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
@@ -377,9 +341,6 @@ namespace Entities.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -548,15 +509,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Company", "Company")
                         .WithMany("Branches")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("Entities.Models.Location", "Location")
                         .WithMany("Branches")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.Navigation("Company");
 
@@ -567,15 +524,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Point", "Point")
                         .WithMany("EletronicPointHistories")
-                        .HasForeignKey("PointId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PointId");
 
                     b.HasOne("Entities.Models.User", "User")
                         .WithMany("EletronicPointHistories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Point");
 
@@ -586,15 +539,11 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Branch", "Branch")
                         .WithMany("Events")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BranchId");
 
                     b.HasOne("Entities.Models.Location", "Location")
                         .WithMany("Events")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.Navigation("Branch");
 
@@ -624,9 +573,7 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Branch", "Branch")
                         .WithMany("Points")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BranchId");
 
                     b.Navigation("Branch");
                 });
@@ -635,47 +582,22 @@ namespace Entities.Migrations
                 {
                     b.HasOne("Entities.Models.Location", "Location")
                         .WithMany("Reminders")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("Entities.Models.User", "User")
                         .WithMany("Reminders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Location");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Entities.Models.TestRelation", b =>
-                {
-                    b.HasOne("Entities.Models.TestClass", "TestClass")
-                        .WithMany("TestRelations")
-                        .HasForeignKey("TestClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.TestStudent", "TestStudent")
-                        .WithMany("TestRelations")
-                        .HasForeignKey("TestStudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TestClass");
-
-                    b.Navigation("TestStudent");
-                });
-
             modelBuilder.Entity("Entities.Models.User", b =>
                 {
                     b.HasOne("Entities.Models.Branch", "Branch")
                         .WithMany("Users")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BranchId");
 
                     b.Navigation("Branch");
                 });
@@ -762,16 +684,6 @@ namespace Entities.Migrations
             modelBuilder.Entity("Entities.Models.Point", b =>
                 {
                     b.Navigation("EletronicPointHistories");
-                });
-
-            modelBuilder.Entity("Entities.Models.TestClass", b =>
-                {
-                    b.Navigation("TestRelations");
-                });
-
-            modelBuilder.Entity("Entities.Models.TestStudent", b =>
-                {
-                    b.Navigation("TestRelations");
                 });
 
             modelBuilder.Entity("Entities.Models.User", b =>

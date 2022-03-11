@@ -14,15 +14,17 @@ namespace Entities.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new BranchEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new CompanyEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new EletronicPointHistoryEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new EventEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new EventUserEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new LocationEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new PointEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new ReminderEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new BranchEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new CompanyEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new EletronicPointHistoryEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new EventEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new EventUserEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new LocationEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new PointEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new ReminderEntityConfiguration());
+            // modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            
+            //todo: consertar migrações
             base.OnModelCreating(modelBuilder);
         }
 
@@ -39,5 +41,11 @@ namespace Entities.Context
         public DbSet<Point> Points { get; set; }
         
         public DbSet<Reminder> Reminders { get; set; }
+        
+        public DbSet<TestStudent> TestStudents { get; set; }
+        
+        public DbSet<TestClass> TestClasses { get; set; }
+        
+        public DbSet<TestRelation> TestRelations { get; set; }
     }
 }

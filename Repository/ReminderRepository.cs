@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Contracts;
+using System.Threading.Tasks;
 using Contracts.Repositories;
 using Entities.Context;
 using Entities.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -15,33 +14,33 @@ namespace Repository
         {
         }
 
-        public IEnumerable<Reminder> ReadAllReminders() => ReadAll().ToList();
+        public async Task<IEnumerable<Reminder>> ReadAllRemindersAsync() => await ReadAllAsync();
 
-        public Reminder ReadReminder(Guid id) => ReadByCondition(r => r.Id.Equals(id))
-            .FirstOrDefault();
-/*
-        public IEnumerable<Reminder> ReadRemindersByUserId(Guid userId) =>
-            ReadByCondition(r => r.User.Id.Equals(userId.ToString())).ToList();
-*/
-        public Reminder CreateReminder(Reminder reminder)
+        public async Task<Reminder> ReadReminderAsync(Guid id)
+        {
+            var reminder = await ReadByConditionAsync(r => r.Id.Equals(id));
+            return reminder.FirstOrDefault();
+        }
+
+        public async Task<Reminder> CreateReminderAsync(Reminder reminder)
         {
             reminder.CreatedAt = DateTime.Now;
-            var createResult = Create(reminder);
-            return ReadReminder(createResult.Id); 
+            var createResult = await CreateAsync(reminder);
+            return await ReadReminderAsync(createResult.Id);         
         }
-
-        public Reminder UpdateReminder(Reminder reminder)
+        
+        public async Task<Reminder> UpdateReminderAsync(Reminder reminder)
         {
             reminder.ModifiedAt = DateTime.Now;
-            return Update(reminder);
+            return await UpdateAsync(reminder.Id, reminder);
         }
 
-        public bool DeleteReminder(Reminder reminder) => Delete(reminder);
+        public async Task<bool> DeleteReminderAsync(Reminder reminder) => await DeleteAsync(reminder);
         
-        public bool DeleteReminder(Guid id)
+        public async Task<bool> DeleteReminderAsync(Guid id)
         {
-            var entity = ReadReminder(id);
-            return entity is not null && DeleteReminder(entity);
+            var entity = await ReadReminderAsync(id);
+            return entity is not null && await DeleteReminderAsync(entity);
         }
     }
 }

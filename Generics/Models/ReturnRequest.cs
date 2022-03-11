@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -52,7 +51,7 @@ namespace Generic.Models
 
         public ReturnRequest(HttpStatusCode statusCode) => Status = statusCode;
         
-        public ReturnRequest( bool operationResult, HttpMethod method)
+        public ReturnRequest(bool operationResult, HttpMethod method)
         {
             Method = method;
             OperationResult = operationResult;

@@ -24,19 +24,39 @@ namespace FirstApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllUsers() => _service.User.GetAll().ObjectResult;
+        public async Task<ActionResult> GetAllUsers()
+        {
+            var returnRequest = await _service.User.GetAllAsync();
+            return returnRequest.ObjectResult;
+        }
 
         [HttpGet("{id}")]
-        public ActionResult GetUser([FromRoute] Guid id) => _service.User.Get(id).ObjectResult;
+        public async Task<ActionResult> GetUser([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.User.GetAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPost]
-        public ActionResult PostUser([FromBody] UserDTO model) => _service.User.Post(model).ObjectResult;
+        public async Task<ActionResult> PostUser([FromBody] UserDTO model)
+        {
+            var returnRequest = await _service.User.PostAsync(model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateUser([FromRoute] Guid id, [FromBody] UserDTO model) => _service.User.Put(id, model).ObjectResult;
+        public async Task<ActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UserDTO model)
+        {
+            var returnRequest = await _service.User.PutAsync(id, model);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteUser([FromRoute] Guid id) => _service.User.Delete(id).ObjectResult;
+        public async Task<ActionResult> DeleteUser([FromRoute] Guid id)
+        {
+            var returnRequest = await _service.User.DeleteAsync(id);
+            return returnRequest.ObjectResult;
+        }
 
         [HttpDelete("all")]
         public ActionResult DeleteAllUsers() => throw new NotImplementedException();

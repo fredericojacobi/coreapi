@@ -1,23 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Repositories
 {
     public interface IReminderRepository : IRepositoryBase<Reminder>
     {
-        IEnumerable<Reminder> ReadAllReminders();
+        Task<IEnumerable<Reminder>> ReadAllRemindersAsync();
         
-        Reminder ReadReminder(Guid id);
-        /*
-        IEnumerable<Reminder> ReadRemindersByUserId(Guid userId);
-        */
-        Reminder CreateReminder(Reminder reminder);
+        Task<Reminder> ReadReminderAsync(Guid id);
         
-        Reminder UpdateReminder(Reminder reminder);
+        Task<Reminder> CreateReminderAsync(Reminder reminder);
         
-        bool DeleteReminder(Reminder reminder);
+        Task<Reminder> UpdateReminderAsync(Reminder reminder);
+        
+        Task<bool> DeleteReminderAsync(Reminder reminder);
 
-        bool DeleteReminder(Guid id);
+        Task<bool> DeleteReminderAsync(Guid id);
     }
 }

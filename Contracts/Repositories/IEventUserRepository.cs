@@ -1,26 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Repositories
 {
     public interface IEventUserRepository : IRepositoryBase<EventUser>
     {
-        IEnumerable<EventUser> ReadAllEventUsers();
+        Task<IEnumerable<EventUser>> ReadAllEventUsersAsync();
 
-        IEnumerable<EventUser> ReadEventByUserId(Guid id);
+        Task<IEnumerable<EventUser>> ReadAllEventByUserIdAsync(Guid id);
 
-        IEnumerable<EventUser> ReadEventByEventId(Guid id);
+        Task<IEnumerable<EventUser>> ReadEventByEventIdAsync(Guid id);
 
-        EventUser ReadEventUser(Guid id);
+        Task<EventUser> ReadEventUserAsync(Guid id);
 
-        EventUser CreateEventUser(EventUser eventUser);
+        Task<EventUser> CreateEventUserAsync(EventUser eventUser);
 
-        EventUser UpdateEventUser(EventUser eventUser);
+        Task<EventUser> UpdateEventUserAsync(EventUser eventUser);
 
-        bool DeleteEventUser(EventUser eventUser);
+        Task<bool> DeleteEventUserAsync(EventUser eventUser);
 
-        bool DeleteEventUser(Guid id);
+        Task<bool> DeleteEventUserAsync(Guid id);
         
     }
 }

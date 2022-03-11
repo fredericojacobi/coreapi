@@ -1,26 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Repositories
 {
     public interface ILocationRepository : IRepositoryBase<Location>
     {
-        IEnumerable<Location> ReadAllLocations();
+        Task<IEnumerable<Location>> ReadAllLocationsAsync();
 
-        Location ReadLocation(Guid id);
+        Task<Location> ReadLocationAsync(Guid id);
 
-        Location CreateLocation(Location location);
+        Task<Location> CreateLocationAsync(Location location);
 
-        IEnumerable<Location> CreateMultiplesLocations(IEnumerable<Location> locations);
+        Task<IEnumerable<Location>> CreateMultipleLocationsAsync(IEnumerable<Location> locations);
         
-        Location UpdateLocation(Location location);
+        Task<Location> UpdateLocationAsync(Location location);
 
-        bool DeleteLocation(Location location);
+        Task<bool> DeleteLocationAsync(Location location);
         
-        bool DeleteLocation(Guid id);
+        Task<bool> DeleteLocationAsync(Guid id);
 
-        bool DeleteMultiplesLocation();
-        
+        Task<bool> DeleteMultipleLocationAsync(int quantity);
     }
 }

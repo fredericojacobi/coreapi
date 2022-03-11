@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Contracts;
 using Contracts.Repositories;
-using Entities;
 using Entities.Context;
-using Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace Repository
 {
@@ -19,7 +15,7 @@ namespace Repository
 
         protected RepositoryBase(AppDbContext context) => _context = context;
 
-        public async Task<IList<T>> ReadAllAsync(params Expression<Func<T, bool>>[] includeExpressions)
+        public async Task<IList<T>> ReadAllAsync(params Expression<Func<T, Object>>[] includeExpressions)
         {
             var query = _context.Set<T>();
             if (!includeExpressions.Any()) return await query.AsNoTracking().ToListAsync();
@@ -31,8 +27,6 @@ namespace Repository
         {
             var query = _context.Set<T>().Where(expression);
             if (!includeExpressions.Any()) return await query.AsNoTracking().ToListAsync();
-            // foreach (var include in includeExpressions)
-            // query = query.Include(include);
             includeExpressions.ToList().ForEach(x => query.Include(x));
             return await query.AsNoTracking().ToListAsync();
         }
@@ -69,9 +63,10 @@ namespace Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteMultiplesAsync()
+        public async Task<bool> DeleteMultipleAsync(int quantity)
         {
             var entityList = await ReadAllAsync();
+            entityList = entityList.Take(quantity).ToList();
             if (!entityList.Any()) return false;
             _context.Set<T>().RemoveRange(entityList);
             return await _context.SaveChangesAsync() > 0;

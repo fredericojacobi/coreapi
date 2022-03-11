@@ -1,5 +1,3 @@
-using Contracts.Repositories;
-
 namespace Contracts.Services
 {
     public interface IServiceWrapper
@@ -19,5 +17,7 @@ namespace Contracts.Services
         IUserService User { get; }
         
         IPointService Point { get; }
+        
+        // IReminderService Reminder { get; }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.DataTransferObjects;
 using Generic.Models;
 
@@ -7,18 +8,18 @@ namespace Contracts.Services;
 
 public interface ILocationService
 {
-    ReturnRequest<LocationDTO> GetAll();
+    Task<ReturnRequest<LocationDTO>> GetAllAsync();
 
-    ReturnRequest<LocationDTO> Get(Guid id);
+    Task<ReturnRequest<LocationDTO>> GetAsync(Guid id);
 
-    ReturnRequest<LocationDTO> Post(LocationDTO location);
+    Task<ReturnRequest<LocationDTO>> PostAsync(LocationDTO location);
 
-    ReturnRequest<LocationDTO> PostMultiple(IEnumerable<LocationDTO> locations);
+    Task<ReturnRequest<LocationDTO>> PostMultipleAsync(IEnumerable<LocationDTO> locations);
 
-    ReturnRequest<LocationDTO> Put(Guid id, LocationDTO location);
+    Task<ReturnRequest<LocationDTO>> PutAsync(Guid id, LocationDTO location);
 
-    ReturnRequest<LocationDTO> Delete(Guid id);
+    Task<ReturnRequest<LocationDTO>> DeleteAsync(Guid id);
     
-    ReturnRequest<LocationDTO> DeleteAll();
+    Task<ReturnRequest<LocationDTO>> DeleteAllAsync(int quantity);
     
 }

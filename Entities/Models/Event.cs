@@ -6,9 +6,9 @@ namespace Entities.Models
 {
     public class Event : ObjectBase
     {
-        public Guid? BranchId { get; set; }
+        public Guid BranchId { get; set; }
         
-        public Guid? LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         public string Name { get; set; }
         
@@ -24,8 +24,8 @@ namespace Entities.Models
         
         public Branch Branch { get; set; }
         
-        public ICollection<EventUser> EventUsers { get; set; }
-        
         public bool isCovered { get; set; }
+        
+        public ICollection<EventUser> EventUsers { get; set; }
     }
 }

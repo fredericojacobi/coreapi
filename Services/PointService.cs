@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using Contracts.Repositories;
 using Contracts.Services;
@@ -22,12 +23,12 @@ public class PointService : IPointService
         _mapper = mapper;
     }
 
-    public ReturnRequest<PointDTO> GetAll()
+    public async Task<ReturnRequest<PointDTO>> GetAllAsync()
     {
         try
         {
-            var repositoryTask = _repository.Point.ReadAllPoints();
-            var mapperResult = _mapper.Map<IEnumerable<PointDTO>>(repositoryTask.Result);
+            var repositoryTask = await _repository.Point.ReadAllPointsAsync();
+            var mapperResult = _mapper.Map<IEnumerable<PointDTO>>(repositoryTask);
             return new ReturnRequest<PointDTO>(mapperResult, HttpMethod.Get);
         }
         catch (Exception e)
@@ -36,15 +37,15 @@ public class PointService : IPointService
         }
     }
 
-    public ReturnRequest<PointDTO> Get(Guid id)
+    public async Task<ReturnRequest<PointDTO>> GetAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<PointDTO>();
 
         try
         {
-            var repositoryTask = _repository.Point.ReadPoint(id);
-            var mapperResult = _mapper.Map<PointDTO>(repositoryTask.Result);
+            var repositoryTask = await _repository.Point.ReadPointAsync(id);
+            var mapperResult = _mapper.Map<PointDTO>(repositoryTask);
             return new ReturnRequest<PointDTO>(mapperResult, HttpMethod.Get);
         }
         catch (Exception e)
@@ -53,7 +54,7 @@ public class PointService : IPointService
         }
     }
 
-    public ReturnRequest<PointDTO> Post(PointDTO model)
+    public async Task<ReturnRequest<PointDTO>> PostAsync(PointDTO model)
     {
         if (model is null)
             return new ReturnRequest<PointDTO>();
@@ -61,8 +62,8 @@ public class PointService : IPointService
         try
         {
             var point = _mapper.Map<Point>(model);
-            var repositoryTask = _repository.Point.CreatePoint(point);
-            var mapperResult = _mapper.Map<PointDTO>(repositoryTask.Result);
+            var repositoryTask = await _repository.Point.CreatePointAsync(point);
+            var mapperResult = _mapper.Map<PointDTO>(repositoryTask);
             return new ReturnRequest<PointDTO>(mapperResult, HttpMethod.Post);
         }
         catch (Exception e)
@@ -71,7 +72,7 @@ public class PointService : IPointService
         }
     }
 
-    public ReturnRequest<PointDTO> Put(Guid id, PointDTO model)
+    public async Task<ReturnRequest<PointDTO>> PutAsync(Guid id, PointDTO model)
     {
         if (model is null || id.Equals(Guid.Empty) || !id.Equals(model.Id))
             return new ReturnRequest<PointDTO>();
@@ -79,8 +80,8 @@ public class PointService : IPointService
         try
         {
             var point = _mapper.Map<Point>(model);
-            var repositoryTask = _repository.Point.UpdatePoint(point);
-            var mapperResult = _mapper.Map<PointDTO>(repositoryTask.Result);
+            var repositoryTask = await _repository.Point.UpdatePointAsync(point);
+            var mapperResult = _mapper.Map<PointDTO>(repositoryTask);
             return new ReturnRequest<PointDTO>(mapperResult, HttpMethod.Put);
         }
         catch (Exception e)
@@ -89,15 +90,15 @@ public class PointService : IPointService
         }
     }
 
-    public ReturnRequest<PointDTO> Delete(Guid id)
+    public async Task<ReturnRequest<PointDTO>> DeleteAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<PointDTO>();
 
         try
         {
-            var repositoryTask = _repository.Point.DeletePoint(id);
-            return new ReturnRequest<PointDTO>(repositoryTask.Result, HttpMethod.Delete);
+            var repositoryTask = await _repository.Point.DeletePointAsync(id);
+            return new ReturnRequest<PointDTO>(repositoryTask, HttpMethod.Delete);
         }
         catch (Exception e)
         {

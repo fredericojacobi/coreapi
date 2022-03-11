@@ -19,6 +19,7 @@ namespace FirstApp
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.CreatedAt));
             
             CreateMap<Event, EventDTO>().ReverseMap();
+            CreateMap<EventUser, EventUserDTO>().ReverseMap();
             
             CreateMap<Location, LocationDTO>().ReverseMap();
             

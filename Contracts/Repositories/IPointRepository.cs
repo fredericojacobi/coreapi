@@ -7,17 +7,17 @@ namespace Contracts.Repositories
 {
     public interface IPointRepository : IRepositoryBase<Point>
     {
-        Task<IEnumerable<Point>> ReadAllPoints();
+        Task<IEnumerable<Point>> ReadAllPointsAsync();
 
-        Task<Point> ReadPoint(Guid id);
+        Task<Point> ReadPointAsync(Guid id);
 
-        Task<Point> CreatePoint(Point point);
+        Task<Point> CreatePointAsync(Point point);
 
-        Task<Point> UpdatePoint(Point point);
+        Task<Point> UpdatePointAsync(Point point);
 
-        Task<bool >DeletePoint(Point point);
+        Task<bool> DeletePointAsync(Point point);
 
-        Task<bool >DeletePoint(Guid id);
+        Task<bool> DeletePointAsync(Guid id);
         
     }
 }

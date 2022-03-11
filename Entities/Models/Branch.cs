@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Generic.Models;
 
 namespace Entities.Models
 {
     public class Branch : ObjectBase
     {
-        public Guid? CompanyId { get; set; }
+        public Guid CompanyId { get; set; }
         
-        public Guid? LocationId { get; set; }
+        public Guid LocationId { get; set; }
 
         public string Name { get; set; }
         

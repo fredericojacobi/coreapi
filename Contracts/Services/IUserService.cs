@@ -8,14 +8,14 @@ namespace Contracts.Services;
 
 public interface IUserService
 {
-    ReturnRequest<UserDTO> GetAll();
+    Task<ReturnRequest<UserDTO>> GetAllAsync();
 
-    ReturnRequest<UserDTO> Get(Guid id);
+    Task<ReturnRequest<UserDTO>> GetAsync(Guid id);
 
-    ReturnRequest<UserDTO> Post(UserDTO userDTO);
+    Task<ReturnRequest<UserDTO>> PostAsync(UserDTO userDTO);
 
-    ReturnRequest<UserDTO> Put(Guid id, UserDTO userDTO);
+    Task<ReturnRequest<UserDTO>> PutAsync(Guid id, UserDTO userDTO);
 
-    ReturnRequest<UserDTO> Delete(Guid id);
+    Task<ReturnRequest<UserDTO>> DeleteAsync(Guid id);
     
 }

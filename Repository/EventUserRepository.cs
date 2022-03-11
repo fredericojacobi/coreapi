@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Entities.Context;
@@ -10,29 +11,35 @@ namespace Repository
 {
     public class EventUserRepository : RepositoryBase<EventUser>, IEventUserRepository
     {
-
         public EventUserRepository(AppDbContext context) : base(context)
         {
         }
 
-        public IEnumerable<EventUser> ReadAllEventUsers() => ReadAll().ToList();
-        
-        public IEnumerable<EventUser> ReadEventByUserId(Guid id) => ReadByCondition(x => x.UserId.Equals(id)).ToList();
-        
-        public IEnumerable<EventUser> ReadEventByEventId(Guid id) => ReadByCondition(x => x.EventId.Equals(id)).ToList();
+        public async Task<IEnumerable<EventUser>> ReadAllEventUsersAsync() => await ReadAllAsync();
 
-        public EventUser ReadEventUser(Guid id) => ReadByCondition(x => x.Id.Equals(id)).FirstOrDefault();
+        public async Task<IEnumerable<EventUser>> ReadAllEventByUserIdAsync(Guid id) =>
+            await ReadAllAsync();
 
-        public EventUser CreateEventUser(EventUser eventUser) => Create(eventUser);
+        public async Task<IEnumerable<EventUser>> ReadEventByEventIdAsync(Guid id) =>
+            await ReadAllAsync();
 
-        public EventUser UpdateEventUser(EventUser eventUser) => Update(eventUser);
-
-        public bool DeleteEventUser(EventUser eventUser) => Delete(eventUser);
-
-        public bool DeleteEventUser(Guid id)
+        public async Task<EventUser> ReadEventUserAsync(Guid id)
         {
-            var entity = ReadEventUser(id);
-            return entity is not null && DeleteEventUser(entity);
+            var eventUser = await ReadByConditionAsync(x => x.Id.Equals(id));
+            return eventUser.FirstOrDefault();
+        }
+
+        public async Task<EventUser> CreateEventUserAsync(EventUser eventUser) => await CreateAsync(eventUser);
+
+        public async Task<EventUser> UpdateEventUserAsync(EventUser eventUser) =>
+            await UpdateAsync(eventUser.Id, eventUser);
+
+        public async Task<bool> DeleteEventUserAsync(EventUser eventUser) => await DeleteAsync(eventUser);
+
+        public async Task<bool> DeleteEventUserAsync(Guid id)
+        {
+            var entity = await ReadEventUserAsync(id);
+            return entity is not null && await DeleteEventUserAsync(entity);
         }
     }
 }

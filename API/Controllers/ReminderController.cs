@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
 using Contracts.Repositories;
+using Contracts.Services;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Generic.Models;
@@ -18,12 +19,14 @@ namespace FirstApp.Controllers
     public class ReminderController : ControllerBase
     {
         private readonly ILogger<ReminderController> _logger;
+        private readonly IServiceWrapper _service;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
 
-        public ReminderController(ILogger<ReminderController> logger, IRepositoryWrapper repository, IMapper mapper)
+        public ReminderController(ILogger<ReminderController> logger, IRepositoryWrapper repository, IServiceWrapper service, IMapper mapper)
         {
             _logger = logger;
+            _service = service;
             _repository = repository;
             _mapper = mapper;
         }
@@ -34,8 +37,8 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var reminders = _repository.Reminder.ReadAllReminders();
-                return Ok(_mapper.Map<IEnumerable<ReminderDTO>>(reminders));
+                var returnRequest = await _repository.Reminder.ReadAllAsync();
+                return Ok(returnRequest);
             }
             catch (Exception e)
             {
@@ -50,7 +53,7 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var reminder = _repository.Reminder.ReadReminder(id);
+                var reminder = _repository.Reminder.ReadReminderAsync(id);
                 if (reminder != null) return Ok(_mapper.Map<ReminderDTO>(reminder));
                 _logger.LogError($"{DateTime.Now} - {nameof(Get)} : Reminder with id {id} hasn't been found in db");
                 return NotFound();
@@ -69,7 +72,7 @@ namespace FirstApp.Controllers
             try
             {
                 var reminder = _mapper.Map<Reminder>(model);
-                var repositoryResult = _repository.Reminder.CreateReminder(reminder);
+                var repositoryResult = _repository.Reminder.CreateReminderAsync(reminder);
                 if(repositoryResult != null) return Ok(_mapper.Map<ReminderDTO>(repositoryResult));
                 _logger.LogError($"{DateTime.Now} - {nameof(Post)} : Reminder hasn't been created");
                 return StatusCode(500, "Internal server error");
@@ -93,7 +96,7 @@ namespace FirstApp.Controllers
                     return BadRequest("Object's Ids doesn't match");
                 }
                 var reminder = _mapper.Map<Reminder>(model);
-                var repositoryResult = _repository.Reminder.UpdateReminder(reminder);
+                var repositoryResult = _repository.Reminder.UpdateReminderAsync(reminder);
                 if (repositoryResult != null) return Ok(_mapper.Map<ReminderDTO>(repositoryResult));
                 _logger.LogError($"{DateTime.Now} - {nameof(Put)} : Reminder hasn't been updated.");
                 return Ok(ResponseErrorMessage.InternalServerError("Internal server error. Reminder hasn't been updated."));
@@ -112,7 +115,7 @@ namespace FirstApp.Controllers
         {
             try
             {
-                var removed = _repository.Reminder.DeleteReminder(id);
+                var removed = await _repository.Reminder.DeleteReminderAsync(id);
                 if (removed)
                     return Ok(true);
                 _logger.LogError($"{DateTime.Now} - {nameof(Delete)} : Reminder hasn't been removed");

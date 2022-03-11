@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.DataTransferObjects;
 using Generic.Models;
 
@@ -7,14 +7,20 @@ namespace Contracts.Services;
 
 public interface IEventService
 {
-    ReturnRequest<EventDTO> GetAll();
+    Task<ReturnRequest<EventDTO>> GetAllAsync();
 
-    ReturnRequest<EventDTO> Get(Guid id);
+    Task<ReturnRequest<EventDTO>> GetAsync(Guid id);
+    
+    Task<ReturnRequest<EventDTO>> GetAllByUserIdAsync(Guid id);
+    
+    Task<ReturnRequest<EventDTO>> GetByEventIdAsync(Guid id);
+    
+    Task<ReturnRequest<EventDTO>> PostAsync(EventDTO eventDTO);
+    
+    Task<ReturnRequest<EventUserDTO>> PostJoinUserAsync(EventUserDTO eventUserDTO);
 
-    ReturnRequest<EventDTO> Post(EventDTO eventDTO);
+    Task<ReturnRequest<EventDTO>> PutAsync(Guid id, EventDTO eventDTO);
 
-    ReturnRequest<EventDTO> Put(Guid id, EventDTO eventDTO);
-
-    ReturnRequest<EventDTO> Delete(Guid id);
+    Task<ReturnRequest<EventDTO>> DeleteAsync(Guid id);
     
 }

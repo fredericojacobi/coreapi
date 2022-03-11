@@ -1,21 +1,20 @@
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.DataTransferObjects;
-using Entities.Models;
 using Generic.Models;
 
 namespace Contracts.Services;
 
 public interface IPointService
 {
-    ReturnRequest<PointDTO> GetAll();
+    Task<ReturnRequest<PointDTO>> GetAllAsync();
 
-    ReturnRequest<PointDTO> Get(Guid id);
+    Task<ReturnRequest<PointDTO>> GetAsync(Guid id);
 
-    ReturnRequest<PointDTO> Post(PointDTO point);
+    Task<ReturnRequest<PointDTO>> PostAsync(PointDTO point);
 
-    ReturnRequest<PointDTO> Put(Guid id, PointDTO point);
+    Task<ReturnRequest<PointDTO>> PutAsync(Guid id, PointDTO point);
 
-    ReturnRequest<PointDTO> Delete(Guid id);
+    Task<ReturnRequest<PointDTO>> DeleteAsync(Guid id);
     
 }

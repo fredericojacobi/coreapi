@@ -8,18 +8,18 @@ namespace Contracts.Repositories
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
-        Task<IEnumerable<User>> ReadAllUsers();
+        Task<IEnumerable<User>> ReadAllUsersAsync();
         
-        Task<User> ReadUser(Guid id);
+        Task<User> ReadUserAsync(Guid id);
         
-        Task<User> ReadUserByUserName(string username);
+        Task<User> ReadUserByUserNameAsync(string username);
         
-        Task<User> CreateUser(User user, string password);
+        Task<User> CreateUserAsync(User user, string password);
         
-        Task<User> UpdateUser(User user);
+        Task<User> UpdateUserAsync(User user);
         
-        Task<bool> DeleteUser(User user);
+        Task<bool> DeleteUserAsync(User user);
         
-        Task<bool> DeleteUser(Guid id);
+        Task<bool> DeleteUserAsync(Guid id);
     }
 }

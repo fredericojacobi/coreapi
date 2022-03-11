@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using Contracts.Repositories;
 using Contracts.Services;
@@ -24,11 +25,11 @@ public class LocationService : ILocationService
         _mapper = mapper;
     }
 
-    public ReturnRequest<LocationDTO> GetAll()
+    public async Task<ReturnRequest<LocationDTO>> GetAllAsync()
     {
         try
         {
-            var repositoryResult = _repository.Location.ReadAllLocations();
+            var repositoryResult = await _repository.Location.ReadAllLocationsAsync();
             var mapperResult = _mapper.Map<IEnumerable<LocationDTO>>(repositoryResult);
             return new ReturnRequest<LocationDTO>(mapperResult, HttpMethod.Get);
         }
@@ -38,14 +39,14 @@ public class LocationService : ILocationService
         }
     }
 
-    public ReturnRequest<LocationDTO> Get(Guid id)
+    public async Task<ReturnRequest<LocationDTO>> GetAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<LocationDTO>();
 
         try
         {
-            var repositoryResult = _repository.Location.ReadLocation(id);
+            var repositoryResult = await _repository.Location.ReadLocationAsync(id);
             var mapperResult = _mapper.Map<LocationDTO>(repositoryResult);
             return new ReturnRequest<LocationDTO>(mapperResult, HttpMethod.Get);
         }
@@ -55,7 +56,7 @@ public class LocationService : ILocationService
         }
     }
 
-    public ReturnRequest<LocationDTO> Post(LocationDTO model)
+    public async Task<ReturnRequest<LocationDTO>> PostAsync(LocationDTO model)
     {
         if (model is null)
             return new ReturnRequest<LocationDTO>();
@@ -63,7 +64,7 @@ public class LocationService : ILocationService
         try
         {
             var location = _mapper.Map<Location>(model);
-            var repositoryResult = _repository.Location.CreateLocation(location);
+            var repositoryResult = await _repository.Location.CreateLocationAsync(location);
             var mapperResult = _mapper.Map<LocationDTO>(repositoryResult);
             return new ReturnRequest<LocationDTO>(mapperResult, HttpMethod.Post);
         }
@@ -73,7 +74,7 @@ public class LocationService : ILocationService
         }
     }
 
-    public ReturnRequest<LocationDTO> PostMultiple(IEnumerable<LocationDTO> locations)
+    public async Task<ReturnRequest<LocationDTO>> PostMultipleAsync(IEnumerable<LocationDTO> locations)
     {
         if (!locations.Any())
             return new ReturnRequest<LocationDTO>();
@@ -81,7 +82,7 @@ public class LocationService : ILocationService
         try
         {
             var locationsMapperResult = _mapper.Map<IEnumerable<Location>>(locations);
-            var repositoryResult = _repository.Location.CreateMultiplesLocations(locationsMapperResult);
+            var repositoryResult = await _repository.Location.CreateMultipleLocationsAsync(locationsMapperResult);
             var mapperResult = _mapper.Map<IEnumerable<LocationDTO>>(repositoryResult);
             return new ReturnRequest<LocationDTO>(mapperResult, HttpMethod.Post);
         }
@@ -91,7 +92,7 @@ public class LocationService : ILocationService
         }
     }
 
-    public ReturnRequest<LocationDTO> Put(Guid id, LocationDTO model)
+    public async Task<ReturnRequest<LocationDTO>> PutAsync(Guid id, LocationDTO model)
     {
         if (model is null || id.Equals(Guid.Empty) || !id.Equals(model.Id))
             return new ReturnRequest<LocationDTO>();
@@ -99,7 +100,7 @@ public class LocationService : ILocationService
         try
         {
             var location = _mapper.Map<Location>(model);
-            var repositoryResult = _repository.Location.UpdateLocation(location);
+            var repositoryResult = await _repository.Location.UpdateLocationAsync(location);
             var mapperResult = _mapper.Map<LocationDTO>(repositoryResult);
             return new ReturnRequest<LocationDTO>(mapperResult, HttpMethod.Put);
         }
@@ -109,14 +110,14 @@ public class LocationService : ILocationService
         }
     }
 
-    public ReturnRequest<LocationDTO> Delete(Guid id)
+    public async Task<ReturnRequest<LocationDTO>> DeleteAsync(Guid id)
     {
         if (id.Equals(Guid.Empty))
             return new ReturnRequest<LocationDTO>();
 
         try
         {
-            var repositoryResult = _repository.Location.DeleteLocation(id);
+            var repositoryResult = await _repository.Location.DeleteLocationAsync(id);
             return new ReturnRequest<LocationDTO>(repositoryResult, HttpMethod.Delete);
         }
         catch (Exception e)
@@ -125,11 +126,11 @@ public class LocationService : ILocationService
         }
     }
 
-    public ReturnRequest<LocationDTO> DeleteAll()
+    public async Task<ReturnRequest<LocationDTO>> DeleteAllAsync(int quantity)
     {
         try
         {
-            var repositoryResult = _repository.Location.DeleteMultiplesLocation();
+            var repositoryResult = await _repository.Location.DeleteMultipleLocationAsync(quantity);
             return new ReturnRequest<LocationDTO>(repositoryResult, HttpMethod.Delete);
         }
         catch (Exception e)
