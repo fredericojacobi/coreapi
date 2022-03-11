@@ -17,9 +17,9 @@ namespace Repository
 
         public async Task<IList<T>> ReadAllAsync(params Expression<Func<T, Object>>[] includeExpressions)
         {
-            var query = _context.Set<T>();
+            var query = _context.Set<T>().AsQueryable();
             if (!includeExpressions.Any()) return await query.AsNoTracking().ToListAsync();
-            includeExpressions.ToList().ForEach(x => query.Include(x));
+            includeExpressions.ToList().ForEach(x => query = query.Include(x));
             return await query.AsNoTracking().ToListAsync();
         }
 
@@ -27,7 +27,7 @@ namespace Repository
         {
             var query = _context.Set<T>().Where(expression);
             if (!includeExpressions.Any()) return await query.AsNoTracking().ToListAsync();
-            includeExpressions.ToList().ForEach(x => query.Include(x));
+            includeExpressions.ToList().ForEach(x => query = query.Include(x));
             return await query.AsNoTracking().ToListAsync();
         }
 

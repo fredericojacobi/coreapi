@@ -14,18 +14,7 @@ namespace Entities.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.ApplyConfiguration(new BranchEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new CompanyEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new EletronicPointHistoryEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new EventEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new EventUserEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new LocationEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new PointEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new ReminderEntityConfiguration());
-            // modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
-            
-            //todo: consertar migrações
-            base.OnModelCreating(modelBuilder);
+         base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Branch> Branches { get; set; }

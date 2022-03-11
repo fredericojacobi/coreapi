@@ -18,6 +18,6 @@ namespace Contracts.Services
         
         IPointService Point { get; }
         
-        // IReminderService Reminder { get; }
+        IReminderService Reminder { get; }
     }
 }

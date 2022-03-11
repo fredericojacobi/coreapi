@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Entities.DataTransferObjects
 {
@@ -17,6 +18,8 @@ namespace Entities.DataTransferObjects
         public CompanyDTO Company { get; set; }
         
         public LocationDTO Location { get; set; }
+        
+        public ICollection<PointDTO> Points { get; set; }
 
     }
 }

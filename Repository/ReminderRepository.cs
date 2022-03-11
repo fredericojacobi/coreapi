@@ -14,11 +14,11 @@ namespace Repository
         {
         }
 
-        public async Task<IEnumerable<Reminder>> ReadAllRemindersAsync() => await ReadAllAsync();
+        public async Task<IEnumerable<Reminder>> ReadAllRemindersAsync() => await ReadAllAsync(x => x.User, x => x.Location);
 
         public async Task<Reminder> ReadReminderAsync(Guid id)
         {
-            var reminder = await ReadByConditionAsync(r => r.Id.Equals(id));
+            var reminder = await ReadByConditionAsync(r => r.Id.Equals(id), x => x.User, x => x.Location);
             return reminder.FirstOrDefault();
         }
 

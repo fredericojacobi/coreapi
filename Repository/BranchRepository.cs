@@ -18,8 +18,7 @@ namespace Repository
         {
         }
 
-        public async Task<IEnumerable<Branch>> ReadAllBranchesAsync() => await ReadAllAsync();
-
+        public async Task<IEnumerable<Branch>> ReadAllBranchesAsync() => await ReadAllAsync(x => x.Company, x=> x.Location, x=> x.Points);
 
         public async Task<Branch> ReadBranchAsync(Guid id)
         {
