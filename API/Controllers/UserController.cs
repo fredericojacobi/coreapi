@@ -1,10 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Contracts.Repositories;
 using Contracts.Services;
 using Entities.DataTransferObjects;
-using Entities.Models;
-using Generic.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
