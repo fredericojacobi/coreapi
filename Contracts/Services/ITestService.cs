@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Contracts.Services
 {
     public interface ITestService
     {
-        IEnumerable<Company> GetAll();
+        Task<IEnumerable<Company>> GetAllAsync();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Contracts;
 using Contracts.Repositories;
 using Contracts.Services;
@@ -13,6 +14,6 @@ namespace Services
 
         public TestService(IRepositoryWrapper repository) => _repository = repository;
 
-        public IEnumerable<Company> GetAll() => _repository.Company.ReadAllCompaniesAsync().ToList();
+        public async Task<IEnumerable<Company>> GetAllAsync() => await _repository.Company.ReadAllCompaniesAsync();
     }
 }

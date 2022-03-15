@@ -1,14 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
 using System.Threading.Tasks;
-using AutoMapper;
-using Contracts;
-using Contracts.Repositories;
 using Contracts.Services;
 using Entities.DataTransferObjects;
-using Entities.Models;
-using Generic.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
