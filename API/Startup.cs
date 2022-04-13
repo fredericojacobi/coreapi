@@ -29,6 +29,7 @@ namespace FirstApp
             //services.ConfigureAuthentication(Configuration);
             services.ConfigureIdentity();
             services.ConfigureSwagger();
+            services.ConfigureCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory,
@@ -38,7 +39,6 @@ namespace FirstApp
             context.Database.Migrate();
         
             // loggerFactory.AddFile($"Logs/{DateTime.Now.ToString("yyyyMMddHHmmss")}.txt");
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -54,6 +54,8 @@ namespace FirstApp
             
             app.UseRouting();
 
+            app.UseCors("corsPolicy");
+            
             app.UseAuthorization();
 
             app.UseAuthentication();
